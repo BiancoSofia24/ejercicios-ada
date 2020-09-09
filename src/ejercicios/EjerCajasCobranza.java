@@ -28,20 +28,21 @@ public class EjerCajasCobranza {
 		System.out.println("Ingresa el importe de su factura (0 para Salir)");
 		float importe = sc.nextFloat();
 
+		// Validación valor importe
 		while (importe != 0) {
 			System.out.println("Ingrese el número de caja a la que corresponde");
 			int caja = sc.nextInt();
 
-			if (caja >= 1 && caja < 5) {
+			// Validación número de caja
+			while (caja > cajas.length) {
+				System.out.println("Número de caja erroneo, ingrese nuevamente los datos.");
+				System.out.println("Ingrese el número de caja a la que corresponde");
+				caja = sc.nextInt();
+			}
+
+			if (caja >= 1 && caja <= cajas.length) {
 				cajas[caja - 1] = cajas[caja - 1] + 1;
 				total = total + importe;
-
-			} else {
-				System.out.println("Número de caja erroneo, ingrese nuevamente los datos.");
-
-				// Falta que vuelva a ingresar el importe en el total
-				// System.out.println("Ingrese el número de caja a la que corresponde");
-				// caja = sc.nextInt();
 			}
 
 			System.out.println("Ingrese el importe de su factura (0 para Salir)");

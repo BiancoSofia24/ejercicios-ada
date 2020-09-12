@@ -6,10 +6,19 @@ public class EjerCiudadesDistancias {
 
 	public static void main(String[] args) {
 
-		Scanner sc = new Scanner(System.in);
+		mostrarTitulo("Sistema de estaciones");
 
-		System.out.println("Sistema de estaciones");
-		System.out.println("---------------------");
+		int vCiudadess[] = procesar();
+
+		for (int i = 0; i < vCiudadess.length; i++) {
+			dibujarTrayecto(vCiudadess[i]);
+		}
+	}
+
+	private static int[] procesar() {
+		// Se define int[] dado que es el tipo de dato que quiero que retorne
+
+		Scanner sc = new Scanner(System.in);
 
 		System.out.print("Ingrese la cantidad de estaciones intermedias: ");
 		int estacionesT = sc.nextInt();
@@ -25,27 +34,30 @@ public class EjerCiudadesDistancias {
 		}
 		sc.close();
 
+		System.out.println();
 		System.out.println("Distancia total: " + distanciaT + "km");
-		System.out.println("Promedio entre paradas: " + (distanciaT / estacionesT) + "km");
+		System.out.println("Promedio entre ciudades: " + (distanciaT / estacionesT) + "km");
+		System.out.println();
 
-		System.out.print("*");
-		for (int i = 0; i < estacionesT; i++) {
-			dibujarTrayecto(ciudades[i]);
-		}
+		return ciudades;
+		// En este caso la var ciudades correspone en tipo de dato a lo que quiero
+		// retornar
 	}
 
-	/*
-	 * Dibuja trayecto entre ciudades
-	 */
+	private static void mostrarTitulo(String titulo) {
+
+		System.out.println(titulo.toUpperCase());
+		System.out.println("------------------------------------------------------------");
+		System.out.println();
+	}
+
+	// Dibuja trayecto entre ciudades
 	private static void dibujarTrayecto(int distancia) {
-		// Por cada estación (bucle) imprimo "*" cantidad de líneas según km
+
+		System.out.print("*");
+
 		for (int i = 0; i < distancia; i++) {
-			System.out.print("-");
-			// Método extra para animaciones
-			/*
-			 * try { Thread.sleep(200); } catch (InterruptedException e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); }
-			 */
+			System.out.print("-"); // Estaciones = "**", imprimo x cantidad de "-" según km
 		}
 
 		System.out.print("*");

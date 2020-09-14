@@ -6,73 +6,97 @@ public class EjerBoleteria {
 
 	private static final int CANT_BOLETOS = 50;
 	private static final int BUTACAS = 10;
-	private static final int FILAS_BUTACAS = 5;
+	private static final int FILAS_BUTACAS = CANT_BOLETOS / BUTACAS;
 
 	public static void main(String[] args) {
 
-		mostrarTitulo("sistema de venta de boletos");
+		mostrarMensaje("sistema de venta de boletos");
 
-		dibujarTeatro();
+		int butacas[] = inicializarSistema();
 
-		int butacasVendidas = procesarDatos();
+		// Teatro vacio
+		dibujarSala(butacas);
 
-		mostrarDatos(butacasVendidas);
+		int ventas = procesarDatos(butacas);
+
+		mostrarVentas(ventas);
+
+		// Boletos vendidos
+		dibujarSala(butacas);
 
 	}
 
-	private static void dibujarTeatro() {
+	private static void mostrarMensaje(String mensaje) {
 
-		System.out.println("________________________________");
+		System.out.println("----------------------------------------");
+		System.out.println(mensaje.toUpperCase());
+		System.out.println("----------------------------------------");
+		System.out.println();
+
+	}
+
+	private static int[] inicializarSistema() {
+		int butacas[] = new int[CANT_BOLETOS];
+		for (int i = 0; i < butacas.length; i++) {
+			butacas[i] = 0;
+		}
+		return butacas;
+
+	}
+
+	private static void dibujarSala(int butacas[]) {
+
+		System.out.println("|OUT|======== TARIMA ========|OUT|");
+		System.out.println("|________________________________|");
 
 		for (int j = 0; j < FILAS_BUTACAS; j++) {
-			System.out.print("|");
+			System.out.print("| ");
 			for (int i = 0; i < BUTACAS; i++) {
-				System.out.print(" - ");
+				if (butacas[(BUTACAS * j) + i] == 0) {
+					System.out.print(" o ");
+				} else {
+					System.out.print(" x ");
+				}
 			}
-			System.out.println("|");
+			System.out.println(" |");
 		}
 
-		System.out.println("|______________________________|");
-		System.out.println("|=========== TARIMA ===========|");
+		System.out.println("|                                |");
+		System.out.println("|IN|__________________________|IN|");
 		System.out.println();
 
 	}
 
-	private static void mostrarDatos(int asientos) {
+	private static void mostrarVentas(int asientos) {
 
 		System.out.println();
-		mostrarTitulo("butacas vendidas");
-		System.out.println("Hay " + asientos + " butacas vendidas");
+		mostrarMensaje("butacas vendidas");
+		System.out.println("Hay " + asientos + " boletos vendidas");
 
 		if (asientos != CANT_BOLETOS) {
 			int boletosTotales = CANT_BOLETOS - asientos;
-			System.out.println("Aún quedan " + boletosTotales + " por vender");
-			System.out.println("¡Sigue vendiendo!");
+			System.out.println("Aún quedan " + boletosTotales + " boletos por vender");
+			System.out.println();
 		} else {
 			System.out.println("Ya has vendido todos los boletos!");
-			System.out.println("Vendedor del mes");
 		}
 
 	}
 
-	private static int procesarDatos() {
+	private static int procesarDatos(int butacas[]) {
 
 		Scanner sc = new Scanner(System.in);
-		int boletos[] = new int[CANT_BOLETOS];
-		for (int i = 0; i < boletos.length; i++) {
-			boletos[i] = 0;
-		}
 
-		System.out.println("Ingrese número de butaca a comprar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
-		int butaca = sc.nextInt();
+		System.out.println("Ingrese número de butaca a ocupar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
+		int asiento = sc.nextInt();
 
-		while (butaca != 99) {
+		while (asiento != 99) {
 
-			if (esValido(butaca)) {
+			if (esValido(asiento)) {
 
-				if (boletos[butaca - 1] == 0) {
+				if (butacas[asiento - 1] == 0) {
 
-					boletos[butaca - 1] = 1;
+					butacas[asiento - 1] = 1;
 					System.out.println("Butaca seleccionada");
 					System.out.println();
 				} else {
@@ -82,21 +106,21 @@ public class EjerBoleteria {
 
 				System.out
 						.println("Ingrese número de butaca a comprar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
-				butaca = sc.nextInt();
+				asiento = sc.nextInt();
 			} else {
 
 				System.out.println("Boleto en butaca no autorizada");
 				System.out
 						.println("Ingrese número de butaca a comprar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
-				butaca = sc.nextInt();
+				asiento = sc.nextInt();
 			}
 		}
 
 		sc.close();
 
 		int contador = 0;
-		for (int i = 0; i < boletos.length; i++) {
-			if (boletos[i] == 1) {
+		for (int i = 0; i < butacas.length; i++) {
+			if (butacas[i] == 1) {
 				contador += 1;
 			}
 		}
@@ -105,18 +129,11 @@ public class EjerBoleteria {
 
 	}
 
-	private static boolean esValido(int asientos) {
+	private static boolean esValido(int valor) {
 
-		boolean ok = (asientos - 1 >= 0 && asientos - 1 < CANT_BOLETOS);
+		boolean ok = (valor - 1 >= 0 && valor - 1 < CANT_BOLETOS);
 		return ok;
 
 	}
 
-	private static void mostrarTitulo(String titulo) {
-
-		System.out.println(titulo.toUpperCase());
-		System.out.println("------------------------------------------------------------");
-		System.out.println();
-
-	}
 }

@@ -52,5 +52,7 @@ public class Ejer102Area {
 		System.out.println("El area del rectángulo es: " + areaR);
 		System.out.println("El area total es: " + areaTotal);
 
+		sc.close();
+
 	}
 }

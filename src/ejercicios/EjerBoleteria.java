@@ -70,8 +70,8 @@ public class EjerBoleteria {
 	private static void mostrarVentas(int asientos) {
 
 		System.out.println();
-		mostrarMensaje("butacas vendidas");
-		System.out.println("Hay " + asientos + " boletos vendidas");
+		mostrarMensaje("boletos vendidos");
+		System.out.println("Hay " + asientos + " boletos vendidos");
 
 		if (asientos != CANT_BOLETOS) {
 			int boletosTotales = CANT_BOLETOS - asientos;
@@ -101,17 +101,15 @@ public class EjerBoleteria {
 					System.out.println();
 				} else {
 
-					System.out.println("Butaca vendida. Seleccione otra butaca");
+					System.out.println("Butaca asignada. Seleccione otra butaca");
 				}
 
-				System.out
-						.println("Ingrese número de butaca a comprar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
+				System.out.println("Ingrese número de butaca a ocupar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
 				asiento = sc.nextInt();
 			} else {
 
 				System.out.println("Boleto en butaca no autorizada");
-				System.out
-						.println("Ingrese número de butaca a comprar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
+				System.out.println("Ingrese número de butaca a ocupar. Entre 1 y " + CANT_BOLETOS + " (99 para salir)");
 				asiento = sc.nextInt();
 			}
 		}

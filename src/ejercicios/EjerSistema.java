@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class EjerSistema {
 
 	private static final int CANT_DIAS = 5;
-	private static final int CANT_OPC = 4;
 
 	public static void main(String[] args) {
 
@@ -19,8 +18,9 @@ public class EjerSistema {
 		Scanner sc = new Scanner(System.in);
 		int opcMenu = sc.nextInt();
 
+		// Cantidad de opciones = 3, Salir no se incluye como alternativa
 		// ejecutarMenu() incluye validación
-		ejecutarMenu(opcMenu, dias);
+		ejecutarMenu(opcMenu, 3, dias);
 
 		mostrarMensaje("gracias por usar nuestro servicio");
 
@@ -28,12 +28,12 @@ public class EjerSistema {
 
 	}
 
-	private static void ejecutarMenu(int opcion, int vector[]) {
+	private static void ejecutarMenu(int opcion, int cantOpcionesMenu, int vector[]) {
 
 		Scanner sc = new Scanner(System.in);
 		while (opcion > 0) {
 
-			if (opcion >= CANT_OPC) {
+			if (opcion > cantOpcionesMenu) {
 
 				mostrarError("opción inválida");
 

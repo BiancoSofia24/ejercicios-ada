@@ -29,54 +29,69 @@ public class EjerComunicaciones {
 
 		mostrarMensaje("servicios de comunicaciones");
 
-		System.out.print("Ingrese número de cliente: ");
-		int cliente = sc.nextInt();
+		procesarDatos(servicios);
 
-		int cantClientes = 0;
-		while (cliente != 0) {
+		mostrarVentas(servicios);
 
-			System.out.println("Hola " + cliente); // CdE
+		mostrarMensaje("gracias por usar nuestro sistema");
 
-			System.out.print("Servicio: ");
-			int servicio = sc.nextInt();
+		sc.close();
+	}
 
-			switch (servicio) {
-			case 1:
-				System.out.println("op 1 bu");
-				servicios[0] += 1;
-				break;
-			case 2:
-				System.out.println("op 2 bu");
-				servicios[1] += 1;
-				break;
-			case 3:
-				System.out.println("op 3 bu");
-				servicios[2] += 1;
-				break;
-			}
+	private static void mostrarVentas(int[] servicios) {
 
-			System.out.println("servicio" + servicio); // CdE
-			// Verificar vector
-			for (int i = 0; i < CANT_SERV; i++) {
-				System.out.println(servicios[i]); // CdE
-			}
+		System.out.println();
+		System.out.println("Servicio 1: Telefónia. Servicio 2: Banda Ancha. Servicio 3: TV");
 
-			cantClientes += 1;
-
-			System.out.print("Ingrese número de cliente: ");
-			cliente = sc.nextInt();
+		for (int i = 0; i < CANT_SERV; i++) {
+			System.out.println("La cantidad de clientes para el servicio " + (i + 1) + " es: " + servicios[i]);
 		}
 
-		// Totales
-		System.out.println("Clientes totales: " + cantClientes);
-		System.out.println("Total telefonia: " + (servicios[0] * COSTO_TELF));
-		System.out.println("Total clientes telefonia: " + servicios[0]);
-		System.out.println("Total banda ancha: " + (servicios[1] * COSTO_BA));
-		System.out.println("Total clientes banda ancha: " + servicios[1]);
-		System.out.println("Total tv: " + (servicios[2] * COSTO_TV));
-		System.out.println("Total clientes tv: " + servicios[2]);
+		int totalTelf = servicios[0] * COSTO_TELF;
+		int totalBa = servicios[1] * COSTO_BA;
+		int totalTv = servicios[2] * COSTO_TV;
+		int total = totalTelf + totalBa + totalTv;
 
-		System.out.println("bye");
+		System.out.println("Total recaudado: $" + total);
+	}
+
+	private static void procesarDatos(int[] servicios) {
+
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Ingrese número de cliente (0 para Salir): ");
+		int cliente = sc.nextInt();
+
+		while (cliente != 0) {
+
+			if (cliente > 0) {
+
+				System.out.println();
+				System.out.println("Servicio 1: Telefónia. Servicio 2: Banda Ancha. Servicio 3: TV");
+				System.out.println("Ingrese servicio solicitados para el cliente " + cliente + " (0 para Salir)");
+				System.out.print("Servicio: ");
+				int servicio = sc.nextInt();
+				while (servicio != 0) {
+
+					if (servicio > 0 && servicio <= CANT_SERV) {
+
+						servicios[servicio - 1] += 1;
+					} else {
+
+						System.out.println("Número de servicio inválido");
+					}
+
+					System.out.print("Servicio: ");
+					servicio = sc.nextInt();
+				}
+			} else {
+
+				System.out.println("Número de cliente inválido");
+			}
+
+			System.out.print("Ingrese número de cliente (0 para Salir): ");
+			cliente = sc.nextInt();
+		}
 
 		sc.close();
 	}

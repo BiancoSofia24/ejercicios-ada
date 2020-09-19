@@ -28,7 +28,6 @@ public class EjerJuegoAhorcado {
 		while (jugar != 0) {
 
 			if (jugar == 1) {
-
 				String palabra = generarPalabra();
 
 				int errores = adivinar(palabra);
@@ -37,7 +36,6 @@ public class EjerJuegoAhorcado {
 
 				mostrarMensaje("¡gracias por jugar!");
 			} else {
-
 				System.out.println("Ingresaste el número equivocado");
 			}
 
@@ -55,9 +53,7 @@ public class EjerJuegoAhorcado {
 	 * @param intentos
 	 */
 	private static void mostrarPuntos(int intentos) {
-
 		int ptos = MAX_PLBRA - intentos;
-
 		System.out.println("Tu maravilloso puntaje fue: " + ptos);
 		System.out.println();
 	}
@@ -67,75 +63,90 @@ public class EjerJuegoAhorcado {
 	 * @return cantErrores
 	 */
 	private static int adivinar(String palabra) {
-
 		Scanner sc = new Scanner(System.in);
 
-		// Pedir letra
 		System.out.println();
 		System.out.println("Escribe una letra (con tu teclado) para intentar adivinar");
-		System.out.println("Si completaste la palabra ingresa un 0 y veras tu puntuación");
 		System.out.print("Letra: ");
 		String letra = sc.next();
 		System.out.println();
 
-		boolean resultado[] = new boolean[palabra.length()];
+		// letrasOk[false, false, false, ...] dimension = longPalabra
+		boolean letrasOk[] = new boolean[palabra.length()];
 		int cantAciertos = 0;
 		int cantErrores = 0;
-		// Evaluar cantidadAcierto <
 		while (cantAciertos < palabra.length() && cantErrores != MAX_ERR) {
+			// Buscar letra en la palabra
+			int posLetra = palabra.indexOf(letra.toUpperCase()); // Si letra !E = -1
 
-			int posicion = palabra.indexOf(letra); // Si letra !E = -1
-
-			if (posicion != -1) {
-
-				resultado[posicion] = posicion != -1;
+			if (posLetra != -1) {
+				letrasOk[posLetra] = true;
 				cantAciertos++;
 			} else {
-
 				cantErrores++;
 			}
 
 			for (int i = 0; i < palabra.length(); i++) {
-
-				if (resultado[i]) {
-
+				// Si letraOK[true] -> mostrar letra correcta
+				if (letrasOk[i]) {
 					System.out.print(" " + palabra.charAt(i) + " ");
 				} else {
-
 					System.out.print(" _ ");
 				}
 			}
 
-			System.out.println("Llevas " + cantErrores + " errores");
+			System.out.println("    Llevas " + cantErrores + " errores");
+			System.out.println();
 
-			System.out.println();
-			System.out.println("Escribe una letra (con tu teclado) para intentar adivinar");
-			System.out.println("Si completaste la palabra ingresa un 0 y veras tu puntuación");
-			System.out.print("Letra: ");
-			letra = sc.next();
-			System.out.println();
+			if (cantAciertos < palabra.length() && cantErrores != MAX_ERR) {
+				System.out.println("Escribe una letra (con tu teclado) para intentar adivinar");
+				System.out.print("Letra: ");
+				letra = sc.next();
+				System.out.println();
+			}
 		}
 
 		if (cantErrores == MAX_ERR) {
-			System.out.println();
-			System.out.println("¡Perdiste!");
-			System.out.println("Vuelve a intentarlo");
-			System.out.println();
+			dibujarPerder();
 		} else {
-			System.out.println();
-			System.out.println("¡Ganaste!");
-			System.out.println("Tu premio fue este mensaje...");
-			System.out.println();
+			dibujarGanar();
 		}
 
 		return cantErrores;
+	}
+
+	private static void dibujarGanar() {
+		System.out.println("      _______");
+		System.out.println("        |   |");
+		System.out.println("            |");
+		System.out.println("            |");
+		System.out.println("   O        |");
+		System.out.println("  (|)       |");
+		System.out.println("  | | ______|___");
+		System.out.println();
+		System.out.println("¡Ganaste!");
+		System.out.println("Tu premio fue este mensaje...");
+		System.out.println();
+	}
+
+	private static void dibujarPerder() {
+		System.out.println("    _______");
+		System.out.println("      |   |");
+		System.out.println("      O   |");
+		System.out.println("     (|)  |");
+		System.out.println("     | |  |");
+		System.out.println("          |");
+		System.out.println("    ______|___");
+		System.out.println();
+		System.out.println("¡Perdiste!");
+		System.out.println("Vuelve a intentarlo");
+		System.out.println();
 	}
 
 	/**
 	 * @return palabra
 	 */
 	private static String generarPalabra() {
-
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println();
@@ -145,21 +156,19 @@ public class EjerJuegoAhorcado {
 		System.out.print("Palabra: ");
 		String palabra = sc.next();
 
-		int longPalabra = palabra.length();
-		while (longPalabra < MIN_PLBRA || longPalabra > MAX_PLBRA) {
+		while (palabra.length() < MIN_PLBRA || palabra.length() > MAX_PLBRA) {
 			System.out.println();
-			System.out.println("¡Esa palabra es demasiado larga para este sencillo juego!");
+			System.out.println("¡Esa palabra es demasiado larga o corta para este sencillo juego!");
 			System.out.println("Ingresa una palabra entre " + MIN_PLBRA + " y " + MAX_PLBRA + " letras.");
 			System.out.println();
 			System.out.print("Palabra: ");
 			palabra = sc.next();
 		}
 
-		return palabra;
+		return palabra.toUpperCase();
 	}
 
 	private static void mostrarMensaje(String texto) {
-
 		System.out.println("-----------------------------------");
 		System.out.println(texto.toUpperCase());
 		System.out.println("-----------------------------------");

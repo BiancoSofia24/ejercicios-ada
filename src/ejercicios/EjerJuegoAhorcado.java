@@ -147,7 +147,7 @@ public class EjerJuegoAhorcado {
 			System.out.println();
 			break;
 		case 10:
-			System.out.println("¡Lo siento! Creo...");
+			System.out.println("¡Lo siento! Busca la revancha");
 			System.out.println("   _______");
 			System.out.println("     |   |");
 			System.out.println("     O   |");

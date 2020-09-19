@@ -50,6 +50,120 @@ public class EjerJuegoAhorcado {
 	}
 
 	/**
+	 * @param errores
+	 */
+	private static void dibujar(int errores) {
+		switch (errores) {
+		case 1:
+			System.out.println("Uy...");
+			System.out.println("   _______");
+			System.out.println();
+			break;
+		case 2:
+			System.out.println("Construyendo...");
+			System.out.println("   _______");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println();
+			break;
+		case 3:
+			System.out.println("Construyendo...");
+			System.out.println("   _______");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		case 4:
+			System.out.println("¿Qué tenemos por aquí?");
+			System.out.println("   _______");
+			System.out.println("     |   |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		case 5:
+			System.out.println("Quiero tu cabeza :)");
+			System.out.println("   _______");
+			System.out.println("     |   |");
+			System.out.println("     O   |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		case 6:
+			System.out.println("¿Me parece o estás muy delgado/a?");
+			System.out.println("   _______");
+			System.out.println("     |   |");
+			System.out.println("     O   |");
+			System.out.println("     |   |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		case 7:
+			System.out.println("Chan, chan...");
+			System.out.println("   _______");
+			System.out.println("     |   |");
+			System.out.println("     O   |");
+			System.out.println("    (|   |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		case 8:
+			System.out.println("¡Te estás quedando sin oportunidades!");
+			System.out.println("   _______");
+			System.out.println("     |   |");
+			System.out.println("     O   |");
+			System.out.println("    (|)  |");
+			System.out.println("         |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		case 9:
+			System.out.println("Te queda una oportunidad para desperdiciar... :D");
+			System.out.println("   _______");
+			System.out.println("     |   |");
+			System.out.println("     O   |");
+			System.out.println("    (|)  |");
+			System.out.println("    |    |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		case 10:
+			System.out.println("¡Lo siento! Creo...");
+			System.out.println("   _______");
+			System.out.println("     |   |");
+			System.out.println("     O   |");
+			System.out.println("    (|)  |");
+			System.out.println("    | |  |");
+			System.out.println("         |");
+			System.out.println("   ______|___");
+			System.out.println();
+			break;
+		default:
+			System.out.println("¡Vas bien!");
+			System.out.println();
+		}
+	}
+
+	/**
 	 * @param intentos
 	 */
 	private static void mostrarPuntos(int intentos) {
@@ -97,6 +211,7 @@ public class EjerJuegoAhorcado {
 
 			System.out.println("    Llevas " + cantErrores + " errores");
 			System.out.println();
+			dibujar(cantErrores);
 
 			if (cantAciertos < palabra.length() && cantErrores != MAX_ERR) {
 				System.out.println("Escribe una letra (con tu teclado) para intentar adivinar");
@@ -107,7 +222,9 @@ public class EjerJuegoAhorcado {
 		}
 
 		if (cantErrores == MAX_ERR) {
-			dibujarPerder();
+			System.out.println("¡Perdiste!");
+			System.out.println("Vuelve a intentarlo");
+			System.out.println();
 		} else {
 			dibujarGanar();
 		}
@@ -126,20 +243,6 @@ public class EjerJuegoAhorcado {
 		System.out.println();
 		System.out.println("¡Ganaste!");
 		System.out.println("Tu premio fue este mensaje...");
-		System.out.println();
-	}
-
-	private static void dibujarPerder() {
-		System.out.println("    _______");
-		System.out.println("      |   |");
-		System.out.println("      O   |");
-		System.out.println("     (|)  |");
-		System.out.println("     | |  |");
-		System.out.println("          |");
-		System.out.println("    ______|___");
-		System.out.println();
-		System.out.println("¡Perdiste!");
-		System.out.println("Vuelve a intentarlo");
 		System.out.println();
 	}
 

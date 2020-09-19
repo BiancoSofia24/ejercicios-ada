@@ -104,7 +104,6 @@ public class EjerSistema {
 		System.out.println();
 	}
 
-	// No funciona. No se lee el menú luego de usar el método
 	private static void ingresarDatos(float[] vector) {
 		Scanner sc = new Scanner(System.in);
 

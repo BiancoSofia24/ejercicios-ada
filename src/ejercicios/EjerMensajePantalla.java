@@ -34,14 +34,20 @@ public class EjerMensajePantalla {
 
 		// i -> filas / j -> columnas
 		for (int i = 0; i < alto; i++) {
+
 			for (int j = 0; j < ancho; j++) {
+
 				if (i == 0 || i == alto - 1) {
+
 					System.out.print(simb);
 				} else if (j == 0 || j == ancho - 1) {
+
 					System.out.print(simb);
 				} else if (i == textoY && j == margen) {
+
 					System.out.print(mensaje);
 				} else {
+
 					System.out.print(" ");
 				}
 			}
@@ -58,7 +64,7 @@ public class EjerMensajePantalla {
 	}
 
 	private static void dibujarLinea(int tamanio, String simbol) {
-		for (int i = 0; i < tamanio; i++) {
+		for (int i = 0; i < tamanio + 1; i++) {
 			System.out.print("-");
 		}
 		System.out.println();

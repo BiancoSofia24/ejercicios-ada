@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class EjerTateti {
 
-	private static final int COL = 3;
-	private static final int ROW = 3;
+	private static final int CANT_COL = 3;
+	private static final int CANT_FIL = 3;
 	private static final int PJ1 = 1;
 	private static final int PJ2 = 2;
 	// private static final int PCPU = 2;
@@ -29,7 +29,7 @@ public class EjerTateti {
 		while (seguirJugando) {
 			Scanner scan = new Scanner(System.in);
 
-			System.out.print("Jugador 1 (X) Ingresa una posición (1-9): ");
+			System.out.print("Turno J" + PJ1 + " (X) Ingresa una posición (1-9): ");
 			int posJ1 = scan.nextInt();
 			System.out.println();
 
@@ -48,7 +48,7 @@ public class EjerTateti {
 				// int posCpu = rand.nextInt(9) + 1;
 				// ubicarFicha(tablero, porCpu, PCPU);
 
-				System.out.print("Jugador 2 (O) Ingresa una posición (1-9): ");
+				System.out.print("Turno J" + PJ2 + " (O) Ingresa una posición (1-9): ");
 				int posJ2 = scan.nextInt();
 				System.out.println();
 
@@ -129,14 +129,15 @@ public class EjerTateti {
 		default:
 			break;
 		}
+
 	}
 
 	private static char[][] imprimirTablero(char[][] tablero) {
 
 		// Para ver el tablero
 		// i -> filas / j -> columnas
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
+		for (int i = 0; i < CANT_FIL; i++) {
+			for (int j = 0; j < CANT_COL; j++) {
 				System.out.print(" | ");
 				System.out.print(tablero[i][j]);
 			}
@@ -149,12 +150,12 @@ public class EjerTateti {
 
 	private static char[][] inicializarMatriz() {
 
-		char[][] tablero = new char[ROW][COL];
+		char[][] tablero = new char[CANT_FIL][CANT_COL];
 		// Para dibujar el tablero
 		// i -> filas / j -> columnas
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
-				tablero[i][j] = '-';
+		for (int i = 0; i < CANT_FIL; i++) {
+			for (int j = 0; j < CANT_COL; j++) {
+				tablero[i][j] = ' ';
 			}
 		}
 

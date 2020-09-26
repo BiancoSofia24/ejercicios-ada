@@ -19,7 +19,7 @@ public class EjerTatetiOtraVers {
 
 		char[][] tablero = inicializarMatriz(CANT_FIL, CANT_COL);
 
-		imprimirTablero(tablero);
+		visualizar(tablero);
 
 		boolean ganador = false;
 		int cont = 0;
@@ -27,140 +27,158 @@ public class EjerTatetiOtraVers {
 		while (!ganador && cont < 9) {
 			cont++;
 			jugador = cont % 2;
-			ganador = turno(jugador, tablero);
+			ganador = jugar(jugador, tablero);
 		}
 	}
 
-	private static boolean turno(int jugador, char[][] tablero) {
-		Scanner scan = new Scanner(System.in);
+	private static boolean jugar(int jugador, char[][] tablero) {
 
-		if (jugador == 0) {
-			System.out.println("Turno del J" + (jugador + 2));
-		} else {
-			System.out.println("Turno del J" + jugador);
-		}
+		cambiarTurno(jugador);
 
-		System.out.print("Ingrese fila en la que desea ubicarse (1-3): ");
-		int fila = scan.nextInt();
-		System.out.print("Ingrese columna en  la que desea ubicarse (1-3): ");
-		int col = scan.nextInt();
-		System.out.println();
+		int fila = elegirFila();
+		int col = elegirCol();
 
 		boolean ganador = false;
-		if (tablero[fila - 1][col - 1] == 'X' || tablero[fila - 1][col - 1] == 'O') {
-			System.out.println("POsición inválida. Pierdes el turno");
+
+		while (tablero[fila - 1][col - 1] == 'X' || tablero[fila - 1][col - 1] == 'O') {
+			System.out.println("Posición inválida");
 			System.out.println();
+			fila = elegirFila();
+			col = elegirCol();
+		}
+
+		if (jugador == 1) {
+			tablero[fila - 1][col - 1] = 'X';
 		} else {
-			if (jugador == 1) {
-				tablero[fila - 1][col - 1] = 'X';
+			tablero[fila - 1][col - 1] = 'O';
+		}
+
+		ganador = verificarGanador(tablero);
+
+		imprimirTablero(tablero);
+
+		if (ganador) {
+			if (jugador == 0) {
+				mostrarMensaje("¡ganaste J" + (jugador + 2) + "!");
 			} else {
-				tablero[fila - 1][col - 1] = 'O';
-			}
-
-			ganador = verificarGanador(tablero);
-
-			imprimirTablero(tablero);
-
-			if (ganador) {
-				if (jugador == 0) {
-					mostrarMensaje("¡ganaste J" + (jugador + 2) + "!");
-				} else {
-					mostrarMensaje("¡ganaste J" + jugador + "!");
-				}
+				mostrarMensaje("¡ganaste J" + jugador + "!");
 			}
 		}
 
 		return ganador;
 	}
 
-	private static int posicion(char[][] tablero, int pos) {
+	private static int elegirCol() {
+		Scanner scan = new Scanner(System.in);
 
-		switch (pos) {
-		case 1:
-			pos = tablero[0][0];
-			break;
-		case 2:
-			pos = tablero[0][1];
-			break;
-		case 3:
-			pos = tablero[0][2];
-			break;
-		case 4:
-			pos = tablero[1][0];
-			break;
-		case 5:
-			pos = tablero[1][1];
-			break;
-		case 6:
-			pos = tablero[1][2];
-			break;
-		case 7:
-			pos = tablero[2][1];
-			break;
-		case 8:
-			pos = tablero[2][1];
-			break;
-		case 9:
-			pos = tablero[2][2];
-			break;
-		default:
-			break;
+		System.out.print("Ingrese columna en  la que desea ubicarse (1-3): ");
+		int col = scan.nextInt();
+		while (col <= 0 || col > 3) {
+			System.out.println();
+			System.out.println("Columna inválida");
+			System.out.print("Ingrese columna en la que desea ubicarse (1-3): ");
+			col = scan.nextInt();
 		}
 
-		return pos;
+		System.out.println();
+
+		return col;
 	}
 
-	private static boolean verificarGanador(char[][] tablero) {
-		boolean fila1 = (tablero[0][0] == tablero[0][1]) && (tablero[0][0] == tablero[0][2])
-				&& (tablero[0][0] == 'X' || tablero[0][0] == 'O');
-		boolean fila2 = (tablero[1][0] == tablero[1][1]) && (tablero[1][0] == tablero[1][2])
-				&& (tablero[1][0] == 'X' || tablero[1][0] == 'O');
-		boolean fila3 = (tablero[2][0] == tablero[2][1]) && (tablero[2][0] == tablero[2][2])
-				&& (tablero[2][0] == 'X' || tablero[2][0] == 'O');
+	private static int elegirFila() {
+		Scanner scan = new Scanner(System.in);
 
-		boolean col1 = (tablero[0][0] == tablero[1][0]) && (tablero[0][0] == tablero[2][0])
-				&& (tablero[0][0] == 'X' || tablero[0][0] == 'O');
-		boolean col2 = (tablero[0][1] == tablero[1][1]) && (tablero[0][1] == tablero[2][1])
-				&& (tablero[0][1] == 'X' || tablero[0][1] == 'O');
-		boolean col3 = (tablero[0][2] == tablero[1][2]) && (tablero[0][2] == tablero[2][2])
-				&& (tablero[0][2] == 'X' || tablero[0][2] == 'O');
+		System.out.print("Ingrese fila en la que desea ubicarse (1-3): ");
+		int fila = scan.nextInt();
+		while (fila <= 0 || fila > 3) {
+			System.out.println();
+			System.out.println("Fila inválida");
+			System.out.print("Ingrese fila en la que desea ubicarse (1-3): ");
+			fila = scan.nextInt();
+		}
 
-		boolean diag1 = (tablero[0][0] == tablero[1][1]) && (tablero[0][0] == tablero[2][2])
-				&& (tablero[0][0] == 'X' || tablero[0][0] == 'O');
-		boolean diag2 = (tablero[0][2] == tablero[1][1]) && (tablero[0][2] == tablero[2][0])
-				&& (tablero[0][2] == 'X' || tablero[0][2] == 'O');
+		System.out.println();
+
+		return fila;
+	}
+
+	private static void cambiarTurno(int jugador) {
+		// Alternar turno del jugador
+		if (jugador == 0) {
+			System.out.println("Turno del J" + (jugador + 2) + " (O)");
+		} else {
+			System.out.println("Turno del J" + jugador + " (X)");
+		}
+
+		System.out.println();
+	}
+
+	private static boolean verificarGanador(char[][] matriz) {
+		boolean fila1 = (matriz[0][0] == matriz[0][1]) && (matriz[0][0] == matriz[0][2])
+				&& (matriz[0][0] == 'X' || matriz[0][0] == 'O');
+		boolean fila2 = (matriz[1][0] == matriz[1][1]) && (matriz[1][0] == matriz[1][2])
+				&& (matriz[1][0] == 'X' || matriz[1][0] == 'O');
+		boolean fila3 = (matriz[2][0] == matriz[2][1]) && (matriz[2][0] == matriz[2][2])
+				&& (matriz[2][0] == 'X' || matriz[2][0] == 'O');
+
+		boolean col1 = (matriz[0][0] == matriz[1][0]) && (matriz[0][0] == matriz[2][0])
+				&& (matriz[0][0] == 'X' || matriz[0][0] == 'O');
+		boolean col2 = (matriz[0][1] == matriz[1][1]) && (matriz[0][1] == matriz[2][1])
+				&& (matriz[0][1] == 'X' || matriz[0][1] == 'O');
+		boolean col3 = (matriz[0][2] == matriz[1][2]) && (matriz[0][2] == matriz[2][2])
+				&& (matriz[0][2] == 'X' || matriz[0][2] == 'O');
+
+		boolean diag1 = (matriz[0][0] == matriz[1][1]) && (matriz[0][0] == matriz[2][2])
+				&& (matriz[0][0] == 'X' || matriz[0][0] == 'O');
+		boolean diag2 = (matriz[0][2] == matriz[1][1]) && (matriz[0][2] == matriz[2][0])
+				&& (matriz[0][2] == 'X' || matriz[0][2] == 'O');
 
 		return fila1 || fila2 || fila3 || col1 || col2 || col3 || diag1 || diag2;
 	}
 
-	private static char[][] imprimirTablero(char[][] tablero) {
-
-		// Para ver el tablero
-		// i -> filas / j -> columnas
+	private static void visualizar(char[][] matriz) {
+		// A forma de instructivo
+		System.out.println("Columnas: 1   2   3");
 		for (int i = 0; i < CANT_FIL; i++) {
+			System.out.print("Fila: " + (i + 1));
 			for (int j = 0; j < CANT_COL; j++) {
 				System.out.print(" | ");
-				System.out.print(tablero[i][j]);
+				System.out.print(matriz[i][j]);
 			}
 			System.out.println(" | ");
 		}
 
 		System.out.println();
-		return tablero;
+	}
+
+	private static char[][] imprimirTablero(char[][] matriz) {
+		// Para imprimir en pantalla la matriz
+		// i -> filas / j -> columnas
+		for (int i = 0; i < CANT_FIL; i++) {
+			for (int j = 0; j < CANT_COL; j++) {
+				System.out.print(" | ");
+				System.out.print(matriz[i][j]);
+			}
+			System.out.println(" | ");
+		}
+
+		System.out.println();
+
+		return matriz;
 	}
 
 	private static char[][] inicializarMatriz(int fila, int col) {
+		// Para rellenar la matriz
+		char[][] matriz = new char[fila][col];
 
-		char[][] tablero = new char[fila][col];
-		// Para dibujar el tablero
 		// i -> filas / j -> columnas
 		for (int i = 0; i < fila; i++) {
 			for (int j = 0; j < col; j++) {
-				tablero[i][j] = ' ';
+				matriz[i][j] = ' ';
 			}
 		}
 
-		return tablero;
+		return matriz;
 	}
 
 	private static void mostrarMensaje(String texto) {

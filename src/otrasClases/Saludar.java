@@ -1,4 +1,4 @@
-package saludo;
+package otrasClases;
 
 public class Saludar {
  

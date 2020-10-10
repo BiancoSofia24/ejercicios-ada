@@ -2,13 +2,20 @@ package inicio.envios;
 
 public class Paquete {
 
-	private static float ZONA_1 = 10;
-	private static float ZONA_2 = 12;
-	private static float ZONA_3 = 15;
+	private static int ZONA_1 = 10;
+	private static int ZONA_2 = 12;
+	private static int ZONA_3 = 15;
+	private static int PESO_MAX = 5000;
 
 	private float peso;
 	private int zona;
 	private boolean transportable;
+
+	public Paquete(float peso, int zona) {
+		this.peso = peso;
+		this.zona = zona;
+		this.transportable = (peso < 5000);
+	}
 
 	public boolean isTransportable() {
 		return transportable;

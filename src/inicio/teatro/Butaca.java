@@ -7,6 +7,14 @@ public class Butaca {
 	private int col;
 	private boolean ocupado;
 
+	public Butaca() {
+	}
+
+	public Butaca(int posicion) {
+		this.posicion = posicion;
+		this.ocupado = true;
+	}
+
 	public int getPosicion() {
 		return posicion;
 	}

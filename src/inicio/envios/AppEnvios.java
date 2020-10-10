@@ -16,20 +16,23 @@ public class AppEnvios {
 	}
 
 	private static void calcularEnvio() {
+
 		float pesoEnvio = solicitarPeso();
-		int zonaEnvio = 0;
+		int zonaEnvio;
+		;
 		while (pesoEnvio != 0) {
 			zonaEnvio = solicitarZona();
 
-			Paquete paq = new Paquete();
-			paq.setPeso(pesoEnvio);
+			Paquete paq = new Paquete(pesoEnvio, zonaEnvio);
+			// paq.setPeso(pesoEnvio);
+
 			if (paq.isTransportable()) {
-				paq.setZona(zonaEnvio);
+				// paq.setZona(zonaEnvio);
 				float precioT = paq.calcularPrecio();
 				System.out.println("El valor del envio es: " + precioT);
 				System.out.println();
 			} else {
-				System.out.println("El paquete es muy pesado");
+				showErr("El paquete es muy pesado");
 				System.out.println();
 			}
 

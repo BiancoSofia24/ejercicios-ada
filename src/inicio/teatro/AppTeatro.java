@@ -12,28 +12,34 @@ public class AppTeatro {
 		showMessage("sistema de venta de boletos");
 
 		Butaca[] butacas = new Butaca[BUTACAS_T];
+		int[] asiento = setUpArray(BUTACAS_T);
 
 		for (int i = 0; i < butacas.length; i++) {
 			butacas[i] = new Butaca();
 		}
 
-		dibujarSala(butacas);
+		dibujarSala(asiento);
 
 		int pos = solicitarPosicion("boleto (1-50 / 0 Salir)");
 
 		while (pos != 0) {
-			pos -= 1;
+			while (pos > 50) {
+				showErr("butaca inexistente");
+				pos = solicitarPosicion("boleto (1-50 / 0 Salir)");
+			}
 
-			Butaca butaca = new Butaca();
-			butaca.setPosicion(pos);
+			pos -= 1;
+			Butaca butaca = new Butaca(pos);
+			// butaca.setPosicion(pos);
 
 			if (butacas[pos].isOcupado()) {
 				showErr("error");
 				System.out.println("Butaca " + (butacas[pos].getPosicion() + 1) + " ya vendida");
 				System.out.println();
 			} else {
-				butaca.setOcupado(true);
+				// butaca.setOcupado(true);
 				butacas[pos] = butaca;
+				asiento[pos] = 1;
 				System.out.println("Butaca asignada");
 				System.out.println();
 			}
@@ -44,9 +50,14 @@ public class AppTeatro {
 
 		System.out.println();
 		showMessage("butacas vendidas");
+
+		dibujarSala(asiento);
+		System.out.println();
+
 		for (int i = 0; i < butacas.length; i++) {
 			if (butacas[i].isOcupado()) {
 				System.out.println("Butaca " + (butacas[i].getPosicion() + 1) + " ocupada");
+
 			}
 		}
 
@@ -67,7 +78,15 @@ public class AppTeatro {
 		 */
 	}
 
-	private static void dibujarSala(Butaca[] butacas) {
+	private static int[] setUpArray(int dimension) {
+		int vector[] = new int[dimension];
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] = 0;
+		}
+		return vector;
+	}
+
+	private static void dibujarSala(int[] asiento) {
 
 		System.out.println("|OUT|======== TARIMA ========|OUT|");
 		System.out.println("|________________________________|");
@@ -75,7 +94,11 @@ public class AppTeatro {
 		for (int j = 0; j < FILAS; j++) {
 			System.out.print("| ");
 			for (int i = 0; i < COLS; i++) {
-				System.out.print(" o ");
+				if (asiento[(COLS * j) + i] == 0) {
+					System.out.print(" o ");
+				} else {
+					System.out.print(" x ");
+				}
 			}
 			System.out.println(" |");
 		}

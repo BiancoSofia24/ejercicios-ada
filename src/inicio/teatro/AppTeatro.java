@@ -30,6 +30,17 @@ public class AppTeatro {
 
 			pos -= 1;
 
+			// Conceptos de Herencia entre Objetos
+			int fila = 1;
+			int col = 1;
+			Butaca butaca = Butaca.crear(pos, fila, col);
+			// Butaca es clase hijo
+			// ButacaVip es clase padre
+			ButacaVip bVIP = new ButacaVip(pos);
+			ButacaVip bVIP2 = new ButacaVip(pos, true);
+			// ButacaVip "hereda" atributos de Butaca
+			bVIP.setPosicion(pos);
+
 			if (butacas[pos].isOcupado()) {
 				showErr("error");
 				System.out.println("Butaca " + (butacas[pos].getPosicion() + 1) + " ya vendida");

@@ -7,7 +7,14 @@ public class Butaca {
 	private int col;
 	private boolean ocupado;
 
-	private Butaca() {
+	// Para el polimorfismo
+	protected float precio;
+
+	private Butaca(int posicion, int fila, int col) {
+		this.posicion = posicion;
+		this.fila = fila;
+		this.col = col;
+		this.ocupado = false;
 	}
 
 	public Butaca(int posicion) {
@@ -45,6 +52,19 @@ public class Butaca {
 
 	public void setCol(int col) {
 		this.col = col;
+	}
+
+	// Para el polimorfismo
+	public float getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(int precio) {
+		this.col = precio;
+	}
+
+	public static Butaca crear(int posicion, int fila, int col) {
+		return new Butaca(posicion, fila, col);
 	}
 
 	public static void dibujarSala(int[] asiento, int cols, int filas) {

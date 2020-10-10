@@ -1,5 +1,6 @@
 package inicio.teatro;
 
+// *
 // La clase Butaca "extiende" sus atributos
 public class ButacaVip extends Butaca {
 
@@ -33,3 +34,4 @@ public class ButacaVip extends Butaca {
 		}
 	}
 }
+// *

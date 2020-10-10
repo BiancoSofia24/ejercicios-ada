@@ -30,6 +30,7 @@ public class AppTeatro {
 
 			pos -= 1;
 
+			// *
 			// Conceptos de Herencia entre Objetos
 			int fila = 1;
 			int col = 1;
@@ -40,6 +41,7 @@ public class AppTeatro {
 			ButacaVip bVIP2 = new ButacaVip(pos, true);
 			// ButacaVip "hereda" atributos de Butaca
 			bVIP.setPosicion(pos);
+			// *
 
 			if (butacas[pos].isOcupado()) {
 				showErr("error");

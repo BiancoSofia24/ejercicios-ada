@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 public class AppEnvios {
 
+	// Tarea
+	// Enviar paquetes, cartas, dinero
+	// Programar clases para distintos servicios con
+	// sus métodos y atributos
+
 	public static void main(String[] args) {
 
 		Paquete.showMessage("bienvenido/a");

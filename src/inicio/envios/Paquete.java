@@ -14,7 +14,12 @@ public class Paquete {
 	public Paquete(float peso, int zona) {
 		this.peso = peso;
 		this.zona = zona;
-		this.transportable = (peso < 5000);
+		this.transportable = (peso < PESO_MAX);
+	}
+
+	private Paquete(float peso) {
+		this.peso = peso;
+		this.transportable = (peso < PESO_MAX);
 	}
 
 	public boolean isTransportable() {
@@ -63,5 +68,33 @@ public class Paquete {
 		}
 
 		return precio;
+	}
+
+	// Estos métodos pertenecen a la clase paquete
+	// no al objeto paquete
+	public static Paquete crear() {
+		Paquete paq = new Paquete(0);
+		System.out.println("Paquete con peso 0");
+		return paq;
+	}
+
+	public static void showErr(String text) {
+		System.out.println();
+		System.out.println("*** " + text.toUpperCase() + " ***");
+		System.out.println();
+	}
+
+	public static void showMessage(String text) {
+		drawLine(text.length(), "-");
+		System.out.println(text.toUpperCase());
+		drawLine(text.length(), "-");
+		System.out.println();
+	}
+
+	public static void drawLine(int size, String symbol) {
+		for (int i = 0; i < size + 1; i++) {
+			System.out.print("-");
+		}
+		System.out.println();
 	}
 }

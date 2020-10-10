@@ -6,13 +6,13 @@ public class AppEnvios {
 
 	public static void main(String[] args) {
 
-		showMessage("bienvenido/a");
+		Paquete.showMessage("bienvenido/a");
 		System.out.println("Sistema de envios");
 		System.out.println();
 
 		calcularEnvio();
 
-		showMessage("nos vemos");
+		Paquete.showMessage("nos vemos");
 	}
 
 	private static void calcularEnvio() {
@@ -23,7 +23,7 @@ public class AppEnvios {
 		while (pesoEnvio != 0) {
 			zonaEnvio = solicitarZona();
 
-			Paquete paq = new Paquete(pesoEnvio, zonaEnvio);
+			Paquete paq = Paquete.crear();
 			// paq.setPeso(pesoEnvio);
 
 			if (paq.isTransportable()) {
@@ -32,7 +32,7 @@ public class AppEnvios {
 				System.out.println("El valor del envio es: " + precioT);
 				System.out.println();
 			} else {
-				showErr("El paquete es muy pesado");
+				Paquete.showErr("El paquete es muy pesado");
 				System.out.println();
 			}
 
@@ -51,25 +51,5 @@ public class AppEnvios {
 		System.out.print("Ingrese peso del paquete (0 Salir): ");
 		Scanner scan = new Scanner(System.in);
 		return scan.nextFloat();
-	}
-
-	private static void showErr(String text) {
-		System.out.println();
-		System.out.println("*** " + text.toUpperCase() + " ***");
-		System.out.println();
-	}
-
-	private static void showMessage(String text) {
-		drawLine(text.length(), "-");
-		System.out.println(text.toUpperCase());
-		drawLine(text.length(), "-");
-		System.out.println();
-	}
-
-	private static void drawLine(int size, String symbol) {
-		for (int i = 0; i < size + 1; i++) {
-			System.out.print("-");
-		}
-		System.out.println();
 	}
 }

@@ -28,7 +28,9 @@ public class AppEnvios {
 		while (pesoEnvio != 0) {
 			zonaEnvio = solicitarZona();
 
-			Paquete paq = Paquete.crear();
+			Paquete paq = new Paquete(pesoEnvio, zonaEnvio);
+
+			// Paquete paq = Paquete.crear();
 			// paq.setPeso(pesoEnvio);
 
 			if (paq.isTransportable()) {

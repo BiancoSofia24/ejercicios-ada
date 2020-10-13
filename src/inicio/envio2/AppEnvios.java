@@ -10,14 +10,19 @@ public class AppEnvios {
 
 		System.out.println("Bienvenido/a...");
 		mostrarTitulo("paquetitos: mi sistema de paquetería");
+		System.out.println("                       ______ ");
+		System.out.println("         __           |______|");
+		System.out.println(" (>^^)> |__| <(^^<)   (^-.-'^)");
+		System.out.println();
 
-		System.out.println("Envíamos a las zonas 1, 2 y 3");
+		System.out.println("Envíamos a las zonas 1, 2 y 3 (?)");
 
 		int opcion = imprimirMenu();
 
 		ejecutarMenu(opcion, CANT_ZONAS);
 		System.out.println();
 
+		System.out.println(" (u.u) ");
 		System.out.println("Hasta luego...");
 		mostrarTitulo("vuelva pronto");
 
@@ -39,45 +44,6 @@ public class AppEnvios {
 		System.out.print("Indique peso de su paquete / documento (Kg): ");
 		Scanner scan = new Scanner(System.in);
 		return scan.nextFloat();
-	}
-
-	public static void ejecutarMenu(int opc, int cantOpc) {
-		while (opc > 0) {
-			if (opc > cantOpc) {
-				showErr("opción erronea");
-				opc = imprimirMenu();
-			} else {
-				switch (opc) {
-				case 1:
-					mostrarTitulo("Paquetes");
-
-					System.out.println("Peso máximo de 10Kg");
-
-					calcularPrecio(opc);
-
-					opc = imprimirMenu();
-					break;
-				case 2:
-					mostrarTitulo("Documentos");
-
-					System.out.println("Peso máximo de 3Kg");
-
-					calcularPrecio(opc);
-
-					opc = imprimirMenu();
-					break;
-				case 3:
-					mostrarTitulo("Remesas");
-
-					System.out.println("Cantidad máxima de 1000 USD");
-
-					calcularPrecio(opc);
-
-					opc = imprimirMenu();
-					break;
-				}
-			}
-		}
 	}
 
 	private static void calcularPrecio(int option) {
@@ -168,6 +134,60 @@ public class AppEnvios {
 			System.out.println();
 		}
 
+	}
+
+	public static void ejecutarMenu(int opc, int cantOpc) {
+		while (opc > 0) {
+			if (opc > cantOpc) {
+				showErr("opción erronea");
+				opc = imprimirMenu();
+			} else {
+				switch (opc) {
+				case 1:
+					mostrarTitulo("Paquetes");
+
+					System.out.println("          _____ ");
+					System.out.println("      *  /    /| *");
+					System.out.println("    * * /____/ / * *");
+					System.out.println("  * * * |____|/  * * *");
+					System.out.println("* * * *          * * * *");
+
+					System.out.println("Peso máximo de 10Kg");
+
+					calcularPrecio(opc);
+
+					opc = imprimirMenu();
+					break;
+				case 2:
+					mostrarTitulo("Documentos");
+
+					System.out.println("      *  _____  * ");
+					System.out.println("    * * |\\___/| * *");
+					System.out.println("  * * * |_____| * * *");
+					System.out.println("* * * *         * * * *");
+
+					System.out.println("Peso máximo de 3Kg");
+
+					calcularPrecio(opc);
+
+					opc = imprimirMenu();
+					break;
+				case 3:
+					mostrarTitulo("Remesas");
+
+					System.out.println("    *  ===========  *");
+					System.out.println("  * * |   ($$$)   | * *");
+					System.out.println("* * *  ===========  * * *");
+
+					System.out.println("Cantidad máxima de 1000 USD");
+
+					calcularPrecio(opc);
+
+					opc = imprimirMenu();
+					break;
+				}
+			}
+		}
 	}
 
 	public static int imprimirMenu() {

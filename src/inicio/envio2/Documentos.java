@@ -8,16 +8,16 @@ public class Documentos extends Paquetes {
 		return (pesoDoc > 0 && pesoDoc <= PESO_DOC);
 	}
 
-	private Documentos(float peso) {
-		super(peso);
+	private Documentos(float peso, int zona) {
+		super(peso, zona);
 	}
 
-	public static Documentos crearDoc(float peso) {
-		return new Documentos(peso);
+	public static Documentos crearDoc(float peso, int zona) {
+		return new Documentos(peso, zona);
 	}
 
 	public static void procesarDoc(float pesoDoc, int zona) {
-		Documentos doc = Documentos.crearDoc(pesoDoc);
+		Documentos doc = Documentos.crearDoc(pesoDoc, zona);
 		float precioDoc = doc.calcularPrecio(pesoDoc, zona);
 		float costoZona = doc.conocerCosto(zona);
 		String region = doc.definirZona(zona);

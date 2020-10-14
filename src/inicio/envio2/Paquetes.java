@@ -40,8 +40,9 @@ public class Paquetes {
 	}
 
 	// Constructor
-	public Paquetes(float peso) {
+	public Paquetes(float peso, int zona) {
 		this.pesoEnvio = peso;
+		this.zona = zona;
 		this.transportable = false;
 	}
 

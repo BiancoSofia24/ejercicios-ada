@@ -8,19 +8,19 @@ public class Cajas extends Paquetes {
 		return (pesoCaja > 0 && pesoCaja <= PESO_CAJA);
 	}
 
-	private Cajas(float peso) {
-		super(peso);
+	private Cajas(float peso, int zona) {
+		super(peso, zona);
 	}
 
-	public static Cajas crearCaja(float peso) {
-		return new Cajas(peso);
+	public static Cajas crearCaja(float peso, int zona) {
+		return new Cajas(peso, zona);
 	}
 
-	public static void procesarCaja(float pesoCaja, int zonaEnvio) {
-		Cajas caja = Cajas.crearCaja(pesoCaja);
-		float precioCaja = caja.calcularPrecio(pesoCaja, zonaEnvio);
-		float costoZona = caja.conocerCosto(zonaEnvio);
-		String region = caja.definirZona(zonaEnvio);
+	public static void procesarCaja(float pesoCaja, int zona) {
+		Cajas caja = Cajas.crearCaja(pesoCaja, zona);
+		float precioCaja = caja.calcularPrecio(pesoCaja, zona);
+		float costoZona = caja.conocerCosto(zona);
+		String region = caja.definirZona(zona);
 
 		if (caja.isTransportable(pesoCaja)) {
 			Cajas.darRespuesta(precioCaja, costoZona, region);

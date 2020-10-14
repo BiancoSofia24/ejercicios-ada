@@ -28,10 +28,11 @@ public class AppEnvios {
 
 		float envio;
 		int zonaEnvio = solicitarZona();
+		zonaEnvio = validarZona(zonaEnvio);
 
 		while (zonaEnvio != 0) {
 
-			validarZona(zonaEnvio);
+			zonaEnvio = validarZona(zonaEnvio);
 
 			switch (option) {
 			case 1:
@@ -57,11 +58,13 @@ public class AppEnvios {
 		}
 	}
 
-	private static void validarZona(int zonaEnvio) {
+	private static int validarZona(int zonaEnvio) {
 		while (zonaEnvio < 0 || zonaEnvio > CANT_ZONAS) {
 			Utiles.showErr("zona inexistente");
 			zonaEnvio = solicitarZona();
 		}
+
+		return zonaEnvio;
 	}
 
 	private static int solicitarZona() {

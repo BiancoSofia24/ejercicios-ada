@@ -1,5 +1,7 @@
 package inicio.envio2;
 
+import java.util.Scanner;
+
 public class Paquetes {
 
 	// Constantes
@@ -9,16 +11,16 @@ public class Paquetes {
 	private static int PRECIO_Z3 = 10;
 
 	// Variables globales
-	private float carga;
+	private float pesoEnvio;
 	private int zona;
 	private boolean transportable;
 
 	public float getCarga() {
-		return carga;
+		return pesoEnvio;
 	}
 
-	public void setCarga(float carga) {
-		this.carga = carga;
+	public void setCarga(float peso) {
+		this.pesoEnvio = peso;
 	}
 
 	public int getZona() {
@@ -39,23 +41,27 @@ public class Paquetes {
 
 	// Constructor
 	public Paquetes(float peso) {
-		this.carga = peso;
+		this.pesoEnvio = peso;
 		this.transportable = false;
 	}
 
+	public Paquetes(int zona) {
+		this.zona = zona;
+	}
+
 	// Métodos
-	public float calcularPrecio(float peso, int zona) {
+	public float calcularPrecio(float pesoEnvio, int zona) {
 		float precio = 0;
 
 		switch (zona) {
 		case 1:
-			precio = PRECIO_Z1 * peso;
+			precio = PRECIO_Z1 * pesoEnvio;
 			break;
 		case 2:
-			precio = PRECIO_Z2 * peso;
+			precio = PRECIO_Z2 * pesoEnvio;
 			break;
 		case 3:
-			precio = PRECIO_Z3 * peso;
+			precio = PRECIO_Z3 * pesoEnvio;
 			break;
 		}
 
@@ -78,6 +84,41 @@ public class Paquetes {
 		}
 
 		return costo;
+	}
+
+	public static float solicitarPeso() {
+		System.out.print("Indique peso de su paquete / documento (Kg): ");
+		Scanner scan = new Scanner(System.in);
+		return scan.nextFloat();
+	}
+
+	public static float validarPeso() {
+		float envio = solicitarPeso();
+
+		while (envio < 0) {
+			Utiles.showErr("opción erronea");
+			envio = solicitarPeso();
+		}
+
+		return envio;
+	}
+
+	public String definirZona(int zona) {
+		String region = "";
+
+		switch (zona) {
+		case 1:
+			region = "Sur Ámerica";
+			break;
+		case 2:
+			region = "Norte Ámerica";
+			break;
+		case 3:
+			region = "Europa";
+			break;
+		}
+
+		return region;
 	}
 
 }

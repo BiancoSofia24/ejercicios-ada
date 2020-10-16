@@ -31,9 +31,6 @@ public class AppEnvios {
 		zonaEnvio = validarZona(zonaEnvio);
 
 		while (zonaEnvio != 0) {
-
-			zonaEnvio = validarZona(zonaEnvio);
-
 			switch (option) {
 			case 1:
 				// Cajas
@@ -55,6 +52,7 @@ public class AppEnvios {
 			}
 
 			zonaEnvio = solicitarZona();
+			zonaEnvio = validarZona(zonaEnvio);
 		}
 	}
 

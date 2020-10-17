@@ -21,7 +21,7 @@ public class AppPagos {
 		System.out.println("Tu app de medios de pago :D");
 
 		float importe = solicitarImporte();
-		importe = validarImporte(importe);
+		// importe = validarImporte(importe);
 
 		int tipo;
 		String moneda;
@@ -50,13 +50,14 @@ public class AppPagos {
 
 			System.out.println();
 			importe = solicitarImporte();
-			importe = validarImporte(importe);
+			// importe = validarImporte(importe);
 		}
 
+		// Despedida
 		System.out.println();
-		Varios.drawLine(60, '-');
+		// Varios.drawLine(60, '-');
 
-		mostrarTotales(total);
+		// mostrarTotales(total);
 
 		Varios.showMessage("vuelve pronto!");
 

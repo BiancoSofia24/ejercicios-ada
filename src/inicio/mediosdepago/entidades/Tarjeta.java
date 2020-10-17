@@ -2,6 +2,7 @@ package inicio.mediosdepago.entidades;
 
 public class Tarjeta extends MediosDePago {
 
+	// Variables
 	private String numero; // 0000 XXXX XXXX XXXX
 	private String fechaVenc;
 	private String nombre;
@@ -9,11 +10,13 @@ public class Tarjeta extends MediosDePago {
 	private float interes; // porcentaje
 	private float totalRecargo;
 
+	// Constructor
 	public Tarjeta(float importe, String moneda, String numero) {
 		super(importe, moneda);
 		this.numero = numero;
 	}
 
+	// Getter / Setter
 	public String getNumero() {
 		return numero;
 	}
@@ -60,6 +63,13 @@ public class Tarjeta extends MediosDePago {
 
 	public void setTotalRecargo(float totalRecargo) {
 		this.totalRecargo = totalRecargo;
+	}
+
+	// Metodos
+	@Override
+	public boolean validar() {
+		// verficiar algo (numero)
+		return false;
 	}
 
 }

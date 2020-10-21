@@ -34,10 +34,10 @@ public class Anuncio extends Publicacion {
 		this.empresa = empresa;
 	}
 
-	private static final float PRECIO_BASE = 0.5f;
+	private static final float PRECIO_PORCIEN = 1.5f;
 
-	public static float calcularPrecio(int tamanio) {
-		float importe = tamanio * PRECIO_BASE;
+	public float calcularPrecio(int tamanio) {
+		float importe = tamanio * PRECIO_PORCIEN;
 		return importe;
 	}
 
@@ -45,6 +45,11 @@ public class Anuncio extends Publicacion {
 	public boolean validar() {
 		// validar algo (ej mayores de 18)
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Anuncio con img: " + tieneImg;
 	}
 
 }

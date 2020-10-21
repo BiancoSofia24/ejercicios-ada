@@ -8,6 +8,7 @@ public class Post extends Publicacion {
 
 	public Post(int tamanio, String genero) {
 		super(tamanio);
+		this.genero = genero;
 	}
 
 	public String getAutor() {
@@ -38,6 +39,11 @@ public class Post extends Publicacion {
 	public boolean validar() {
 		// validar algo
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Post de: " + genero;
 	}
 
 }

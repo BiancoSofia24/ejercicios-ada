@@ -3,6 +3,8 @@ package inicio.periodico;
 import java.util.Scanner;
 
 import inicio.periodico.entidades.Anuncio;
+import inicio.periodico.entidades.PostEscrito;
+import inicio.periodico.entidades.PostVideo;
 import inicio.periodico.util.Varios;
 
 // publicaciones = notas ( escritas / video ) / publicidad
@@ -22,15 +24,37 @@ public class AppPeriodico {
 		Object[] publicaciones = new Object[PUBLIC_T];
 		float total = 0;
 
-		for (int i = 0; i < PUBLIC_T; i++) {
+		int tamanio;
+		String genero = "";
 
-			int opc = solicitarOpc("publicidad");
+		for (int i = 0; i < PUBLIC_T; i++) {
+			int opc = solicitarOpc("publicidad 1 Post / 2 Anuncio: ");
 			switch (opc) {
 			case 1:
 				int tipoPost = solicitarOpc("post 1 Escrito / 2 Video: ");
+
+				// Nuevo
+				if (tipoPost == 1) {
+					tamanio = 200;
+					genero = "viajes";
+					PostEscrito postEsc = new PostEscrito(tamanio, genero);
+					System.out.println(postEsc);
+					publicaciones[i] = postEsc;
+
+				} else if (tipoPost == 2) {
+					tamanio = 300;
+					genero = "noticias";
+					PostVideo postVid = new PostVideo(tamanio, genero);
+					System.out.println(postVid);
+					publicaciones[i] = postVid;
+				}
+				// Fin nuevo
 				break;
 			case 2:
 				Anuncio anuncio = new Anuncio(200);
+				System.out.println(anuncio);
+				tamanio = anuncio.getTamanio();
+				System.out.println("Precio anuncio: " + anuncio.calcularPrecio(tamanio));
 				publicaciones[i] = anuncio;
 				break;
 			default:
@@ -41,9 +65,12 @@ public class AppPeriodico {
 		for (int i = 0; i < PUBLIC_T; i++) {
 			if (publicaciones[i] instanceof Anuncio) {
 				Anuncio aux = (Anuncio) publicaciones[i];
-				// total += aux;
+				total += aux.getPrecio();
 			}
 		}
+
+		// No registra el total
+		System.out.println("Total: " + total);
 
 		/*
 		 * int opc =

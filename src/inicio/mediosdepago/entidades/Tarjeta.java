@@ -72,4 +72,10 @@ public class Tarjeta extends MediosDePago {
 		return false;
 	}
 
+	// Si no agregamos este método al hacer un System.out.print de un obj tarjeta
+	// Veremos en consola inicio.mediosdepago.entidades.Tarjeta@unNumero
+	@Override
+	public String toString() {
+		return "Numero: " + numero;
+	}
 }

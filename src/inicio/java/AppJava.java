@@ -3,6 +3,7 @@ package inicio.java;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import inicio.mediosdepago.entidades.Tarjeta;
@@ -32,10 +33,13 @@ public class AppJava {
 		// De obj Integer a int
 		int numInt = numTInteger.intValue();
 		numInt++;
+		// De obj Double a double
 		double numTDouble = numDouble.doubleValue();
 
 		// De int a String
 		String numSig = String.valueOf(numInt);
+		// De obj Integer a String
+		doble.toString();
 
 		System.out.println("Siguiente numero: " + numSig);
 		System.out.println("Doble: " + doble);
@@ -77,9 +81,24 @@ public class AppJava {
 		System.out.println("Fecha format: " + hoyFormat);
 
 		// Método con excepcion
-		Date fechaAnt = simpleDate.parse("20201010");
+		Date fechaAnt = simpleDate.parse("2020/10/10");
 		System.out.println("Fecha anterior: " + fechaAnt);
 
-	}
+		// Devuelve un true o false
+		if (fechaAnt.after(hoy)) {
+			System.out.println("eh?");
+		} else {
+			System.out.println("ok");
+		}
 
+		// Obj Calendar
+		Calendar calendario = Calendar.getInstance();
+		calendario.set(Calendar.MONTH, 1);
+		calendario.setTime(hoy);
+		calendario.add(Calendar.DATE, -1);
+
+		String calendarioFormat = simpleDate.format(calendario.getTime());
+		System.out.println("Calendario format: " + calendarioFormat);
+
+	}
 }

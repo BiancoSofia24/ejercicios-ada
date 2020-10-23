@@ -47,6 +47,7 @@ public class Anuncio extends Publicacion {
 		return false;
 	}
 
+	// Nuevo
 	@Override
 	public String toString() {
 		return "Anuncio con img: " + tieneImg;

@@ -64,6 +64,7 @@ public class AppPeriodico {
 
 		for (int i = 0; i < PUBLIC_T; i++) {
 			if (publicaciones[i] instanceof Anuncio) {
+				// Casting
 				Anuncio aux = (Anuncio) publicaciones[i];
 				total += aux.getPrecio();
 			}

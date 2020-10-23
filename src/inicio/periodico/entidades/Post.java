@@ -41,6 +41,7 @@ public class Post extends Publicacion {
 		return false;
 	}
 
+	// Nuevo
 	@Override
 	public String toString() {
 		return "Post de: " + genero;

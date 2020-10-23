@@ -2,6 +2,7 @@ package inicio.java.fecha;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -15,10 +16,34 @@ public class AppVacaciones {
 	private static final int CANT_EMPL = 5;
 
 	public static void main(String[] args) throws ParseException {
-
-		System.out.println("Metodo 1. No recomendable");
-
 		Scanner scan = new Scanner(System.in);
+
+		SimpleDateFormat sd = new SimpleDateFormat("ddMMyyyy");
+
+		System.out.println("Mayoria de edad");
+
+		System.out.println("1 Calcular mayoria de edad, 0 Saltar");
+		int opc = scan.nextInt();
+		boolean mayor;
+		String fechaNacStr;
+		Date fechaNac = new Date();
+		;
+		while (opc != 0) {
+			System.out.print("Ingrese su fecha de nac (Format ddMMyyyy): ");
+			fechaNacStr = scan.next();
+
+			fechaNac = sd.parse(fechaNacStr);
+			mayor = esMayor(fechaNac);
+
+			System.out.println("Es mayor? " + mayor);
+			System.out.println();
+			System.out.println("1 Calcular mayoria de edad, 0 Saltar");
+			opc = scan.nextInt();
+		}
+
+		System.out.println();
+		System.out.println("Metodo 1. No recomendable");
+		System.out.println();
 
 		SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -84,6 +109,13 @@ public class AppVacaciones {
 		System.out.println(
 				"El empleado que saldrá antes de vaciones es: " + (pos + 1) + " en fecha: " + fechasVacas[pos]);
 
+	}
+
+	private static boolean esMayor(Date fechaNac) {
+		// Segun calendario fecha de actual
+		Calendar hoy = Calendar.getInstance();
+		hoy.add(Calendar.YEAR, -18);
+		return fechaNac.before(hoy.getTime());
 	}
 
 }

@@ -91,7 +91,7 @@ public class AppJava {
 			System.out.println("ok");
 		}
 
-		// Obj Calendar
+		// Obj Calendar no puede ser instanciado con new
 		Calendar calendario = Calendar.getInstance();
 		calendario.set(Calendar.MONTH, 1);
 		calendario.setTime(hoy);

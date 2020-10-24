@@ -18,7 +18,7 @@ public class AppResumenBanc {
 
 	private static final int CANT_MOV = 4;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 		System.out.println("Resumen Bancario");
 

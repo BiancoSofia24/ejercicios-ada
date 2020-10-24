@@ -14,22 +14,13 @@ Vamos a listarlos ordenados de menor a mayor:
 - Todos.
 */
 
-/*
- * 										Resumen
- * 	        Fecha      Importe        ( Accion       id      nombre       banco(?)       totalCuenta  )        
- * 
- * 		movimiento [1, 2, 3, 4]   -> mov 1 { fecha, importe }
- * 		
- * 
- * */
-
 public class AppResumenBanc {
 
 	private static final int CANT_MOV = 4;
 
 	public static void main(String[] args) throws ParseException {
 
-		System.out.println("Hello world!");
+		System.out.println("Resumen Bancario");
 
 		Scanner scan = new Scanner(System.in);
 		Movimiento[] movs = new Movimiento[CANT_MOV];

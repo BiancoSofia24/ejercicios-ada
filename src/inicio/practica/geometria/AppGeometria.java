@@ -1,0 +1,39 @@
+package inicio.practica.geometria;
+
+import inicio.practica.geometria.entidades.Circulo;
+import inicio.practica.geometria.entidades.Cuadrado;
+import inicio.practica.geometria.entidades.Figuras;
+import inicio.practica.geometria.entidades.Pentagono;
+import inicio.practica.geometria.entidades.Triangulo;
+
+// Figuras: circulo, triangulo, cuadrado, pentagono
+// Lados iguales en las figuras
+// interface Perimetrable. Default de ser posible
+// Generar instancia de cada clase e invocar el metodo
+
+public class AppGeometria {
+
+	public static void main(String[] args) {
+
+		Figuras fig = new Figuras();
+		fig.setLado(4);
+
+		System.out.println(fig.getLado());
+
+		Circulo circulo = new Circulo();
+		System.out.println("¿Es una figura? " + circulo.esFigura() + " Perimetro: " + circulo.obtenerPerimetro());
+
+		Cuadrado cuad = new Cuadrado();
+		cuad.setCantLados(4);
+		System.out.println("¿Es una figura? " + cuad.esFigura() + " Perimetro: " + cuad.obtenerPerimetro());
+
+		Pentagono penta = new Pentagono();
+		penta.setCantLados(5);
+		System.out.println("¿Es una figura? " + penta.esFigura() + " Perimetro: " + penta.obtenerPerimetro());
+
+		Triangulo triang = new Triangulo();
+		triang.setCantLados(3);
+		System.out.println("¿Es una figura? " + triang.esFigura() + " Perimetro: " + triang.obtenerPerimetro());
+	}
+
+}

@@ -9,6 +9,6 @@ public class Circulo extends Figuras implements Perimetrable, Nombrable {
 
 	@Override
 	public void nombrarFigura() {
-		System.out.println("Es un circulo");
+		System.out.println("Circulo");
 	}
 }

@@ -20,6 +20,6 @@ public class Triangulo extends Figuras implements Perimetrable, Nombrable {
 
 	@Override
 	public void nombrarFigura() {
-		System.out.println("Es un triángulo");
+		System.out.println("Triángulo");
 	}
 }

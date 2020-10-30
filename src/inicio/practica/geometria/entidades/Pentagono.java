@@ -14,7 +14,7 @@ public class Pentagono extends Figuras implements Perimetrable, Nombrable {
 
 	@Override
 	public void nombrarFigura() {
-		System.out.println("Es un pentagono");
+		System.out.println("Pentagono");
 	}
 
 	@Override

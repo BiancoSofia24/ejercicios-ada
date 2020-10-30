@@ -20,7 +20,7 @@ public class Cuadrado extends Figuras implements Perimetrable, Nombrable {
 
 	@Override
 	public void nombrarFigura() {
-		System.out.println("Es un cuadrado");
+		System.out.println("Cuadrado");
 	}
 
 	// Lleva el método como default

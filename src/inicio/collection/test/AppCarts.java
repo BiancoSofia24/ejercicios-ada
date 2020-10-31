@@ -33,7 +33,6 @@ public class AppCarts {
 			// usedCards.add(number);
 			// }
 			// }
-
 		}
 
 		// chooseCard(cards);

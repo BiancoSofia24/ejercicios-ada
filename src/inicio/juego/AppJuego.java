@@ -30,7 +30,7 @@ public class AppJuego {
 		System.out.println(arco);
 
 		System.out.println();
-		System.out.println("----------------------------------------");
+		System.out.println("--------------------------------------------------");
 		System.out.println();
 
 		durabilidad = 6;
@@ -50,7 +50,7 @@ public class AppJuego {
 		System.out.println(rev);
 
 		System.out.println();
-		System.out.println("----------------------------------------");
+		System.out.println("--------------------------------------------------");
 		System.out.println();
 
 		Ejecutable rev2 = new Revolver(durabilidad, danio);

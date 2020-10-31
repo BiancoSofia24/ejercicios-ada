@@ -4,7 +4,7 @@ import inicio.juego.entidades.Arco;
 import inicio.juego.entidades.Ejecutable;
 import inicio.juego.entidades.Revolver;
 
-public class AppMinecraft {
+public class AppJuego {
 
 	public static void main(String[] args) {
 
@@ -20,6 +20,7 @@ public class AppMinecraft {
 
 		proyectiles = 12;
 		recarga = arco.recargar(proyectiles);
+		System.out.println("Encontraste " + recarga + " flechas!");
 		System.out.println(arco);
 		arco.ejecutar(arma, objetivo);
 		arco.disparar(recarga);
@@ -42,6 +43,7 @@ public class AppMinecraft {
 
 		proyectiles = 6;
 		recarga = rev.recargar(proyectiles);
+		System.out.println("Encontraste " + recarga + " balas!");
 		System.out.println(rev);
 		rev.ejecutar(arma, objetivo);
 		rev.disparar(recarga);

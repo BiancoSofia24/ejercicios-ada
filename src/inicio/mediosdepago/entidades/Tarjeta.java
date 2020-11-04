@@ -11,9 +11,10 @@ public class Tarjeta extends MediosDePago {
 	private float totalRecargo;
 
 	// Constructor
-	public Tarjeta(float importe, String moneda, String numero) {
+	public Tarjeta(float importe, String moneda, String numero, String fechaVenc) {
 		super(importe, moneda);
 		this.numero = numero;
+		this.fechaVenc = fechaVenc;
 	}
 
 	// Getter / Setter
@@ -76,6 +77,6 @@ public class Tarjeta extends MediosDePago {
 	// Veremos en consola inicio.mediosdepago.entidades.Tarjeta@unNumero
 	@Override
 	public String toString() {
-		return "Numero: " + numero;
+		return "Numero: " + numero + " Fecha de vencimiento: " + fechaVenc;
 	}
 }

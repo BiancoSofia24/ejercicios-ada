@@ -62,7 +62,7 @@ public class AppJava {
 		System.out.println("numTStr.hashCode: " + numTStr.hashCode());
 		System.out.println();
 
-		Tarjeta tarjeta = new Tarjeta(200, "ARS", "0001000012300234");
+		Tarjeta tarjeta = new Tarjeta(200, "ARS", "0001000012300234", "10/12/2021");
 		System.out.println("Tarjeta -> " + tarjeta);
 		System.out.println();
 

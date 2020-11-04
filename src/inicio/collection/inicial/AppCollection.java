@@ -13,8 +13,8 @@ public class AppCollection {
 	public static void main(String[] args) {
 
 		List<Tarjeta> tarjetas = new ArrayList<Tarjeta>();
-		Tarjeta tdc1 = new Tarjeta(500, "ARS", "4141");
-		Tarjeta tdc2 = new Tarjeta(250, "ARS", "4949");
+		Tarjeta tdc1 = new Tarjeta(500, "ARS", "4141", "10/12/2021");
+		Tarjeta tdc2 = new Tarjeta(250, "ARS", "4949", "10/12/2021");
 		tarjetas.add(tdc1);
 		tarjetas.add(tdc2);
 		System.out.println(tarjetas);

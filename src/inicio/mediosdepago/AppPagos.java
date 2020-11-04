@@ -38,7 +38,7 @@ public class AppPagos {
 				break;
 			case 2:
 				numero = solicitarTexto("numero de tarjeta: ");
-				Tarjeta tarj = new Tarjeta(importe, moneda, numero);
+				Tarjeta tarj = new Tarjeta(importe, moneda, numero, "10/12/2021");
 				total[1] += tarj.getImporte();
 				break;
 			case 3:

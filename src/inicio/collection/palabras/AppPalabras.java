@@ -1,6 +1,8 @@
 package inicio.collection.palabras;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 // //Buscar en internet un texto (parrafo)
@@ -17,13 +19,15 @@ public class AppPalabras {
 
 	public static void main(String[] args) {
 
-		String myText = "This is a cute text and is a text just for fun and only fun, just because a cat steal my dinner";
-
+		String myText = "This is a cute text and is a text for fun and just for fun, because my cat, "
+				+ "Franz, stole my dinner and i do not want to get mad.";
+		myText = myText.toLowerCase();
 		// \\s+|(?=[,.]) Regex for common paragraph
-
 		String[] myStrArray = myText.split("\\s+|(?=[,.])");
 
-		Map<String, Integer> strMap = new TreeMap<String, Integer>();
+		// Map<String, Integer> strMap = new TreeMap<String, Integer>();
+		AlfabetoDesc alfabetoDesc = new AlfabetoDesc();
+		Map<String, Integer> strMap = new TreeMap<String, Integer>(alfabetoDesc);
 		String word;
 		Integer value;
 		Integer cont;
@@ -38,9 +42,23 @@ public class AppPalabras {
 
 		System.out.println(strMap);
 
+		// Loop through using lambda
 		strMap.forEach((k, v) -> {
 			System.out.println(k + ": " + v);
 		});
+
+		System.out.println("------------------------");
+
+		// Loop through using while
+		Set<String> keys = strMap.keySet();
+		Iterator<String> iterator = keys.iterator();
+		String key;
+		Integer num;
+		while (iterator.hasNext()) {
+			key = iterator.next();
+			num = strMap.get(key);
+			System.out.println(key + ": " + num);
+		}
 
 	}
 

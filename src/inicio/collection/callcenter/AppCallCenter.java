@@ -29,8 +29,8 @@ public class AppCallCenter {
 			calls.add(call);
 		}
 
-		calls.forEach((el) -> {
-			System.out.println(el);
-		});
+		for (Llamada item : calls) {
+			System.out.println(item);
+		}
 	}
 }

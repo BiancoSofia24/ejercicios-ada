@@ -35,9 +35,9 @@ public class AppPeriodico {
 
 				// Nuevo
 				if (tipoPost == 1) {
-					tamanio = 200;
-					genero = "viajes";
-					PostEscrito postEsc = new PostEscrito(tamanio, genero);
+					PostEscrito postEsc = new PostEscrito(300, "turismo");
+					postEsc.setTamanio(300);
+					postEsc.setGenero("turismo");
 					System.out.println(postEsc);
 					publicaciones[i] = postEsc;
 

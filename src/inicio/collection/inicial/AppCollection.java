@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +21,9 @@ public class AppCollection {
 		Tarjeta tdc2 = new Tarjeta(250, "ARS", "4949", "12/2021");
 		cards.add(tdc1);
 		cards.add(tdc2);
-		System.out.println(cards);
+
+		// System.out.println("Cards list...");
+		// System.out.println(cards);
 
 		System.out.println();
 
@@ -33,6 +36,33 @@ public class AppCollection {
 		// setTest();
 
 		mapTest();
+
+		System.out.println();
+		System.out.println("-----------------------------");
+		System.out.println();
+		System.out.println("ArrayList...");
+
+		// ArrayList => Each element is next to the other
+		List<String> myArrayList = new ArrayList<String>();
+		// LinkedList => More memory space, each element it's linked to the next
+		List<String> myLinkedList = new LinkedList<String>();
+
+		myArrayList.add("b");
+		myArrayList.add("a");
+		myArrayList.add("d");
+		myArrayList.add("c");
+		// System.out.println(myArrayList); // [b, a, d, c]
+
+		System.out.println();
+		System.out.println("-----------------------------");
+		System.out.println();
+		System.out.println("LinkedList...");
+
+		myLinkedList.add("b");
+		myLinkedList.add("a");
+		myLinkedList.add("d");
+		myLinkedList.add("c");
+		// System.out.println(myLinkedList); // [b, a, d, c]
 
 	}
 
@@ -85,6 +115,7 @@ public class AppCollection {
 		// Repeat info
 		set.add("20-0001");
 		// The size don´t change
+		// In a Set there are no repeating elements
 		System.out.println("size: " + set.size()); // 2
 
 		System.out.println();

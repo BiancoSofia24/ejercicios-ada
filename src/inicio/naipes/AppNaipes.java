@@ -1,7 +1,9 @@
 package inicio.naipes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -32,81 +34,125 @@ public class AppNaipes {
 			}
 		}
 
-		// View the deck
+		// View deck
 		// System.out.println(mazo);
 
 		// Collections.shuffle(mazo);
-
 		List<Naipe> mazo2 = barajear(mazo);
-
 		// System.out.println(mazo2);
 
 		Scanner scan = new Scanner(System.in);
 
-		System.out.println("¿Jugar? ( 1 Si / 0 No) ");
+		System.out.print("¿Jugar? ( 1 Si / 0 No) : ");
 		int instr = scan.nextInt();
-
 		while (instr != 0) {
 
 			System.out.print("Ingrese cantidad de jugadores: ");
 			int jugadores = scan.nextInt();
-			int[] array = new int[jugadores];
-			for (int i = 0; i < array.length - 1; i++) {
 
+			// Profe
+			Map<String, List<Naipe>> mesa = new HashMap<String, List<Naipe>>();
+
+			List<Naipe> mano;
+			int j = 1;
+			do {
+				mano = new ArrayList<Naipe>();
+				int opc = 0;
+				int suma = 0;
+				System.out.println("Turno J" + j);
 				do {
+					Naipe cartaJ1 = mazo2.remove(0);
+					mano.add(cartaJ1);
 
-					List<Naipe> mano = new ArrayList<Naipe>();
-					int suma = 0;
-					int opc;
+					/*
+					 * if (cartaJ1.getNumCarta().getNombre() == "A") {
+					 * System.out.println("Tiene un As. ¿Su As valdrá 1 u 11?");
+					 * cartaJ1.getNumCarta().setValor(scan.nextInt()); }
+					 */
 
-					System.out.println("Turno J" + (i + 1));
-					do {
-						Naipe cartaJ1 = mazo2.remove(0);
-						mano.add(cartaJ1);
-						suma += cartaJ1.getNumCarta().getValor();
+					suma += cartaJ1.getNumCarta().getValor();
 
-						System.out.println("Jugador tiene: " + mano);
-						System.out.println("Suma " + suma);
+					// Desglosar la LIST=MANO del jugadore
+					System.out.println("Jugador tiene: " + mano);
+					System.out.println("Total actual: " + suma);
 
-						System.out.println("¿Desea otra carta? (1 Sí / 2 No)");
-						opc = scan.nextInt();
-					} while (opc == 1);
+					System.out.println("¿Desea otra carta? (1 Sí / 2 No)");
+					opc = scan.nextInt();
 
-					array[i] = suma;
-					System.out.println(array[i]);
+				} while (opc == 1);
 
-					jugadores--;
-				} while (jugadores > 0);
-			}
+				// Profe
+				mesa.put("Jugador " + j, mano);
+				j++;
+				jugadores--;
 
-			for (int i = 0; i < array.length; i++) {
-				System.out.println(array[i]);
-			}
+			} while (jugadores > 0);
 
-			System.out.println("¿Jugar? ( 1 Si / 0 No) ");
+			System.out.println();
+			System.out.println("RESULTADOS");
+			System.out.println("----------");
+
+			// Check what's inside "mesa" after playing
+			mesa.forEach((jugador, manoJ) -> {
+				System.out.println(jugador + ": ");
+				int acc = 0;
+
+				for (Naipe naipeJ : manoJ) {
+					// System.out.println(naipeJ);
+					// System.out.println("Valor Naipe: " + naipeJ.getNumCarta().getValor());
+					// acc += naipeJ.getNumCarta().getValor();
+
+					// Profe
+					if (naipeJ.getNumCarta().equals(NumCarta.AS)) {
+						int valorAs = NumCarta.AS.getValor() + NumCarta.DIEZ.getValor();
+						if (acc <= 10) {
+							acc += valorAs;
+						} else {
+							acc += NumCarta.AS.getValor();
+						}
+					} else {
+						acc += naipeJ.getNumCarta().getValor();
+					}
+
+				}
+
+				// System.out.println("Acumulado: " + acc);
+				System.out.println("Total " + jugador + ": " + acc);
+				System.out.println("-----------------------------");
+
+				List<String> listaJugadores = new ArrayList<String>();
+				listaJugadores.add(jugador);
+				int[] totalJ = new int[listaJugadores.size()];
+				for (int i = 0; i < listaJugadores.size(); i++) {
+					totalJ[i] = acc;
+					System.out.println(totalJ[i]);
+				}
+
+				System.out.println();
+			});
+
+			// Loop through MAP=MESA using WHILE
+			/*
+			 * Set<String> keys = mesa.keySet(); // Set of keys from the map
+			 * Iterator<String> iterator = keys.iterator(); String key; List<Naipe> value;
+			 * List<Integer> listaSumas = new ArrayList<Integer>(); while
+			 * (iterator.hasNext()) { key = iterator.next(); // System.out.println(key +
+			 * ": ");
+			 * 
+			 * value = mesa.get(key); int acc2 = 0; for (Naipe item : value) { //
+			 * System.out.println(item); acc2 += item.getNumCarta().getValor(); }
+			 * 
+			 * // System.out.println("Acum: " + acc2); listaSumas.add(acc2); for (int i = 0;
+			 * i < listaSumas.size(); i++) { // System.out.println(listaSumas.get(i)); if (i
+			 * < listaSumas.size()) { // System.out.println("J" + (i + 1) + " suma " +
+			 * listaSumas.get(i)); }
+			 * 
+			 * } }
+			 */
+
+			System.out.print("¿Jugar? ( 1 Si / 0 No) : ");
 			instr = scan.nextInt();
 		}
-
-		// Jugador 1
-		/*
-		 * List<Naipe> manoJ1 = new ArrayList<Naipe>(); int sumaJ1 = 0; int opc; do {
-		 * Naipe cartaJ1 = mazo2.remove(0); manoJ1.add(cartaJ1); sumaJ1 +=
-		 * cartaJ1.getNumCarta().getValor();
-		 * 
-		 * System.out.println("J1 tiene: " + manoJ1); System.out.println("Suma " +
-		 * sumaJ1); System.out.println("¿Desea otra carta? (1 Sí / 2 No)"); opc =
-		 * scan.nextInt(); } while (opc == 1);
-		 * 
-		 * // Jugador 2 List<Naipe> manoJ2 = new ArrayList<Naipe>(); int sumaJ2 = 0; opc
-		 * = 0; do { Naipe cartaJ2 = mazo2.remove(0); manoJ2.add(cartaJ2); sumaJ2 +=
-		 * cartaJ2.getNumCarta().getValor();
-		 * 
-		 * System.out.println("J2 tiene: " + manoJ2); System.out.println("Suma " +
-		 * sumaJ2); System.out.println("¿Desea otra carta? (1 Sí / 2 No)"); opc =
-		 * scan.nextInt(); } while (opc == 1);
-		 * 
-		 * // Comparar sumas de ambos jugadores definirGanador(sumaJ1, sumaJ2);
-		 */
 
 	}
 
@@ -121,23 +167,6 @@ public class AppNaipes {
 		}
 
 		return mazo2;
-	}
-
-	private static void definirGanador(int sumaJ1, int sumaJ2) {
-		if (sumaJ1 <= 21 && sumaJ1 > sumaJ2) {
-			System.out.println("J1 ganador");
-		} else if (sumaJ2 <= 21 && sumaJ2 > sumaJ1) {
-			System.out.println("J2 ganador");
-		} else if (sumaJ1 == 21 || sumaJ2 == 21) {
-			System.out.println("Blackjack!");
-		} else if (sumaJ1 > 21 && sumaJ2 <= 21) {
-			System.out.println("J2 ganador");
-		} else if (sumaJ2 > 21 && sumaJ1 <= 21) {
-			System.out.println("J1 ganador");
-		} else if (sumaJ2 > 21 || sumaJ1 > 21) {
-			System.out.println("Gana la casa :P");
-		}
-
 	}
 
 }

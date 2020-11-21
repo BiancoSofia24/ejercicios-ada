@@ -1,5 +1,7 @@
 package inicio.productos;
 
+import java.text.DecimalFormat;
+
 public class Producto {
 
 	private double precio;
@@ -27,7 +29,8 @@ public class Producto {
 	}
 
 	public String toString() {
-		return "Codigo: " + cod + " Precio: " + precio;
+		DecimalFormat formato = new DecimalFormat("#.00");
+		return String.format("{Código: %s Precio: %s ARS}", cod, formato.format(precio));
 	}
 
 }

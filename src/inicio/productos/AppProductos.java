@@ -14,24 +14,14 @@ import java.util.Random;
 
 public class AppProductos {
 
-	private static final int MIN = 5;
-	private static final int MAX = 20;
+	private static final int MIN_PRECIO = 5;
+	private static final int MAX_PRECIO = 20;
 	private static final double CANTIDAD_MAX = 50;
+	private static final int TOTAL_PRODUCTOS = 100;
 
 	public static void main(String[] args) {
 
-		Random random = new Random();
-		List<Producto> listaProducto = new ArrayList<Producto>();
-
-		Producto producto;
-		double precio = 0;
-		for (int i = 0; i < 100; i++) {
-			precio = MIN + (MAX - MIN) * random.nextDouble();
-			precio = formatearDecimal(precio);
-			producto = new Producto((i + 1), precio);
-
-			listaProducto.add(producto);
-		}
+		List<Producto> listaProducto = generarListaProducto(TOTAL_PRODUCTOS);
 
 		System.out.println("LISTA PRODUCTOS ORIGINAL");
 		System.out.println("--------------------------------------");
@@ -40,41 +30,75 @@ public class AppProductos {
 
 		System.out.println("PRECIO TOTAL -> LISTA PRODUCTOS ORIGINAL");
 		System.out.println("--------------------------------------");
-		double precioTLista = calcularPrecioT(listaProducto);
-		System.out.println(precioTLista);
+		String precioTLista = calcularPrecioT(listaProducto);
+		System.out.println("Precio TOTAL lista: " + precioTLista + " ARS");
+		System.out.println();
 
-		List<Producto> listaProductoAzar = new ArrayList<Producto>();
-		Producto productoAzar;
-		int venta = 0;
-		for (int i = 0; i < 10; i++) {
-			venta = random.nextInt(100);
-			productoAzar = listaProducto.get(venta);
-			listaProductoAzar.add(productoAzar);
-		}
+		List<Venta> listaVentas = generarListaProductoAzar(listaProducto, 10);
 
 		System.out.println("LISTA PRODUCTOS AZAR");
 		System.out.println("--------------------------------------");
-		System.out.println(listaProductoAzar);
+		listaVentas.forEach((elem) -> {
+			System.out.println(elem);
+		});
 		System.out.println();
 
 		System.out.println("PRECIO TOTAL -> LISTA PRODUCTOS AZAR");
 		System.out.println("--------------------------------------");
-		double precioT = calcularPrecioT(listaProductoAzar);
-		System.out.println(precioT);
+		double total = 0;
+		double precioTProducto = 0;
+		for (Venta v : listaVentas) {
+			precioTProducto = v.calcularPrecioT();
+			total += precioTProducto;
+		}
+		System.out.println("Precio final venta: " + formatearDecimal(total) + " ARS");
 
 	}
 
-	public static double calcularPrecioT(List<Producto> lista) {
+	private static List<Producto> generarListaProducto(int totalProductos) {
+		List<Producto> listaProducto = new ArrayList<Producto>();
+		Producto producto;
+		double precio = 0;
+		for (int i = 0; i < TOTAL_PRODUCTOS; i++) {
+			precio = generarPrecio();
+			producto = new Producto((i + 1), precio);
+			listaProducto.add(producto);
+		}
+		return listaProducto;
+	}
+
+	private static List<Venta> generarListaProductoAzar(List<Producto> listaProducto, int cantidadProducto) {
+
+		List<Venta> listaVentas = new ArrayList<Venta>();
+		Venta venta;
+		for (int i = 0; i < cantidadProducto; i++) {
+			venta = new Venta(listaProducto.get(aleatorioEntero(TOTAL_PRODUCTOS)), aleatorioEntero(cantidadProducto));
+			listaVentas.add(venta);
+		}
+		return listaVentas;
+	}
+
+	private static int aleatorioEntero(int valor) {
+		Random random = new Random();
+		return random.nextInt(valor);
+	}
+
+	private static double generarPrecio() {
+		Random random = new Random();
+		return MIN_PRECIO + (MAX_PRECIO - MIN_PRECIO) * random.nextDouble();
+	}
+
+	public static String calcularPrecioT(List<Producto> lista) {
+		DecimalFormat formato = new DecimalFormat("#.##");
 		double precioT = lista.stream().mapToDouble((elem) -> (elem.getPrecio() * CANTIDAD_MAX)).sum();
-		return precioT;
+		return formato.format(precioT);
 	}
 
-	private static double formatearDecimal(double precio) {
-		DecimalFormat formato = new DecimalFormat("#.00");
-		String numFormat = formato.format(precio);
-		numFormat = numFormat.replace(",", ".");
-		Double numFormatDouble = Double.parseDouble(numFormat);
-		return numFormatDouble;
+	private static String formatearDecimal(double valorAFormatear) {
+		DecimalFormat formato = new DecimalFormat("#.##");
+		return formato.format(valorAFormatear);
+		// numFormat = numFormat.replace(",", ".");
+		// Double numFormatDouble = Double.parseDouble(numFormat);
 	}
 
 }

@@ -3,6 +3,7 @@ package inicio.productos;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 /*
@@ -16,8 +17,8 @@ public class AppProductos {
 
 	private static final int MIN_PRECIO = 5;
 	private static final int MAX_PRECIO = 20;
-	private static final double CANTIDAD_MAX = 50;
 	private static final int TOTAL_PRODUCTOS = 100;
+	private static final int VALOR_DEFAULT = 10;
 
 	public static void main(String[] args) {
 
@@ -72,15 +73,23 @@ public class AppProductos {
 		List<Venta> listaVentas = new ArrayList<Venta>();
 		Venta venta;
 		for (int i = 0; i < cantidadProducto; i++) {
-			venta = new Venta(listaProducto.get(aleatorioEntero(TOTAL_PRODUCTOS)), aleatorioEntero(cantidadProducto));
+			venta = new Venta(listaProducto.get(aleatorioEntero(Optional.empty())),
+					aleatorioEntero(Optional.of(cantidadProducto)));
+			// venta = new Venta(listaProducto.get(aleatorioEntero(TOTAL_PRODUCTOS)),
+			// aleatorioEntero(cantidadProducto));
 			listaVentas.add(venta);
 		}
 		return listaVentas;
 	}
 
-	private static int aleatorioEntero(int valor) {
+	private static int aleatorioEntero(Optional<Integer> valor) {
 		Random random = new Random();
-		return random.nextInt(valor);
+		if (valor.isPresent()) {
+			return random.nextInt(valor.get());
+		} else {
+			return random.nextInt(VALOR_DEFAULT);
+		}
+
 	}
 
 	private static double generarPrecio() {
@@ -90,7 +99,7 @@ public class AppProductos {
 
 	public static String calcularPrecioT(List<Producto> lista) {
 		DecimalFormat formato = new DecimalFormat("#.##");
-		double precioT = lista.stream().mapToDouble((elem) -> (elem.getPrecio() * CANTIDAD_MAX)).sum();
+		double precioT = lista.stream().mapToDouble((elem) -> (elem.getPrecio() * VALOR_DEFAULT)).sum();
 		return formato.format(precioT);
 	}
 

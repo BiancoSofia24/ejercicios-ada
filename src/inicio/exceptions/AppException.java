@@ -14,34 +14,27 @@ public class AppException {
 
 		System.out.println("Sistema de Pedidos");
 		System.out.println();
-		System.out.print("Ingrese codigo producto: ");
-		int id = scan.nextInt();
-		System.out.print("Ingrese cantidad producto: ");
-		int qtty = scan.nextInt();
-		System.out.println();
-
-		Optional<Producto> product1 = buscarProducto(products, id);
-		System.out.println(product1);
-
-		System.out.println("---------------------------------------------------");
-
-		Producto product2 = buscarProducto2(products, id);
-		System.out.println(product2);
-		System.out.println();
-
-		/*
-		 * try { validarStock(product2, qtty); } catch (SinStockException |
-		 * ProductoNoEncontradoException e) { e.printStackTrace(); }
-		 */
 
 		try {
+
+			System.out.print("Ingrese codigo producto: ");
+			int id = scan.nextInt();
+			System.out.print("Ingrese cantidad producto: ");
+			int qtty = scan.nextInt();
+			System.out.println();
+
+			// Optional<Producto> product1 = buscarProducto(products, id);
+			System.out.println("---------------------------------------------------");
+			Producto product2 = buscarProducto2(products, id);
+
 			validarStock(product2, qtty);
 			imprimirFactura(product2, qtty);
+
 		} catch (SinStockException e) {
-			System.out.println("Stock insuficiente para ese producto");
-			System.out.println();
+			System.out.println(e.getMessage());
+
 		} catch (ProductoNoEncontradoException e) {
-			System.out.println("Producto no encontrado");
+			System.out.println("Producto no encontrado " + e.getMessage());
 			System.out.println();
 		}
 
@@ -60,7 +53,7 @@ public class AppException {
 				product2.setStock(product2.getStock() - qtty);
 			} else {
 				// Error
-				throw new SinStockException();
+				throw new SinStockException("Sin stock. El stock actual es: " + product2.getStock());
 			}
 		} else {
 			throw new ProductoNoEncontradoException();

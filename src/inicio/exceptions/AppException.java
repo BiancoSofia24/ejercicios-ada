@@ -38,12 +38,17 @@ public class AppException {
 			System.out.println();
 		}
 
+		finally {
+			// Bloque usado usualmente al trabajar con BBDD
+			System.out.println("Bloque finally");
+		}
+
 	}
 
 	private static void imprimirFactura(Producto product2, int qtty) {
 		System.out.println("Factura Producto " + product2.getName());
 		System.out.println("Código de Producto: " + product2.getId());
-		System.out.println("Cantidad vendida: " + product2.getStock());
+		System.out.println("Cantidad vendida: " + qtty);
 	}
 
 	private static void validarStock(Producto product2, int qtty)

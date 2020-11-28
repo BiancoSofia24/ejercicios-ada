@@ -1,4 +1,4 @@
-package inicio.exceptions;
+package inicio.exceptions.intro;
 
 import java.util.ArrayList;
 import java.util.List;

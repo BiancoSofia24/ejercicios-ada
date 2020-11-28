@@ -1,4 +1,4 @@
-package inicio.exceptions;
+package inicio.exceptions.intro;
 
 public class Producto {
 

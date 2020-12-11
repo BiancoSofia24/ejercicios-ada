@@ -65,12 +65,30 @@ public class AppJDBC {
 		}
 	}
 
+	private static void newInscription(Scanner scan, Connection con) throws SQLException {
+		Statement stmt = con.createStatement();
+		System.out.println();
+		System.out.println("-------------------");
+		System.out.println("Nueva Inscripción");
+		System.out.println("-------------------");
+		System.out.print("Ingrese id del Alumno -> ");
+		int idAlumn = scan.nextInt();
+		System.out.print("Ingrese id del Curso -> ");
+		int idCourse = scan.nextInt();
+		String sql = "INSERT INTO inscriptions (id_alumn, id_course) VALUES ('" + idAlumn + "', '" + idCourse + "')";
+		int insert = stmt.executeUpdate(sql);
+		if (insert == 1) {
+			System.out.println("Inscripcion realizada");
+		} else {
+			System.out.println("Hubo un error en la inscripción");
+		}
+	}
+
 	private static void inscriptionsOptions(int opt, Scanner scan, Connection con) throws SQLException {
 		while (opt != 0) {
 			switch (opt) {
 			case 1:
-				System.out.println();
-				System.out.println("opt 1");
+				newInscription(scan, con);
 				break;
 			case 2:
 				viewInscriptions(con);
@@ -121,8 +139,12 @@ public class AppJDBC {
 		String opt = scan.next();
 		if (opt.toUpperCase().equals("Y")) {
 			sql = "DELETE FROM alumns WHERE id = " + id + "";
-			stmt.executeUpdate(sql);
-			System.out.println("Registro eliminado");
+			int deleted = stmt.executeUpdate(sql);
+			if (deleted == 1) {
+				System.out.println("Registro eliminado");
+			} else {
+				System.out.println("Registro inexistente");
+			}
 		} else if (opt.toUpperCase().equals("N")) {
 			System.out.println("Registro no eliminado");
 		}
@@ -171,7 +193,7 @@ public class AppJDBC {
 		Statement stmt = con.createStatement();
 		System.out.println();
 		System.out.println("-------------------");
-		System.out.println("Modificar Alumno");
+		System.out.println("Nuevo Alumno");
 		System.out.println("-------------------");
 		System.out.print("Ingrese nombre del Alumno -> ");
 		String name = scan.next();
@@ -179,6 +201,7 @@ public class AppJDBC {
 		String lastName = scan.next();
 		String sql = "INSERT INTO alumns (name, lastName) VALUES ('" + name + "', '" + lastName + "')";
 		stmt.executeUpdate(sql);
+		System.out.println("Alumno ingresado exitosamente");
 	}
 
 	private static void alumnOptions(int opt, Scanner scan, Connection con) throws SQLException {
@@ -233,8 +256,12 @@ public class AppJDBC {
 		String opt = scan.next();
 		if (opt.toUpperCase().equals("Y")) {
 			sql = "DELETE FROM course_1 WHERE id = " + id + "";
-			stmt.executeUpdate(sql);
-			System.out.println("Registro eliminado");
+			int deleted = stmt.executeUpdate(sql);
+			if (deleted == 1) {
+				System.out.println("Registro eliminado");
+			} else {
+				System.out.println("Registro inexistente");
+			}
 		} else if (opt.toUpperCase().equals("N")) {
 			System.out.println("Registro no eliminado");
 		}
@@ -280,10 +307,15 @@ public class AppJDBC {
 	private static void newCourse(Scanner scan, Connection con) throws SQLException {
 		Statement stmt = con.createStatement();
 		System.out.println();
+		System.out.println("-------------------");
+		System.out.println("Nuevo Curso");
+		System.out.println("-------------------");
+		System.out.println();
 		System.out.print("Ingrese nombre del curso -> ");
 		String course = scan.next();
 		String sql = "INSERT INTO course_1 (name) VALUES ('" + course + "')";
 		stmt.executeUpdate(sql);
+		System.out.println("Curso ingresado exitosamente");
 	}
 
 	private static void coursesOptions(int opt, Scanner scan, Connection con) throws SQLException {

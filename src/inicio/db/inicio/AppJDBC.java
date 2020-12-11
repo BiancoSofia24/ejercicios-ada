@@ -18,6 +18,7 @@ public class AppJDBC {
 			int opt = optionsMenu(scan);
 			int optAlumn;
 			int optCourse;
+			int optInsc;
 			while (opt != 0) {
 				switch (opt) {
 				case 1:
@@ -30,6 +31,11 @@ public class AppJDBC {
 					coursesOptions(optCourse, scan, con);
 					opt = optionsMenu(scan);
 					break;
+				case 3:
+					optInsc = inscriptionsMenu(scan);
+					inscriptionsOptions(optInsc, scan, con);
+					opt = optionsMenu(scan);
+					break;
 				}
 			}
 			con.close();
@@ -40,6 +46,59 @@ public class AppJDBC {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void viewInscriptions(Connection con) throws SQLException {
+		Statement stmt = con.createStatement();
+		String sql = "SELECT i.id, a.name, a.lastName, c.name FROM inscriptions i, alumns a, course_1 c WHERE i.id_alumn = a.id AND i.id_course = c.id";
+		ResultSet resultSet = stmt.executeQuery(sql);
+		System.out.println();
+		System.out.println("-------------------");
+		System.out.println("Lista de Inscripciones");
+		System.out.println("-------------------");
+		while (resultSet.next()) {
+			int idInsc = resultSet.getInt(1);
+			String name = resultSet.getString(2);
+			String lastName = resultSet.getString(3);
+			String course = resultSet.getString(4);
+			System.out.println(idInsc + " | " + name + "  " + lastName + " | " + course);
+		}
+	}
+
+	private static void inscriptionsOptions(int opt, Scanner scan, Connection con) throws SQLException {
+		while (opt != 0) {
+			switch (opt) {
+			case 1:
+				System.out.println();
+				System.out.println("opt 1");
+				break;
+			case 2:
+				viewInscriptions(con);
+				break;
+			case 3:
+				System.out.println();
+				System.out.println("opt 3");
+				break;
+			case 4:
+				System.out.println();
+				System.out.println("opt 4");
+				break;
+			}
+			opt = inscriptionsMenu(scan);
+		}
+	}
+
+	private static int inscriptionsMenu(Scanner scan) {
+		System.out.println();
+		System.out.println("Menú Inscripciones");
+		System.out.println("-------------------");
+		System.out.println("1 - Inscribir");
+		System.out.println("2 - Ver Inscripciones");
+		System.out.println("3 - Modificar Inscripción");
+		System.out.println("4 - Dar de baja");
+		System.out.println("0 - Ir Atrás");
+		System.out.print("Opción -> ");
+		return scan.nextInt();
 	}
 
 	private static void deleteAlumn(Scanner scan, Connection con) throws SQLException {
@@ -89,6 +148,7 @@ public class AppJDBC {
 		String lastName = scan.next();
 		sql = "UPDATE alumns SET name = '" + name + "', lastName = '" + lastName + "' WHERE id = " + id + "";
 		stmt.executeUpdate(sql);
+		System.out.println("Alumno modificado exitosamente");
 	}
 
 	private static void viewAlumns(Connection con) throws SQLException {
@@ -105,7 +165,6 @@ public class AppJDBC {
 			String lastName = resultSet.getString(3);
 			System.out.println(idAlumn + " | " + name + " | " + lastName);
 		}
-
 	}
 
 	private static void newAlumn(Scanner scan, Connection con) throws SQLException {
@@ -150,7 +209,7 @@ public class AppJDBC {
 		System.out.println("2 - Ver Alumnos");
 		System.out.println("3 - Modificar Alumno");
 		System.out.println("4 - Eliminar Alumno");
-		System.out.println("0 - Ir Atras");
+		System.out.println("0 - Ir Atrás");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
 	}
@@ -200,6 +259,7 @@ public class AppJDBC {
 		String name = scan.next();
 		sql = "UPDATE course_1 SET name = '" + name + "' WHERE id = " + id + "";
 		stmt.executeUpdate(sql);
+		System.out.println("Curso modificado exitosamente");
 	}
 
 	private static void viewCourses(Connection con) throws SQLException {
@@ -254,7 +314,7 @@ public class AppJDBC {
 		System.out.println("2 - Ver Cursos");
 		System.out.println("3 - Modificar Curso");
 		System.out.println("4 - Eliminar Curso");
-		System.out.println("0 - Ir Atras");
+		System.out.println("0 - Ir Atrás");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
 	}
@@ -265,6 +325,7 @@ public class AppJDBC {
 		System.out.println("-------------------");
 		System.out.println("1 - Alumnos");
 		System.out.println("2 - Cursos");
+		System.out.println("3 - Inscripciones");
 		System.out.println("0 - Salir");
 		System.out.print("Opción -> ");
 		return scan.nextInt();

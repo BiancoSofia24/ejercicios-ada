@@ -150,6 +150,7 @@ public class AppJDBC {
 		System.out.println("2 - Ver Alumnos");
 		System.out.println("3 - Modificar Alumno");
 		System.out.println("4 - Eliminar Alumno");
+		System.out.println("0 - Ir Atras");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
 	}
@@ -253,6 +254,7 @@ public class AppJDBC {
 		System.out.println("2 - Ver Cursos");
 		System.out.println("3 - Modificar Curso");
 		System.out.println("4 - Eliminar Curso");
+		System.out.println("0 - Ir Atras");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
 	}
@@ -263,6 +265,7 @@ public class AppJDBC {
 		System.out.println("-------------------");
 		System.out.println("1 - Alumnos");
 		System.out.println("2 - Cursos");
+		System.out.println("0 - Salir");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
 	}

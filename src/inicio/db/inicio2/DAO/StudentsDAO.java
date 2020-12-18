@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class StudentsDAO {
 			String studentName = resultSet.getString(2);
 			String studentLastName = resultSet.getString(3);
 			Student student = new Student(studentName, studentLastName);
-			student.setIdStud(idStud);
+			student.setIdStudent(idStud);
 			studentsList.add(student);
 		}
 		return studentsList;
@@ -39,8 +40,8 @@ public class StudentsDAO {
 		String sql = "UPDATE students SET sName = ?, sLastName = ? WHERE idStud = ?";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		prepStmt.setString(1, student.getsName());
-		prepStmt.setNString(2, student.getsLastName());
-		prepStmt.setInt(3, student.getIdStud());
+		prepStmt.setString(2, student.getsLastName());
+		prepStmt.setInt(3, student.getIdStudent());
 		return prepStmt.executeUpdate();
 	}
 
@@ -63,4 +64,31 @@ public class StudentsDAO {
 		return student;
 	}
 
+	public static List<Student> findByName(String studentName, Connection con) throws SQLException {
+		String sql = "SELECT s.sName, s.sLastName FROM students s WHERE s.sName LIKE '%" + studentName
+				+ "%' ORDER BY s.sName";
+		Statement stmt = con.createStatement();
+		ResultSet resultSet = stmt.executeQuery(sql);
+		List<Student> studentList = new ArrayList<Student>();
+		Student student = null;
+		while (resultSet.next()) {
+			student = new Student(resultSet.getString(1), resultSet.getString(2));
+			studentList.add(student);
+		}
+		return studentList;
+	}
+
+	public static List<Student> findByLastName(String studentLName, Connection con) throws SQLException {
+		String sql = "SELECT s.sName, s.sLastName FROM students s WHERE s.sLastName LIKE '%" + studentLName
+				+ "%' ORDER BY s.sLastName";
+		Statement stmt = con.createStatement();
+		ResultSet resultSet = stmt.executeQuery(sql);
+		List<Student> studentList = new ArrayList<Student>();
+		Student student = null;
+		while (resultSet.next()) {
+			student = new Student(resultSet.getString(1), resultSet.getString(2));
+			studentList.add(student);
+		}
+		return studentList;
+	}
 }

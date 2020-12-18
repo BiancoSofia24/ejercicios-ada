@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,15 +63,14 @@ public class CoursesDAO {
 	}
 
 	public static List<Course> findByName(String courseName, Connection con) throws SQLException {
-		String sql = "SELECT c.idCourse, c.cName FROM courses c WHERE cName = ?";
-		PreparedStatement prepStmt = con.prepareStatement(sql);
-		prepStmt.setNString(1, courseName);
-		ResultSet resultSet = prepStmt.executeQuery();
+		String sql = "SELECT c.idCourse, c.cName FROM courses c WHERE c.cName LIKE '%" + courseName
+				+ "%' ORDER BY c.cName";
+		Statement stmt = con.createStatement();
+		ResultSet resultSet = stmt.executeQuery(sql);
 		List<Course> courseList = new ArrayList<Course>();
 		Course course = null;
 		while (resultSet.next()) {
-			course.setIdCourse(resultSet.getInt(1));
-			course = new Course(resultSet.getString(2));
+			course = new Course(resultSet.getInt(1), resultSet.getString(2));
 			courseList.add(course);
 		}
 		return courseList;

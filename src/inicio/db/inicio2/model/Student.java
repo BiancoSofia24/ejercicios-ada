@@ -2,7 +2,7 @@ package inicio.db.inicio2.model;
 
 public class Student {
 
-	private int idStud;
+	private int idStudent;
 	private String sName;
 	private String sLastName;
 
@@ -11,12 +11,18 @@ public class Student {
 		this.sLastName = studentLastName;
 	}
 
-	public int getIdStud() {
-		return idStud;
+	public Student(int idStudent, String studentName, String studentLastName) {
+		this.idStudent = idStudent;
+		this.sName = studentName;
+		this.sLastName = studentLastName;
 	}
 
-	public void setIdStud(int idStud) {
-		this.idStud = idStud;
+	public int getIdStudent() {
+		return idStudent;
+	}
+
+	public void setIdStudent(int idStudent) {
+		this.idStudent = idStudent;
 	}
 
 	public String getsName() {

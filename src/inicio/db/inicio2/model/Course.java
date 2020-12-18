@@ -9,6 +9,11 @@ public class Course {
 		this.cName = courseName;
 	}
 
+	public Course(int idCourse, String courseName) {
+		this.idCourse = idCourse;
+		this.cName = courseName;
+	}
+
 	public int getIdCourse() {
 		return idCourse;
 	}

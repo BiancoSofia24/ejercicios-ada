@@ -9,9 +9,11 @@ import inicio.db.inicio2.DAO.AdminDB;
 import inicio.db.inicio2.DAO.CoursesDAO;
 import inicio.db.inicio2.DAO.InscriptionsDAO;
 import inicio.db.inicio2.DAO.StudentsDAO;
+import inicio.db.inicio2.DAO.TeachersDAO;
 import inicio.db.inicio2.model.Course;
 import inicio.db.inicio2.model.Inscription;
 import inicio.db.inicio2.model.Student;
+import inicio.db.inicio2.model.Teacher;
 
 public class AppJDBC {
 
@@ -36,8 +38,13 @@ public class AppJDBC {
 					showCoursesOptions(crudOption, scan, con);
 					break;
 				case 3:
+					crudOption = showTeachersSubmenu(scan);
+					showTeachersOptions(crudOption, scan, con);
+					break;
+				case 4:
 					crudOption = showInscriptionsSubmenu(scan);
 					showInscriptionsOptions(crudOption, scan, con);
+					break;
 				}
 				option = showMenu(scan);
 			}
@@ -72,14 +79,34 @@ public class AppJDBC {
 
 	}
 
-	private static void deleteInscription(Scanner scan, Connection con) {
+	// Incompleta
+	private static void deleteInscription(Scanner scan, Connection con) throws SQLException {
 		showTitle("Eliminar Inscripción");
+		System.out.print("Ingrese id del alumno -> ");
+		int idStudent = scan.nextInt();
+		Student actualStudent = StudentsDAO.findById(idStudent, con);
+		if (actualStudent == null) {
+			System.err.println("Registro inexistente");
+		} else {
+			System.out.println(actualStudent);
+		}
+
 	}
 
+	// Incompleta
 	private static void updateInscription(Scanner scan, Connection con) throws SQLException {
 		showTitle("Modificar Alumno en Curso");
+		System.out.print("Ingrese id del alumno -> ");
+		int idStudent = scan.nextInt();
+		Student actualStudent = StudentsDAO.findById(idStudent, con);
+		if (actualStudent == null) {
+			System.err.println("Registro inexistente");
+		} else {
+			System.out.println(actualStudent);
+		}
 	}
 
+	// Incompleta
 	private static void viewInscriptions(Connection con) throws SQLException {
 		showTitle("Lista de Inscripciones");
 		List<Inscription> inscriptionsList = InscriptionsDAO.findAll(con);
@@ -91,6 +118,7 @@ public class AppJDBC {
 
 	}
 
+	// Incompleta
 	private static void newInscription(Scanner scan, Connection con) throws SQLException {
 		showTitle("Nueva Inscripción");
 		System.out.print("Ingrese id del alumno -> ");
@@ -101,25 +129,7 @@ public class AppJDBC {
 		Student student = StudentsDAO.findById(idStudent, con);
 		Course course = CoursesDAO.findById(idCourse, con);
 
-		// BUG SQLIntegrityConstraintViolationException
-
-		if (student == null && course == null) {
-			System.err.println("No se puede realizar la inscripción");
-			if (student == null) {
-				System.out.println("Alumno inexistente");
-			}
-			if (course == null) {
-				System.out.println("Curso inexistente");
-			}
-		} else {
-			Inscription inscription = new Inscription(idStudent, idCourse);
-			int inserted = InscriptionsDAO.insert(inscription, con);
-			if (inserted == 1) {
-				System.out.println("Inscripción realizada correctamente");
-			} else {
-				System.err.println("Error de ingreso");
-			}
-		}
+		System.out.println(student + " en " + course);
 	}
 
 	private static int showInscriptionsSubmenu(Scanner scan) {
@@ -130,6 +140,159 @@ public class AppJDBC {
 		System.out.println("4 - Eliminar Inscripción");
 		System.out.println("5 - Buscar Alumnos por Curso"); // Alumno por curso
 		System.out.println("6 - Buscar Alumno Inscrito"); // Curso por alumno
+		System.out.println("0 - Ir Atrás");
+		System.out.print("Opción -> ");
+		return scan.nextInt();
+	}
+
+	private static void showTeachersOptions(int option, Scanner scan, Connection con) throws SQLException {
+		while (option != 0) {
+			switch (option) {
+			case 1:
+				newTeacher(scan, con);
+				break;
+			case 2:
+				viewTeachers(con);
+				break;
+			case 3:
+				updateTeacher(scan, con);
+				break;
+			case 4:
+				deleteTeacher(scan, con);
+				break;
+			case 5:
+				findTeacherByName(scan, con);
+				break;
+			case 6:
+				findTeacherByLastName(scan, con);
+				break;
+			}
+			option = showTeachersSubmenu(scan);
+		}
+
+	}
+
+	private static void findTeacherByLastName(Scanner scan, Connection con) throws SQLException {
+		showTitle("Buscar Profesor por Apellido");
+		System.out.print("Ingrese apellido del profesor: ");
+		String teacherLName = scan.next();
+		List<Teacher> teachersListByLastName = TeachersDAO.findByLastName(teacherLName, con);
+		showSubtitle("Apellido | Nombre");
+		teachersListByLastName.forEach((t) -> {
+			System.out.println(t.gettLastName() + " | " + t.gettName());
+		});
+	}
+
+	private static void findTeacherByName(Scanner scan, Connection con) throws SQLException {
+		showTitle("Buscar Profesor por Nombre");
+		System.out.print("Ingrese nombre del profesor: ");
+		String teacherName = scan.next();
+		List<Teacher> teachersListByName = TeachersDAO.findByName(teacherName, con);
+		showSubtitle("Nombre | Apellido");
+		teachersListByName.forEach((t) -> {
+			System.out.println(t.gettName() + " | " + t.gettLastName());
+		});
+	}
+
+	private static void deleteTeacher(Scanner scan, Connection con) throws SQLException {
+		showTitle("Eliminar Profesor");
+		System.out.print("Ingrese id del profesor a eliminar -> ");
+		int idTeacher = scan.nextInt();
+		Teacher actualTeacher = TeachersDAO.findById(idTeacher, con);
+		if (actualTeacher == null) {
+			showError("Registro inexistente");
+		} else {
+			System.out.println(actualTeacher);
+			System.out.println();
+			System.out.print("¿Está seguro de eliminar este profesor? y/n -> ");
+			String opt = scan.next();
+			if (opt.toUpperCase().equals("Y")) {
+				int deleted = TeachersDAO.delete(idTeacher, con);
+				if (deleted == 1) {
+					System.out.println("Registro eliminado");
+				} else {
+					showError("Registro inexistente");
+				}
+			} else if (opt.toUpperCase().equals("N")) {
+				System.out.println("Registro no eliminado");
+			}
+		}
+
+	}
+
+	private static void updateTeacher(Scanner scan, Connection con) throws SQLException {
+		showTitle("Modificar Profesor");
+		System.out.print("Ingrese id del profesor registrado a modificar -> ");
+		int idTeacher = scan.nextInt();
+		Teacher actualTeacher = TeachersDAO.findById(idTeacher, con);
+		if (actualTeacher == null) {
+			showError("Registro inexistente");
+		} else {
+			System.out.println(actualTeacher);
+			System.out.println();
+			System.out.print("¿Desea editar este profesor? y/n -> ");
+			String opt = scan.next();
+			if (opt.toUpperCase().equals("Y")) {
+				System.out.println();
+				System.out.print("Ingrese nombre del profesor -> ");
+				String teacherName = scan.next();
+				System.out.print("Ingrese apellido del profesor -> ");
+				String teacherLName = scan.next();
+				if (validateStringLength(teacherName) && validateStringLength(teacherLName)) {
+					showError("Error de ingreso. Texto inválido");
+				} else {
+					Teacher teacher = new Teacher(teacherName, teacherLName);
+					teacher.setIdTeacher(idTeacher);
+					int updated = TeachersDAO.update(teacher, con);
+					if (updated == 1) {
+						System.out.println("Profesor editado correctamente");
+					} else {
+						showError("Error en la edición de registro");
+					}
+				}
+			} else if (opt.toUpperCase().equals("N")) {
+				System.out.println("Registro no editado");
+			}
+		}
+
+	}
+
+	private static void newTeacher(Scanner scan, Connection con) throws SQLException {
+		showTitle("Nuevo Profesor");
+		System.out.print("Ingrese nombre del profesor -> ");
+		String teachersName = scan.next();
+		System.out.print("Ingrese apellido del profesor -> ");
+		String teachersLastName = scan.next();
+		if (validateStringLength(teachersName) && validateStringLength(teachersLastName)) {
+			showError("Error de ingreso. Texto inválido");
+		} else {
+			Teacher teacher = new Teacher(teachersName, teachersLastName);
+			int inserted = TeachersDAO.insert(teacher, con);
+			if (inserted == 1) {
+				System.out.println("Profesor ingresado exitosamente");
+			} else {
+				showError("Error de ingreso");
+			}
+		}
+	}
+
+	private static void viewTeachers(Connection con) throws SQLException {
+		showTitle("Lista de Profesores");
+		List<Teacher> teachersList = TeachersDAO.findAll(con);
+		showSubtitle("Id | Profesor");
+		teachersList.forEach((t) -> {
+			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName());
+		});
+	}
+
+	private static int showTeachersSubmenu(Scanner scan) {
+		showTitle("Menú Profesores");
+		System.out.println("1 - Nuevo Profesor");
+		System.out.println("2 - Ver Profesores");
+		System.out.println("3 - Modificar Profesor");
+		System.out.println("4 - Eliminar Profesor");
+		System.out.println("5 - Buscar Profesor por Nombre");
+		System.out.println("5 - Buscar Profesor por Apellido");
 		System.out.println("0 - Ir Atrás");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
@@ -165,9 +328,9 @@ public class AppJDBC {
 		showTitle("Buscar Alumno por Apellido");
 		System.out.print("Ingrese apellido del alumno: ");
 		String studentLName = scan.next();
-		List<Student> studentListByLastName = StudentsDAO.findByLastName(studentLName, con);
+		List<Student> studentsListByLastName = StudentsDAO.findByLastName(studentLName, con);
 		showSubtitle("Apellido | Nombre");
-		studentListByLastName.forEach((s) -> {
+		studentsListByLastName.forEach((s) -> {
 			System.out.println(s.getsLastName() + " | " + s.getsName());
 		});
 	}
@@ -176,9 +339,9 @@ public class AppJDBC {
 		showTitle("Buscar Alumno por Nombre");
 		System.out.print("Ingrese nombre del alumno: ");
 		String studentName = scan.next();
-		List<Student> studentListByName = StudentsDAO.findByName(studentName, con);
+		List<Student> studentsListByName = StudentsDAO.findByName(studentName, con);
 		showSubtitle("Nombre | Apellido");
-		studentListByName.forEach((s) -> {
+		studentsListByName.forEach((s) -> {
 			System.out.println(s.getsName() + " | " + s.getsLastName());
 		});
 	}
@@ -189,18 +352,18 @@ public class AppJDBC {
 		int idStudent = scan.nextInt();
 		Student actualStudent = StudentsDAO.findById(idStudent, con);
 		if (actualStudent == null) {
-			System.err.println("Registro inexistente");
+			showError("Registro inexistente");
 		} else {
 			System.out.println(actualStudent);
 			System.out.println();
-			System.out.print("¿Está seguro de eliminar este curso? y/n -> ");
+			System.out.print("¿Está seguro de eliminar este alumno? y/n -> ");
 			String opt = scan.next();
 			if (opt.toUpperCase().equals("Y")) {
 				int deleted = StudentsDAO.delete(idStudent, con);
 				if (deleted == 1) {
 					System.out.println("Registro eliminado");
 				} else {
-					System.err.println("Registro inexistente");
+					showError("Registro inexistente");
 				}
 			} else if (opt.toUpperCase().equals("N")) {
 				System.out.println("Registro no eliminado");
@@ -214,7 +377,7 @@ public class AppJDBC {
 		int idStudent = scan.nextInt();
 		Student actualStudent = StudentsDAO.findById(idStudent, con);
 		if (actualStudent == null) {
-			System.err.println("Registro inexistente");
+			showError("Registro inexistente");
 		} else {
 			System.out.println(actualStudent);
 			System.out.println();
@@ -226,8 +389,8 @@ public class AppJDBC {
 				String studentName = scan.next();
 				System.out.print("Ingrese apellido del alumno -> ");
 				String studentLName = scan.next();
-				if (validateString(studentName) && validateString(studentLName)) {
-					System.out.println("Error de ingreso. Texto inválido");
+				if (validateStringLength(studentName) && validateStringLength(studentLName)) {
+					showError("Error de ingreso. Texto inválido");
 				} else {
 					Student student = new Student(studentName, studentLName);
 					student.setIdStudent(idStudent);
@@ -235,7 +398,7 @@ public class AppJDBC {
 					if (updated == 1) {
 						System.out.println("Alumno editado correctamente");
 					} else {
-						System.err.println("Error en la edición de registro");
+						showError("Error en la edición de registro");
 					}
 				}
 			} else if (opt.toUpperCase().equals("N")) {
@@ -250,15 +413,15 @@ public class AppJDBC {
 		String studentName = scan.next();
 		System.out.print("Ingrese apellido del alumno -> ");
 		String studentLName = scan.next();
-		if (validateString(studentName) && validateString(studentLName)) {
-			System.out.println("Error de ingreso. Texto inválido");
+		if (validateStringLength(studentName) && validateStringLength(studentLName)) {
+			showError("Error de ingreso. Texto inválido");
 		} else {
 			Student student = new Student(studentName, studentLName);
 			int inserted = StudentsDAO.insert(student, con);
 			if (inserted == 1) {
 				System.out.println("Alumno ingresado exitosamente");
 			} else {
-				System.err.println("Error de ingreso");
+				showError("Error de ingreso");
 			}
 		}
 	}
@@ -325,7 +488,7 @@ public class AppJDBC {
 		int idCourse = scan.nextInt();
 		Course actualCourse = CoursesDAO.findById(idCourse, con);
 		if (actualCourse == null) {
-			System.err.println("Registro inexistente");
+			showError("Registro inexistente");
 		} else {
 			System.out.println(actualCourse);
 			System.out.println();
@@ -336,7 +499,7 @@ public class AppJDBC {
 				if (deleted == 1) {
 					System.out.println("Registro eliminado");
 				} else {
-					System.err.println("Registro inexistente");
+					showError("Registro inexistente");
 				}
 			} else if (opt.toUpperCase().equals("N")) {
 				System.out.println("Registro no eliminado");
@@ -350,7 +513,7 @@ public class AppJDBC {
 		int idCourse = scan.nextInt();
 		Course actualCourse = CoursesDAO.findById(idCourse, con);
 		if (actualCourse == null) {
-			System.err.println("Registro inexistente");
+			showError("Registro inexistente");
 		} else {
 			System.out.println(actualCourse);
 			System.out.println();
@@ -360,8 +523,8 @@ public class AppJDBC {
 				System.out.println();
 				System.out.print("Ingrese nuevo nombre del curso -> ");
 				String courseName = scan.next();
-				if (validateString(courseName)) {
-					System.err.println("Error de ingreso. Texto inválido");
+				if (validateStringLength(courseName)) {
+					showError("Error de ingreso. Texto inválido");
 				} else {
 					Course course = new Course(courseName);
 					course.setIdCourse(idCourse);
@@ -369,7 +532,7 @@ public class AppJDBC {
 					if (updated == 1) {
 						System.out.println("Curso editado correctamente");
 					} else {
-						System.err.println("Error en la edición de registro");
+						showError("Error en la edición de registro");
 					}
 				}
 			} else if (opt.toUpperCase().equals("N")) {
@@ -382,15 +545,15 @@ public class AppJDBC {
 		showTitle("Nuevo Curso");
 		System.out.print("Ingrese nombre del curso -> ");
 		String courseName = scan.next();
-		if (validateString(courseName)) {
-			System.out.println("Error de ingreso. Texto inválido");
+		if (validateStringLength(courseName)) {
+			showError("Error de ingreso. Texto inválido");
 		} else {
 			Course course = new Course(courseName);
 			int inserted = CoursesDAO.insert(course, con);
 			if (inserted == 1) {
 				System.out.println("Curso ingresado exitosamente");
 			} else {
-				System.err.println("Error de ingreso");
+				showError("Error de ingreso");
 			}
 		}
 	}
@@ -404,10 +567,9 @@ public class AppJDBC {
 		});
 	}
 
-	private static boolean validateString(String text) {
+	private static boolean validateStringLength(String text) {
 		boolean notValid = text.length() < MIN_CHAR || text.length() > MAX_CHAR;
 		return notValid;
-
 	}
 
 	private static int showCoursesSubmenu(Scanner scan) {
@@ -426,19 +588,24 @@ public class AppJDBC {
 		showTitle("Menú Principal");
 		System.out.println("1 - Alumnos");
 		System.out.println("2 - Cursos");
-		System.out.println("3 - Inscripciones");
+		System.out.println("3 - Profesores");
+		System.out.println("4 - Inscripciones");
 		System.out.println("0 - Salir");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
 	}
 
-	public static void showSubtitle(String text) {
+	private static void showError(String text) {
+		System.out.println(" *** " + text + " *** ");
+	}
+
+	private static void showSubtitle(String text) {
 		System.out.println();
 		System.out.println(text);
 		System.out.println("-------------------------------------");
 	}
 
-	public static void showTitle(String text) {
+	private static void showTitle(String text) {
 		System.out.println();
 		System.out.println("-------------------------------------");
 		System.out.println(text);

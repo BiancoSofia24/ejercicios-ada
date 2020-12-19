@@ -45,10 +45,10 @@ public class StudentsDAO {
 		return prepStmt.executeUpdate();
 	}
 
-	public static int delete(int idStud, Connection con) throws SQLException {
+	public static int delete(int idStudent, Connection con) throws SQLException {
 		String sql = "DELETE FROM students WHERE idStud = ?";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
-		prepStmt.setInt(1, idStud);
+		prepStmt.setInt(1, idStudent);
 		return prepStmt.executeUpdate();
 	}
 
@@ -69,13 +69,13 @@ public class StudentsDAO {
 				+ "%' ORDER BY s.sName";
 		Statement stmt = con.createStatement();
 		ResultSet resultSet = stmt.executeQuery(sql);
-		List<Student> studentList = new ArrayList<Student>();
+		List<Student> studentsList = new ArrayList<Student>();
 		Student student = null;
 		while (resultSet.next()) {
 			student = new Student(resultSet.getString(1), resultSet.getString(2));
-			studentList.add(student);
+			studentsList.add(student);
 		}
-		return studentList;
+		return studentsList;
 	}
 
 	public static List<Student> findByLastName(String studentLName, Connection con) throws SQLException {
@@ -83,12 +83,12 @@ public class StudentsDAO {
 				+ "%' ORDER BY s.sLastName";
 		Statement stmt = con.createStatement();
 		ResultSet resultSet = stmt.executeQuery(sql);
-		List<Student> studentList = new ArrayList<Student>();
+		List<Student> studentsList = new ArrayList<Student>();
 		Student student = null;
 		while (resultSet.next()) {
 			student = new Student(resultSet.getString(1), resultSet.getString(2));
-			studentList.add(student);
+			studentsList.add(student);
 		}
-		return studentList;
+		return studentsList;
 	}
 }

@@ -106,14 +106,14 @@ public class AppJDBC {
 		}
 	}
 
-	// Incompleta
 	private static void viewInscriptions(Connection con) throws SQLException {
 		showTitle("Lista de Inscripciones");
 		List<Inscription> inscriptionsList = InscriptionsDAO.findAll(con);
-		showSubtitle("Id | Alumno       |  Curso");
+		showSubtitle("Id | Alumno       | Curso    | Profesor");
 		inscriptionsList.forEach((i) -> {
 			System.out.println(i.getIdInsc() + " | " + i.getStudent().getsName() + " " + i.getStudent().getsLastName()
-					+ " | " + i.getCourse().getcName());
+					+ " | " + i.getCourse().getcName() + " | " + i.getTeacher().gettName() + " "
+					+ i.getTeacher().gettLastName());
 		});
 
 	}
@@ -292,7 +292,7 @@ public class AppJDBC {
 		System.out.println("3 - Modificar Profesor");
 		System.out.println("4 - Eliminar Profesor");
 		System.out.println("5 - Buscar Profesor por Nombre");
-		System.out.println("5 - Buscar Profesor por Apellido");
+		System.out.println("6 - Buscar Profesor por Apellido");
 		System.out.println("0 - Ir Atrás");
 		System.out.print("Opción -> ");
 		return scan.nextInt();

@@ -10,6 +10,7 @@ import java.util.List;
 import inicio.db.inicio2.model.Course;
 import inicio.db.inicio2.model.Inscription;
 import inicio.db.inicio2.model.Student;
+import inicio.db.inicio2.model.Teacher;
 
 public class InscriptionsDAO {
 
@@ -23,14 +24,15 @@ public class InscriptionsDAO {
 
 	public static List<Inscription> findAll(Connection con) throws SQLException {
 		List<Inscription> inscriptionsList = new ArrayList<Inscription>();
-		String sql = "SELECT i.idInsc, s.idStud, s.sName, s.sLastName, c.idCourse, c.cName FROM inscriptions i, students s, courses c WHERE i.id_student = s.idStud AND i.id_course = c.idCourse ORDER BY i.idInsc";
+		String sql = "SELECT i.idInsc, s.idStud, s.sName, s.sLastName, c.idCourse, c.cName, t.idTeacher, t.tName, t.tLastName FROM inscriptions i, students s, courses c, teachers t WHERE i.id_teacher = t.idTeacher AND i.id_student = s.idStud AND i.id_course = c.idCourse ORDER BY i.idInsc";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		ResultSet resultSet = prepStmt.executeQuery();
 		while (resultSet.next()) {
 			int idInsc = resultSet.getInt(1);
 			Student student = new Student(resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4));
 			Course course = new Course(resultSet.getInt(5), resultSet.getString(6));
-			Inscription inscription = new Inscription(student, course);
+			Teacher teacher = new Teacher(resultSet.getInt(7), resultSet.getString(8), resultSet.getString(9));
+			Inscription inscription = new Inscription(student, course, teacher);
 			inscription.setIdInsc(idInsc);
 			inscriptionsList.add(inscription);
 		}

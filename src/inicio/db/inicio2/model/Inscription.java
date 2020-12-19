@@ -5,17 +5,37 @@ public class Inscription {
 	private int idInsc;
 	private int idStudent;
 	private int idCourse;
+	private int idTeacher;
 	private Course course;
 	private Student student;
+	private Teacher teacher;
 
-	public Inscription(Student student, Course course) {
+	public Inscription(Student student, Course course, Teacher teacher) {
 		this.student = student;
 		this.course = course;
+		this.teacher = teacher;
 	}
 
-	public Inscription(int idStudent, int idCourse) {
+	public Inscription(int idStudent, int idCourse, int idTeacher) {
 		this.idStudent = idStudent;
 		this.idCourse = idCourse;
+		this.idTeacher = idTeacher;
+	}
+
+	public int getIdTeacher() {
+		return idTeacher;
+	}
+
+	public void setIdTeacher(int idTeacher) {
+		this.idTeacher = idTeacher;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 	public Course getCourse() {

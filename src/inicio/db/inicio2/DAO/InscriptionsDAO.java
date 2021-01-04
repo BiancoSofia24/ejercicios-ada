@@ -15,10 +15,11 @@ import inicio.db.inicio2.model.Teacher;
 public class InscriptionsDAO {
 
 	public static int insert(Inscription inscription, Connection con) throws SQLException {
-		String sql = "INSERT INTO inscriptions (id_student, id_course) VALUES (?, ?)";
+		String sql = "INSERT INTO inscriptions (id_student, id_course, id_teacher) VALUES (?, ?, ?)";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
-		prepStmt.setInt(1, inscription.getIdStudent());
-		prepStmt.setInt(2, inscription.getIdCourse());
+		prepStmt.setInt(1, inscription.getStudent().getIdStudent());
+		prepStmt.setInt(2, inscription.getCourse().getIdCourse());
+		prepStmt.setInt(3, inscription.getTeacher().getIdTeacher());
 		return prepStmt.executeUpdate();
 	}
 
@@ -42,8 +43,8 @@ public class InscriptionsDAO {
 	public static int update(Inscription inscription, Connection con) throws SQLException {
 		String sql = "UPDATE inscriptions SET id_course = ? WHERE id_student = ?  AND idInsc = ?";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
-		prepStmt.setInt(1, inscription.getIdCourse());
-		prepStmt.setInt(2, inscription.getIdStudent());
+		prepStmt.setInt(1, inscription.getCourse().getIdCourse());
+		prepStmt.setInt(2, inscription.getStudent().getIdStudent());
 		prepStmt.setInt(3, inscription.getIdInsc());
 		return prepStmt.executeUpdate();
 	}

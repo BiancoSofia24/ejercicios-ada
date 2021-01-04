@@ -3,9 +3,11 @@ package inicio.db.inicio2.model;
 public class Inscription {
 
 	private int idInsc;
-	private int idStudent;
-	private int idCourse;
-	private int idTeacher;
+	private String commission;
+	private int partialNote;
+	private int finalNote;
+	private int status; // 1 = activo / 0 = cancelado
+
 	private Course course;
 	private Student student;
 	private Teacher teacher;
@@ -14,20 +16,6 @@ public class Inscription {
 		this.student = student;
 		this.course = course;
 		this.teacher = teacher;
-	}
-
-	public Inscription(int idStudent, int idCourse, int idTeacher) {
-		this.idStudent = idStudent;
-		this.idCourse = idCourse;
-		this.idTeacher = idTeacher;
-	}
-
-	public int getIdTeacher() {
-		return idTeacher;
-	}
-
-	public void setIdTeacher(int idTeacher) {
-		this.idTeacher = idTeacher;
 	}
 
 	public Teacher getTeacher() {
@@ -61,21 +49,4 @@ public class Inscription {
 	public void setIdInsc(int idInsc) {
 		this.idInsc = idInsc;
 	}
-
-	public int getIdStudent() {
-		return idStudent;
-	}
-
-	public void setIdStudent(int idStudent) {
-		this.idStudent = idStudent;
-	}
-
-	public int getIdCourse() {
-		return idCourse;
-	}
-
-	public void setIdCourse(int idCourse) {
-		this.idCourse = idCourse;
-	}
-
 }

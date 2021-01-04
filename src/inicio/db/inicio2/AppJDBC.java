@@ -31,19 +31,19 @@ public class AppJDBC {
 				switch (option) {
 				case 1:
 					crudOption = showStudentsSubmenu(scan);
-					showStudentsOptions(crudOption, scan, con);
+					studentsOptions(crudOption, scan, con);
 					break;
 				case 2:
 					crudOption = showCoursesSubmenu(scan);
-					showCoursesOptions(crudOption, scan, con);
+					coursesOptions(crudOption, scan, con);
 					break;
 				case 3:
 					crudOption = showTeachersSubmenu(scan);
-					showTeachersOptions(crudOption, scan, con);
+					teachersOptions(crudOption, scan, con);
 					break;
 				case 4:
 					crudOption = showInscriptionsSubmenu(scan);
-					showInscriptionsOptions(crudOption, scan, con);
+					inscriptionsOptions(crudOption, scan, con);
 					break;
 				}
 				option = showMenu(scan);
@@ -58,7 +58,7 @@ public class AppJDBC {
 		}
 	}
 
-	private static void showInscriptionsOptions(int option, Scanner scan, Connection con) throws SQLException {
+	private static void inscriptionsOptions(int option, Scanner scan, Connection con) throws SQLException {
 		while (option != 0) {
 			switch (option) {
 			case 1:
@@ -76,7 +76,6 @@ public class AppJDBC {
 			}
 			option = showInscriptionsSubmenu(scan);
 		}
-
 	}
 
 	// Incompleta
@@ -90,7 +89,6 @@ public class AppJDBC {
 		} else {
 			System.out.println(actualStudent);
 		}
-
 	}
 
 	// Incompleta
@@ -106,6 +104,7 @@ public class AppJDBC {
 		}
 	}
 
+	// Falta estado
 	private static void viewInscriptions(Connection con) throws SQLException {
 		showTitle("Lista de Inscripciones");
 		List<Inscription> inscriptionsList = InscriptionsDAO.findAll(con);
@@ -115,7 +114,6 @@ public class AppJDBC {
 					+ " | " + i.getCourse().getcName() + " | " + i.getTeacher().gettName() + " "
 					+ i.getTeacher().gettLastName());
 		});
-
 	}
 
 	// Incompleta
@@ -123,29 +121,63 @@ public class AppJDBC {
 		showTitle("Nueva Inscripción");
 		System.out.print("Ingrese id del alumno -> ");
 		int idStudent = scan.nextInt();
-		System.out.print("Ingrese id del curso -> ");
-		int idCourse = scan.nextInt();
 
 		Student student = StudentsDAO.findById(idStudent, con);
-		Course course = CoursesDAO.findById(idCourse, con);
+		if (student == null) {
+			showError("Registro inexistente");
+		} else {
+			System.out.println(student);
+			System.out.print("Ingrese id del curso -> ");
+			int idCourse = scan.nextInt();
+			Course course = CoursesDAO.findById(idCourse, con);
+			if (course == null) {
+				showError("Registro inexistente");
+			} else {
+				System.out.println(course);
+				System.out.print("Ingrese id del profesor -> ");
+				int idTeacher = scan.nextInt();
+				Teacher teacher = TeachersDAO.findById(idTeacher, con);
+				if (teacher == null) {
+					showError("Registro inexistente");
+				} else {
+					System.out.println(teacher);
+					System.out.println();
+					System.out.print("¿Desea editar este curso? y/n -> ");
+					String opt = scan.next();
+					if (opt.toUpperCase().equals("Y")) {
+						Inscription inscription = new Inscription(student, course, teacher);
+						// Error!!
+						int inserted = InscriptionsDAO.insert(inscription, con);
+						if (inserted == 1) {
+							System.out.println("Inscripcion realizada exitosamente");
+						} else {
+							showError("Error al crear el registro");
+						}
+					} else if (opt.toUpperCase().equals("N")) {
+						System.out.println("Registro no creado");
+					}
+				}
+			}
+		}
 
-		System.out.println(student + " en " + course);
 	}
 
 	private static int showInscriptionsSubmenu(Scanner scan) {
 		showTitle("Menú Inscripciones");
 		System.out.println("1 - Nueva Inscripción");
-		System.out.println("2 - Ver Inscripciones");
+		System.out.println("2 - Ver Inscripciones por Alumnos");
 		System.out.println("3 - Modificar Inscripción");
 		System.out.println("4 - Eliminar Inscripción");
 		System.out.println("5 - Buscar Alumnos por Curso"); // Alumno por curso
 		System.out.println("6 - Buscar Alumno Inscrito"); // Curso por alumno
+		System.out.println("7 - Ver Inscripciones por Notas");
+		System.out.println("8 - Agregar Notas");
 		System.out.println("0 - Ir Atrás");
 		System.out.print("Opción -> ");
 		return scan.nextInt();
 	}
 
-	private static void showTeachersOptions(int option, Scanner scan, Connection con) throws SQLException {
+	private static void teachersOptions(int option, Scanner scan, Connection con) throws SQLException {
 		while (option != 0) {
 			switch (option) {
 			case 1:
@@ -298,7 +330,7 @@ public class AppJDBC {
 		return scan.nextInt();
 	}
 
-	private static void showStudentsOptions(int option, Scanner scan, Connection con) throws SQLException {
+	private static void studentsOptions(int option, Scanner scan, Connection con) throws SQLException {
 		while (option != 0) {
 			switch (option) {
 			case 1:
@@ -448,7 +480,7 @@ public class AppJDBC {
 		return scan.nextInt();
 	}
 
-	private static void showCoursesOptions(int opt, Scanner scan, Connection con) throws SQLException {
+	private static void coursesOptions(int opt, Scanner scan, Connection con) throws SQLException {
 		while (opt != 0) {
 			switch (opt) {
 			case 1:

@@ -56,40 +56,41 @@ public class StudentsDAO {
 	}
 
 	public static Student findById(int idStud, Connection con) throws SQLException {
-		String sql = "SELECT s.sName, s.sLastName, s.sEmail FROM students s WHERE idStud = ?";
+		String sql = "SELECT * FROM students WHERE idStud = ?";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		prepStmt.setInt(1, idStud);
 		ResultSet resultSet = prepStmt.executeQuery();
 		Student student = null;
 		if (resultSet.next()) {
-			student = new Student(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
+			student = new Student(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+					resultSet.getString(4));
 		}
 		return student;
 	}
 
 	public static List<Student> findByName(String studentName, Connection con) throws SQLException {
-		String sql = "SELECT s.sName, s.sLastName, s.sEmail FROM students s WHERE s.sName LIKE '%" + studentName
-				+ "%' ORDER BY s.sName";
+		String sql = "SELECT * FROM students WHERE sName LIKE '%" + studentName + "%' ORDER BY sName";
 		Statement stmt = con.createStatement();
 		ResultSet resultSet = stmt.executeQuery(sql);
 		List<Student> studentsList = new ArrayList<Student>();
 		Student student = null;
 		while (resultSet.next()) {
-			student = new Student(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
+			student = new Student(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+					resultSet.getString(4));
 			studentsList.add(student);
 		}
 		return studentsList;
 	}
 
 	public static List<Student> findByLastName(String studentLName, Connection con) throws SQLException {
-		String sql = "SELECT s.sName, s.sLastName, s.sEmail FROM students s WHERE s.sLastName LIKE '%" + studentLName
-				+ "%' ORDER BY s.sLastName";
+		String sql = "SELECT * FROM students WHERE sLastName LIKE '%" + studentLName + "%' ORDER BY sLastName";
 		Statement stmt = con.createStatement();
 		ResultSet resultSet = stmt.executeQuery(sql);
 		List<Student> studentsList = new ArrayList<Student>();
 		Student student = null;
 		while (resultSet.next()) {
-			student = new Student(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
+			student = new Student(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+					resultSet.getString(4));
 			studentsList.add(student);
 		}
 		return studentsList;

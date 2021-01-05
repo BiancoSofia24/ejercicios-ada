@@ -7,12 +7,14 @@ public class Student {
 	private String sLastName;
 	private String sEmail;
 
-	public Student(String studentName, String studentLastName) {
+	public Student(String studentName, String studentLastName, String studentEmail) {
 		this.sName = studentName;
 		this.sLastName = studentLastName;
+		this.sEmail = studentEmail;
 	}
 
-	public Student(String studentName, String studentLastName, String studentEmail) {
+	public Student(int idStudent, String studentName, String studentLastName, String studentEmail) {
+		this.idStudent = idStudent;
 		this.sName = studentName;
 		this.sLastName = studentLastName;
 		this.sEmail = studentEmail;

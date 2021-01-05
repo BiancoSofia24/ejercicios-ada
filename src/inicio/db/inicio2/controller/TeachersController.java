@@ -43,9 +43,10 @@ public class TeachersController {
 		System.out.print("Ingrese apellido del profesor: ");
 		String teacherLName = scan.next();
 		List<Teacher> teachersListByLastName = TeachersDAO.findByLastName(teacherLName, con);
-		Util.showSubtitle("Apellido | Nombre");
+		Util.showSubtitle("Id | Apellido | Nombre  | Correo Electrónico   | Especialidad");
 		teachersListByLastName.forEach((t) -> {
-			System.out.println(t.gettLastName() + " | " + t.gettName());
+			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName() + " | "
+					+ Util.valueForStringNull(t.gettEmail()) + " | " + Util.valueForStringNull(t.getSpecialty()));
 		});
 	}
 
@@ -54,9 +55,10 @@ public class TeachersController {
 		System.out.print("Ingrese nombre del profesor: ");
 		String teacherName = scan.next();
 		List<Teacher> teachersListByName = TeachersDAO.findByName(teacherName, con);
-		Util.showSubtitle("Nombre | Apellido");
+		Util.showSubtitle("Id | Nombre | Apellido  | Correo Electrónico   | Especialidad");
 		teachersListByName.forEach((t) -> {
-			System.out.println(t.gettName() + " | " + t.gettLastName());
+			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName() + " | "
+					+ Util.valueForStringNull(t.gettEmail()) + " | " + Util.valueForStringNull(t.getSpecialty()));
 		});
 	}
 
@@ -95,6 +97,8 @@ public class TeachersController {
 			Util.showError("Registro inexistente");
 		} else {
 			System.out.println(actualTeacher);
+			System.out.println("Email: " + Util.valueForStringNull(actualTeacher.gettEmail()));
+			System.out.println("Especialidad: " + Util.valueForStringNull(actualTeacher.getSpecialty()));
 			System.out.println();
 			System.out.print("¿Desea editar este profesor? y/n -> ");
 			String opt = scan.next();
@@ -107,7 +111,12 @@ public class TeachersController {
 				if (Util.validateStringLength(teacherName) && Util.validateStringLength(teacherLName)) {
 					Util.showError("Error de ingreso. Texto inválido");
 				} else {
-					Teacher teacher = new Teacher(teacherName, teacherLName);
+					System.out.print("Ingrese correo electrónico del profesor -> ");
+					String teacherEmail = scan.next();
+					// Validate email
+					System.out.print("Ingrese especialidad -> ");
+					String teacherSpecialty = scan.next();
+					Teacher teacher = new Teacher(teacherName, teacherLName, teacherEmail, teacherSpecialty);
 					teacher.setIdTeacher(idTeacher);
 					int updated = TeachersDAO.update(teacher, con);
 					if (updated == 1) {
@@ -126,16 +135,21 @@ public class TeachersController {
 	public static void newTeacher(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Nuevo Profesor");
 		System.out.print("Ingrese nombre del profesor -> ");
-		String teachersName = scan.next();
+		String teacherName = scan.next();
 		System.out.print("Ingrese apellido del profesor -> ");
-		String teachersLastName = scan.next();
-		if (Util.validateStringLength(teachersName) && Util.validateStringLength(teachersLastName)) {
+		String teacherLName = scan.next();
+		if (Util.validateStringLength(teacherName) && Util.validateStringLength(teacherLName)) {
 			Util.showError("Error de ingreso. Texto inválido");
 		} else {
-			Teacher teacher = new Teacher(teachersName, teachersLastName);
+			System.out.print("Ingrese correo electrónico del profesor -> ");
+			String teacherEmail = scan.next();
+			// Validate email
+			System.out.print("Ingrese especialidad -> ");
+			String teacherSpecialty = scan.next();
+			Teacher teacher = new Teacher(teacherName, teacherLName, teacherEmail, teacherSpecialty);
 			int inserted = TeachersDAO.insert(teacher, con);
 			if (inserted == 1) {
-				System.out.println("Profesor ingresado exitosamente");
+				System.out.println("Registro creado exitosamente");
 			} else {
 				Util.showError("Error de ingreso");
 			}
@@ -145,9 +159,10 @@ public class TeachersController {
 	public static void viewTeachers(Connection con) throws SQLException {
 		Util.showTitle("Lista de Profesores");
 		List<Teacher> teachersList = TeachersDAO.findAll(con);
-		Util.showSubtitle("Id | Profesor");
+		Util.showSubtitle("Id | Profesor     | Correo Electrónico   | Especialidad");
 		teachersList.forEach((t) -> {
-			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName());
+			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName() + " | "
+					+ Util.valueForStringNull(t.gettEmail()) + " | " + Util.valueForStringNull(t.getSpecialty()));
 		});
 	}
 

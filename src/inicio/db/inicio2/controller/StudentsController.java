@@ -115,7 +115,7 @@ public class StudentsController {
 					student.setIdStudent(idStudent);
 					int updated = StudentsDAO.update(student, con);
 					if (updated == 1) {
-						System.out.println("Alumno editado correctamente");
+						System.out.println("Registro editado exitosamente");
 					} else {
 						Util.showError("Error en la edición de registro");
 					}

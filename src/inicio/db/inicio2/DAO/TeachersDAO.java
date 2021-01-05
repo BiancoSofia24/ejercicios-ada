@@ -22,14 +22,14 @@ public class TeachersDAO {
 
 	public static List<Teacher> findAll(Connection con) throws SQLException {
 		List<Teacher> teachersList = new ArrayList<Teacher>();
-		String sql = "SELECT t.idTeacher, t.tName, t.tLastName FROM teachers t";
+		String sql = "SELECT * FROM teachers";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		ResultSet resultSet = prepStmt.executeQuery();
+		Teacher teacher = null;
 		while (resultSet.next()) {
 			int idTeacher = resultSet.getInt(1);
-			String teacherName = resultSet.getString(2);
-			String teacherLastName = resultSet.getString(3);
-			Teacher teacher = new Teacher(teacherName, teacherLastName);
+			teacher = new Teacher(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
+					resultSet.getString(5));
 			teacher.setIdTeacher(idTeacher);
 			teachersList.add(teacher);
 		}
@@ -37,11 +37,13 @@ public class TeachersDAO {
 	}
 
 	public static int update(Teacher teacher, Connection con) throws SQLException {
-		String sql = "UPDATE teachers SET tName = ?, tLastName = ? WHERE idTeacher = ?";
+		String sql = "UPDATE teachers SET tName = ?, tLastName = ?, tEmail = ?, specialty = ? WHERE idTeacher = ?";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		prepStmt.setString(1, teacher.gettName());
 		prepStmt.setString(2, teacher.gettLastName());
-		prepStmt.setInt(3, teacher.getIdTeacher());
+		prepStmt.setString(3, teacher.gettEmail());
+		prepStmt.setString(4, teacher.getSpecialty());
+		prepStmt.setInt(5, teacher.getIdTeacher());
 		return prepStmt.executeUpdate();
 	}
 
@@ -53,40 +55,41 @@ public class TeachersDAO {
 	}
 
 	public static Teacher findById(int idTeacher, Connection con) throws SQLException {
-		String sql = "SELECT t.tName, t.tLastName FROM teachers t WHERE idTeacher = ?";
+		String sql = "SELECT * FROM teachers WHERE idTeacher = ?";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		prepStmt.setInt(1, idTeacher);
 		ResultSet resultSet = prepStmt.executeQuery();
 		Teacher teacher = null;
 		if (resultSet.next()) {
-			teacher = new Teacher(resultSet.getString(1), resultSet.getString(2));
+			teacher = new Teacher(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
+					resultSet.getString(5));
 		}
 		return teacher;
 	}
 
 	public static List<Teacher> findByName(String teacherName, Connection con) throws SQLException {
-		String sql = "SELECT t.tName, t.tLastName FROM teachers t WHERE t.tName LIKE '%" + teacherName
-				+ "%' ORDER BY t.tName";
+		String sql = "SELECT * FROM teachers WHERE tName LIKE '%" + teacherName + "%' ORDER BY tName";
 		Statement stmt = con.createStatement();
 		ResultSet resultSet = stmt.executeQuery(sql);
 		List<Teacher> teachersList = new ArrayList<Teacher>();
 		Teacher teacher = null;
 		while (resultSet.next()) {
-			teacher = new Teacher(resultSet.getString(1), resultSet.getString(2));
+			teacher = new Teacher(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+					resultSet.getString(4), resultSet.getString(5));
 			teachersList.add(teacher);
 		}
 		return teachersList;
 	}
 
 	public static List<Teacher> findByLastName(String teacherLName, Connection con) throws SQLException {
-		String sql = "SELECT t.tName, t.tLastName FROM teachers t WHERE t.tLastName LIKE '%" + teacherLName
-				+ "%' ORDER BY t.tLastName";
+		String sql = "SELECT * FROM teachers WHERE tLastName LIKE '%" + teacherLName + "%' ORDER BY tLastName";
 		Statement stmt = con.createStatement();
 		ResultSet resultSet = stmt.executeQuery(sql);
 		List<Teacher> teachersList = new ArrayList<Teacher>();
 		Teacher teacher = null;
 		while (resultSet.next()) {
-			teacher = new Teacher(resultSet.getString(1), resultSet.getString(2));
+			teacher = new Teacher(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+					resultSet.getString(4), resultSet.getString(5));
 			teachersList.add(teacher);
 		}
 		return teachersList;

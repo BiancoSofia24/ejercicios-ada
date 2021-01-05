@@ -8,11 +8,6 @@ public class Teacher {
 	private String tEmail;
 	private String specialty;
 
-	public Teacher(String teacherName, String teacherLName) {
-		this.tName = teacherName;
-		this.tLastName = teacherLName;
-	}
-
 	public Teacher(String teacherName, String teacherLName, String teacherEmail, String teacherSpecialty) {
 		this.tName = teacherName;
 		this.tLastName = teacherLName;
@@ -24,6 +19,15 @@ public class Teacher {
 		this.idTeacher = idTeacher;
 		this.tName = teacherName;
 		this.tLastName = teacherLName;
+	}
+
+	public Teacher(int idTeacher, String teacherName, String teacherLName, String teacherEmail,
+			String teacherSpecialty) {
+		this.idTeacher = idTeacher;
+		this.tName = teacherName;
+		this.tLastName = teacherLName;
+		this.tEmail = teacherEmail;
+		this.specialty = teacherSpecialty;
 	}
 
 	public String gettEmail() {

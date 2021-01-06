@@ -25,6 +25,8 @@ public class InscriptionsDAO {
 		return prepStmt.executeUpdate();
 	}
 
+	// Do corrections for entities.
+	// Use SELECT * FROM and then use methods for each entity
 	public static List<Inscription> findAll(Connection con) throws SQLException {
 		List<Inscription> inscriptionsList = new ArrayList<Inscription>();
 		String sql = "SELECT i.idInsc, s.idStud, s.sName, s.sLastName, c.idCourse, c.cName, t.idTeacher, t.tName, t.tLastName, i.commission, i.partialNote, i.finalNote, i.status FROM inscriptions i, students s, courses c, teachers t WHERE i.id_teacher = t.idTeacher AND i.id_student = s.idStud AND i.id_course = c.idCourse ORDER BY i.idInsc";

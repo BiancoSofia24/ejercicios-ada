@@ -46,7 +46,7 @@ public class TeachersController {
 		Util.showSubtitle("Id | Apellido | Nombre  | Correo Electrónico   | Especialidad");
 		teachersListByLastName.forEach((t) -> {
 			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName() + " | "
-					+ Util.valueForStringNull(t.gettEmail()) + " | " + Util.valueForStringNull(t.getSpecialty()));
+					+ Util.valueForNullString(t.gettEmail()) + " | " + Util.valueForNullString(t.getSpecialty()));
 		});
 	}
 
@@ -58,7 +58,7 @@ public class TeachersController {
 		Util.showSubtitle("Id | Nombre | Apellido  | Correo Electrónico   | Especialidad");
 		teachersListByName.forEach((t) -> {
 			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName() + " | "
-					+ Util.valueForStringNull(t.gettEmail()) + " | " + Util.valueForStringNull(t.getSpecialty()));
+					+ Util.valueForNullString(t.gettEmail()) + " | " + Util.valueForNullString(t.getSpecialty()));
 		});
 	}
 
@@ -97,8 +97,8 @@ public class TeachersController {
 			Util.showError("Registro inexistente");
 		} else {
 			System.out.println(actualTeacher);
-			System.out.println("Email: " + Util.valueForStringNull(actualTeacher.gettEmail()));
-			System.out.println("Especialidad: " + Util.valueForStringNull(actualTeacher.getSpecialty()));
+			System.out.println("Email: " + Util.valueForNullString(actualTeacher.gettEmail()));
+			System.out.println("Especialidad: " + Util.valueForNullString(actualTeacher.getSpecialty()));
 			System.out.println();
 			System.out.print("¿Desea editar este profesor? y/n -> ");
 			String opt = scan.next();
@@ -162,7 +162,7 @@ public class TeachersController {
 		Util.showSubtitle("Id | Profesor     | Correo Electrónico   | Especialidad");
 		teachersList.forEach((t) -> {
 			System.out.println(t.getIdTeacher() + " | " + t.gettName() + " " + t.gettLastName() + " | "
-					+ Util.valueForStringNull(t.gettEmail()) + " | " + Util.valueForStringNull(t.getSpecialty()));
+					+ Util.valueForNullString(t.gettEmail()) + " | " + Util.valueForNullString(t.getSpecialty()));
 		});
 	}
 

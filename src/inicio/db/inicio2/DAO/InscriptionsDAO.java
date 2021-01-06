@@ -14,7 +14,7 @@ import inicio.db.inicio2.model.Teacher;
 
 public class InscriptionsDAO {
 
-	// Bug!
+	// Error for insert method
 	public static int insert(Inscription inscription, Connection con) throws SQLException {
 		String sql = "INSERT INTO inscriptions (id_student, id_course, id_teacher, status) VALUES (?, ?, ?, ?)";
 		PreparedStatement prepStmt = con.prepareStatement(sql);

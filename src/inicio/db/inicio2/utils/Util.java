@@ -5,7 +5,7 @@ public class Util {
 	private static final int MAX_CHAR = 50;
 	private static final int MIN_CHAR = 1;
 
-	public static String valueForStringNull(String text) {
+	public static String valueForNullString(String text) {
 		if (text == null) {
 			return "none";
 		}

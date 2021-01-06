@@ -45,7 +45,7 @@ public class StudentsController {
 		Util.showSubtitle("Id | Apellido    | Nombre     | Correo Electrónico");
 		studentsListByLastName.forEach((s) -> {
 			System.out.println(s.getIdStudent() + " | " + s.getsLastName() + " | " + s.getsName() + " | "
-					+ Util.valueForStringNull(s.getsEmail()));
+					+ Util.valueForNullString(s.getsEmail()));
 		});
 	}
 
@@ -57,7 +57,7 @@ public class StudentsController {
 		Util.showSubtitle("Id | Nombre   | Apellido    | Correo Electrónico");
 		studentsListByName.forEach((s) -> {
 			System.out.println(s.getIdStudent() + " | " + s.getsName() + " | " + s.getsLastName() + " | "
-					+ Util.valueForStringNull(s.getsEmail()));
+					+ Util.valueForNullString(s.getsEmail()));
 		});
 	}
 
@@ -95,7 +95,7 @@ public class StudentsController {
 			Util.showError("Registro inexistente");
 		} else {
 			System.out.println(actualStudent);
-			System.out.println("Email: " + Util.valueForStringNull(actualStudent.getsEmail()));
+			System.out.println("Email: " + Util.valueForNullString(actualStudent.getsEmail()));
 			System.out.println();
 			System.out.print("¿Desea editar este alumno? y/n -> ");
 			String opt = scan.next();
@@ -154,7 +154,7 @@ public class StudentsController {
 		Util.showSubtitle("Id | Alumno      | Correo Electrónico");
 		studentsList.forEach((s) -> {
 			System.out.println(s.getIdStudent() + " | " + s.getsName() + " " + s.getsLastName() + " | "
-					+ Util.valueForStringNull(s.getsEmail()));
+					+ Util.valueForNullString(s.getsEmail()));
 		});
 	}
 

@@ -64,15 +64,14 @@ public class InscriptionsController {
 		}
 	}
 
-	// Notes, commission and state is missing
 	public static void viewInscriptions(Connection con) throws SQLException {
 		Util.showTitle("Lista de Inscripciones");
 		List<Inscription> inscriptionsList = InscriptionsDAO.findAll(con);
-		Util.showSubtitle("Id | Alumno       | Curso    | Profesor  | Comisión  | Estado");
+		Util.showSubtitle("Id | Alumno       | Curso    | Profesor    | Esado");
 		inscriptionsList.forEach((i) -> {
 			System.out.println(i.getIdInsc() + " | " + i.getStudent().getsName() + " " + i.getStudent().getsLastName()
 					+ " | " + i.getCourse().getcName() + " | " + i.getTeacher().gettName() + " "
-					+ i.getTeacher().gettLastName() + " | " + i.getCommission() + " | " + i.getStatus());
+					+ i.getTeacher().gettLastName() + " | " + i.getStatus());
 		});
 	}
 
@@ -127,13 +126,10 @@ public class InscriptionsController {
 		Util.showTitle("Menú Inscripciones");
 		System.out.println("1 - Nueva Inscripción");
 		System.out.println("2 - Ver Inscripciones");
-		// Show inscriptions by notes
 		System.out.println("3 - Modificar Inscripción");
 		System.out.println("4 - Eliminar Inscripción");
-		System.out.println("5 - Buscar por Curso");
-		// Student per course. Search by teacher, status, commission
-		System.out.println("7 - Ver Inscripciones por Notas");
-		System.out.println("8 - Agregar Notas");
+		// Student per course. Search by teacher, status, commission, course
+		System.out.println("Faltan opciones :)");
 		System.out.println("0 - Ir Atrás");
 		System.out.print("Opción -> ");
 		return scan.nextInt();

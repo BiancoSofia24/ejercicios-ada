@@ -3,7 +3,7 @@ package inicio.db.inicio2.model;
 public class Inscription {
 
 	private int idInsc;
-	private String commission;
+	private String commission; // For update type -> String to Int
 	private int partialNote;
 	private int finalNote;
 	private String status; // 1 = activo / 0 = cancelado

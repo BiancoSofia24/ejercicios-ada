@@ -8,6 +8,12 @@ public class Teacher {
 	private String tEmail;
 	private String specialty;
 
+	public Teacher(String teacherName, String teacherLName, String teacherEmail) {
+		this.tName = teacherName;
+		this.tLastName = teacherLName;
+		this.tEmail = teacherEmail;
+	}
+
 	public Teacher(String teacherName, String teacherLName, String teacherEmail, String teacherSpecialty) {
 		this.tName = teacherName;
 		this.tLastName = teacherLName;

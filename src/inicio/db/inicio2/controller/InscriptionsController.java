@@ -68,11 +68,11 @@ public class InscriptionsController {
 	public static void viewInscriptions(Connection con) throws SQLException {
 		Util.showTitle("Lista de Inscripciones");
 		List<Inscription> inscriptionsList = InscriptionsDAO.findAll(con);
-		Util.showSubtitle("Id | Alumno       | Curso    | Profesor");
+		Util.showSubtitle("Id | Alumno       | Curso    | Profesor  | Comisión  | Estado");
 		inscriptionsList.forEach((i) -> {
 			System.out.println(i.getIdInsc() + " | " + i.getStudent().getsName() + " " + i.getStudent().getsLastName()
 					+ " | " + i.getCourse().getcName() + " | " + i.getTeacher().gettName() + " "
-					+ i.getTeacher().gettLastName());
+					+ i.getTeacher().gettLastName() + " | " + i.getCommission() + " | " + i.getStatus());
 		});
 	}
 
@@ -102,14 +102,14 @@ public class InscriptionsController {
 				} else {
 					System.out.println(teacher);
 					System.out.println();
-					System.out.print("¿Desea editar este curso? y/n -> ");
+					System.out.print("¿Desea crear este registro? y/n -> ");
 					String opt = scan.next();
 					if (opt.toUpperCase().equals("Y")) {
-						Inscription inscription = new Inscription(student, course, teacher);
-						// Error!!
+						String status = "active";
+						Inscription inscription = new Inscription(student, course, teacher, status);
 						int inserted = InscriptionsDAO.insert(inscription, con);
 						if (inserted == 1) {
-							System.out.println("Inscripcion realizada exitosamente");
+							System.out.println("Registro creado exitosamente");
 						} else {
 							Util.showError("Error al crear el registro");
 						}
@@ -126,11 +126,12 @@ public class InscriptionsController {
 	public static int showInscriptionsSubmenu(Scanner scan) {
 		Util.showTitle("Menú Inscripciones");
 		System.out.println("1 - Nueva Inscripción");
-		System.out.println("2 - Ver Inscripciones por Alumnos");
+		System.out.println("2 - Ver Inscripciones");
+		// Show inscriptions by notes
 		System.out.println("3 - Modificar Inscripción");
 		System.out.println("4 - Eliminar Inscripción");
-		System.out.println("5 - Buscar Alumnos por Curso"); // Alumno por curso
-		System.out.println("6 - Buscar Alumno Inscrito"); // Curso por alumno
+		System.out.println("5 - Buscar por Curso");
+		// Student per course. Search by teacher, status, commission
 		System.out.println("7 - Ver Inscripciones por Notas");
 		System.out.println("8 - Agregar Notas");
 		System.out.println("0 - Ir Atrás");

@@ -85,7 +85,7 @@ public class InscriptionsController {
 		});
 	}
 
-	// Error for insert
+	// Error for insert in InscriptionsDAO or in db
 	public static void newInscription(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Nueva Inscripción");
 		System.out.print("Ingrese id del alumno -> ");

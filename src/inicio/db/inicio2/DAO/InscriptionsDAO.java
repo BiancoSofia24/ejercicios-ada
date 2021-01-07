@@ -11,7 +11,7 @@ import inicio.db.inicio2.model.Inscription;
 
 public class InscriptionsDAO {
 
-	// Error for insert method
+	// Error for insert method. It's killing me
 	public static int insert(Inscription inscription, Connection con) throws SQLException {
 		String sql = "INSERT INTO inscriptions (id_student, id_course, id_teacher, status) VALUES (?, ?, ?, ?)";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
@@ -35,16 +35,6 @@ public class InscriptionsDAO {
 			inscriptionsList.add(inscription);
 		}
 		return inscriptionsList;
-	}
-
-	// Modify
-	public static int update(Inscription inscription, Connection con) throws SQLException {
-		String sql = "UPDATE inscriptions SET id_course = ? WHERE id_student = ?  AND idInsc = ?";
-		PreparedStatement prepStmt = con.prepareStatement(sql);
-		prepStmt.setInt(1, inscription.getCourse().getIdCourse());
-		prepStmt.setInt(2, inscription.getStudent().getIdStudent());
-		prepStmt.setInt(3, inscription.getIdInsc());
-		return prepStmt.executeUpdate();
 	}
 
 }

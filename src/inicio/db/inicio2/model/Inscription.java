@@ -33,21 +33,6 @@ public class Inscription {
 		this.status = status;
 	}
 
-	/*
-	 * public Inscription(Student student, Course course, Teacher teacher, String
-	 * commission, int partialNote, int finalNote, String status) { this.student =
-	 * student; this.course = course; this.teacher = teacher; this.commission =
-	 * commission; this.partialNote = partialNote; this.finalNote = finalNote;
-	 * this.status = status; }
-	 * 
-	 * public Inscription(int idInsc, Student student, Course course, Teacher
-	 * teacher, String commission, int partialNote, int finalNote, String status) {
-	 * this.idInsc = idInsc; this.student = student; this.course = course;
-	 * this.teacher = teacher; this.commission = commission; this.partialNote =
-	 * partialNote; this.finalNote = finalNote; this.status = status; }
-	 * 
-	 */
-
 	public String getCommission() {
 		return commission;
 	}

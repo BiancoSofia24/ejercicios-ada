@@ -3,6 +3,9 @@ package inicio.db.inicio2.model;
 public class Inscription {
 
 	private int idInsc;
+	private int idStudent;
+	private int idTeacher;
+	private int idCourse;
 	private String commission; // For update type -> String to Int
 	private int partialNote;
 	private int finalNote;
@@ -12,6 +15,17 @@ public class Inscription {
 	private Student student;
 	private Teacher teacher;
 
+	public Inscription(int idStudent, int idCourse, int idTeacher, String commission, int partialNote, int finalNote,
+			String status) {
+		this.idStudent = idStudent;
+		this.idCourse = idCourse;
+		this.idTeacher = idTeacher;
+		this.commission = commission;
+		this.partialNote = partialNote;
+		this.finalNote = finalNote;
+		this.status = status;
+	}
+
 	public Inscription(Student student, Course course, Teacher teacher, String status) {
 		this.student = student;
 		this.course = course;
@@ -19,31 +33,47 @@ public class Inscription {
 		this.status = status;
 	}
 
-	public Inscription(Student student, Course course, Teacher teacher, String commission, int partialNote,
-			int finalNote, String status) {
-		this.student = student;
-		this.course = course;
-		this.teacher = teacher;
-		this.commission = commission;
-		this.partialNote = partialNote;
-		this.finalNote = finalNote;
-		this.status = status;
-	}
-
-	public Inscription(int idInsc, Student student, Course course, Teacher teacher, String commission, int partialNote,
-			int finalNote, String status) {
-		this.idInsc = idInsc;
-		this.student = student;
-		this.course = course;
-		this.teacher = teacher;
-		this.commission = commission;
-		this.partialNote = partialNote;
-		this.finalNote = finalNote;
-		this.status = status;
-	}
+	/*
+	 * public Inscription(Student student, Course course, Teacher teacher, String
+	 * commission, int partialNote, int finalNote, String status) { this.student =
+	 * student; this.course = course; this.teacher = teacher; this.commission =
+	 * commission; this.partialNote = partialNote; this.finalNote = finalNote;
+	 * this.status = status; }
+	 * 
+	 * public Inscription(int idInsc, Student student, Course course, Teacher
+	 * teacher, String commission, int partialNote, int finalNote, String status) {
+	 * this.idInsc = idInsc; this.student = student; this.course = course;
+	 * this.teacher = teacher; this.commission = commission; this.partialNote =
+	 * partialNote; this.finalNote = finalNote; this.status = status; }
+	 * 
+	 */
 
 	public String getCommission() {
 		return commission;
+	}
+
+	public int getIdStudent() {
+		return idStudent;
+	}
+
+	public void setIdStudent(int idStudent) {
+		this.idStudent = idStudent;
+	}
+
+	public int getIdTeacher() {
+		return idTeacher;
+	}
+
+	public void setIdTeacher(int idTeacher) {
+		this.idTeacher = idTeacher;
+	}
+
+	public int getIdCourse() {
+		return idCourse;
+	}
+
+	public void setIdCourse(int idCourse) {
+		this.idCourse = idCourse;
 	}
 
 	public void setCommission(String commission) {

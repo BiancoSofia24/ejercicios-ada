@@ -67,15 +67,25 @@ public class InscriptionsController {
 	public static void viewInscriptions(Connection con) throws SQLException {
 		Util.showTitle("Lista de Inscripciones");
 		List<Inscription> inscriptionsList = InscriptionsDAO.findAll(con);
-		Util.showSubtitle("Id | Alumno       | Curso    | Profesor    | Esado");
+		Util.showSubtitle("Id | Alumno    | Curso    | Profesor    | Estado");
 		inscriptionsList.forEach((i) -> {
-			System.out.println(i.getIdInsc() + " | " + i.getStudent().getsName() + " " + i.getStudent().getsLastName()
-					+ " | " + i.getCourse().getcName() + " | " + i.getTeacher().gettName() + " "
-					+ i.getTeacher().gettLastName() + " | " + i.getStatus());
+			Student student;
+			Course course;
+			Teacher teacher;
+			try {
+				student = StudentsDAO.findById(i.getIdStudent(), con);
+				course = CoursesDAO.findById(i.getIdCourse(), con);
+				teacher = TeachersDAO.findById(i.getIdTeacher(), con);
+				System.out.println(i.getIdInsc() + " | " + student.getsName() + " " + student.getsLastName() + " | "
+						+ course.getcName() + " | " + teacher.gettName() + " " + teacher.gettLastName() + " | "
+						+ i.getStatus());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		});
 	}
 
-	// Incomplete
+	// Error for insert
 	public static void newInscription(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Nueva Inscripción");
 		System.out.print("Ingrese id del alumno -> ");

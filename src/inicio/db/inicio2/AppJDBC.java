@@ -17,6 +17,7 @@ public class AppJDBC {
 		Util.showTitle("Mis Cursos");
 		try {
 			Connection con = AdminDB.getConnection();
+			System.out.println("Conexión establecida...");
 			Scanner scan = new Scanner(System.in);
 			int option = showMenu(scan);
 			while (option != 0) {
@@ -37,6 +38,7 @@ public class AppJDBC {
 				option = showMenu(scan);
 			}
 			con.close();
+			System.out.println("Hasta Luego..!");
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

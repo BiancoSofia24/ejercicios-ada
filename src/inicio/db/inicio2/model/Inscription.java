@@ -26,10 +26,9 @@ public class Inscription {
 		this.status = status;
 	}
 
-	public Inscription(Student student, Course course, Teacher teacher, String status) {
+	public Inscription(Student student, Course course, String status) {
 		this.student = student;
 		this.course = course;
-		this.teacher = teacher;
 		this.status = status;
 	}
 

@@ -13,12 +13,11 @@ public class InscriptionsDAO {
 
 	// Error for insert method. It's killing me
 	public static int insert(Inscription inscription, Connection con) throws SQLException {
-		String sql = "INSERT INTO inscriptions (id_student, id_course, id_teacher, status) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO inscriptions (id_student, id_course, status) VALUES (?, ?, ?)";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		prepStmt.setInt(1, inscription.getStudent().getIdStudent());
 		prepStmt.setInt(2, inscription.getCourse().getIdCourse());
-		prepStmt.setInt(3, inscription.getTeacher().getIdTeacher());
-		prepStmt.setString(4, inscription.getStatus());
+		prepStmt.setString(3, inscription.getStatus());
 		return prepStmt.executeUpdate();
 	}
 

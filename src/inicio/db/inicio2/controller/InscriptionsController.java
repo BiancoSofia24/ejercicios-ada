@@ -103,32 +103,23 @@ public class InscriptionsController {
 				Util.showError("Registro inexistente");
 			} else {
 				System.out.println(course);
-				System.out.print("Ingrese id del profesor -> ");
-				int idTeacher = scan.nextInt();
-				Teacher teacher = TeachersDAO.findById(idTeacher, con);
-				if (teacher == null) {
-					Util.showError("Registro inexistente");
-				} else {
-					System.out.println(teacher);
-					System.out.println();
-					System.out.print("¿Desea crear este registro? y/n -> ");
-					String opt = scan.next();
-					if (opt.toUpperCase().equals("Y")) {
-						String status = "active";
-						Inscription inscription = new Inscription(student, course, teacher, status);
-						int inserted = InscriptionsDAO.insert(inscription, con);
-						if (inserted == 1) {
-							System.out.println("Registro creado exitosamente");
-						} else {
-							Util.showError("Error al crear el registro");
-						}
-					} else if (opt.toUpperCase().equals("N")) {
-						System.out.println("Registro no creado");
+				System.out.println();
+				System.out.print("¿Desea crear este registro? y/n -> ");
+				String opt = scan.next();
+				if (opt.toUpperCase().equals("Y")) {
+					String status = "active";
+					Inscription inscription = new Inscription(student, course, status);
+					int inserted = InscriptionsDAO.insert(inscription, con);
+					if (inserted == 1) {
+						System.out.println("Registro creado exitosamente");
+					} else {
+						Util.showError("Error al crear el registro");
 					}
+				} else if (opt.toUpperCase().equals("N")) {
+					System.out.println("Registro no creado");
 				}
 			}
 		}
-
 	}
 
 	// Incomplete

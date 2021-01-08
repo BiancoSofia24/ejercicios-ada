@@ -8,11 +8,9 @@ import java.util.Scanner;
 import inicio.db.inicio2.DAO.CoursesDAO;
 import inicio.db.inicio2.DAO.InscriptionsDAO;
 import inicio.db.inicio2.DAO.StudentsDAO;
-import inicio.db.inicio2.DAO.TeachersDAO;
 import inicio.db.inicio2.model.Course;
 import inicio.db.inicio2.model.Inscription;
 import inicio.db.inicio2.model.Student;
-import inicio.db.inicio2.model.Teacher;
 import inicio.db.inicio2.utils.Util;
 
 public class InscriptionsController {
@@ -71,21 +69,17 @@ public class InscriptionsController {
 		inscriptionsList.forEach((i) -> {
 			Student student;
 			Course course;
-			Teacher teacher;
 			try {
 				student = StudentsDAO.findById(i.getIdStudent(), con);
 				course = CoursesDAO.findById(i.getIdCourse(), con);
-				teacher = TeachersDAO.findById(i.getIdTeacher(), con);
 				System.out.println(i.getIdInsc() + " | " + student.getsName() + " " + student.getsLastName() + " | "
-						+ course.getcName() + " | " + teacher.gettName() + " " + teacher.gettLastName() + " | "
-						+ i.getStatus());
+						+ course.getcName() + " | " + i.getStatus());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		});
 	}
 
-	// Error for insert in InscriptionsDAO or in db
 	public static void newInscription(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Nueva Inscripción");
 		System.out.print("Ingrese id del alumno -> ");

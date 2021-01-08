@@ -21,14 +21,13 @@ public class CoursesDAO {
 
 	public static List<Course> findAll(Connection con) throws SQLException {
 		List<Course> courseList = new ArrayList<Course>();
-		String sql = "SELECT c.idCourse, c.cName FROM courses c";
+		String sql = "SELECT * FROM courses";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		ResultSet resultSet = prepStmt.executeQuery();
 		Course course = null;
 		while (resultSet.next()) {
 			int idCourse = resultSet.getInt(1);
-			String courseName = resultSet.getString(2);
-			course = new Course(courseName);
+			course = new Course(resultSet.getString(2));
 			course.setIdCourse(idCourse);
 			courseList.add(course);
 		}
@@ -51,20 +50,19 @@ public class CoursesDAO {
 	}
 
 	public static Course findById(int idCourse, Connection con) throws SQLException {
-		String sql = "SELECT c.cName FROM courses c WHERE idCourse = ?";
+		String sql = "SELECT * FROM courses WHERE idCourse = ?";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		prepStmt.setInt(1, idCourse);
 		ResultSet resultSet = prepStmt.executeQuery();
 		Course course = null;
 		if (resultSet.next()) {
-			course = new Course(resultSet.getString(1));
+			course = new Course(resultSet.getInt(1), resultSet.getString(2));
 		}
 		return course;
 	}
 
 	public static List<Course> findByName(String courseName, Connection con) throws SQLException {
-		String sql = "SELECT c.idCourse, c.cName FROM courses c WHERE c.cName LIKE '%" + courseName
-				+ "%' ORDER BY c.cName";
+		String sql = "SELECT * FROM courses WHERE cName LIKE '%" + courseName + "%' ORDER BY cName";
 		Statement stmt = con.createStatement();
 		ResultSet resultSet = stmt.executeQuery(sql);
 		List<Course> courseList = new ArrayList<Course>();

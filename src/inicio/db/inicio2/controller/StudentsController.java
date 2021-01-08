@@ -105,7 +105,7 @@ public class StudentsController {
 				String studentName = scan.next();
 				System.out.print("Ingrese apellido del alumno -> ");
 				String studentLName = scan.next();
-				if (Util.validateStringLength(studentName) && Util.validateStringLength(studentLName)) {
+				if (Util.isValidStringLength(studentName) && Util.isValidStringLength(studentLName)) {
 					Util.showError("Error de ingreso. Texto inválido");
 				} else {
 					System.out.print("Ingrese correo electrónico del alumno -> ");
@@ -132,7 +132,7 @@ public class StudentsController {
 		String studentName = scan.next();
 		System.out.print("Ingrese apellido del alumno -> ");
 		String studentLName = scan.next();
-		if (Util.validateStringLength(studentName) && Util.validateStringLength(studentLName)) {
+		if (Util.isValidStringLength(studentName) && Util.isValidStringLength(studentLName)) {
 			Util.showError("Error de ingreso. Texto inválido");
 		} else {
 			System.out.print("Ingrese correo electrónico del alumno -> ");

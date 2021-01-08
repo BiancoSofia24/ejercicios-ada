@@ -98,7 +98,7 @@ public class CourseController {
 				System.out.println();
 				System.out.print("Ingrese nuevo nombre del curso -> ");
 				String courseName = scan.next();
-				if (Util.validateStringLength(courseName)) {
+				if (Util.isValidStringLength(courseName)) {
 					Util.showError("Error de ingreso. Texto inválido");
 				} else {
 					Course course = new Course(courseName);
@@ -120,7 +120,7 @@ public class CourseController {
 		Util.showTitle("Nuevo Curso");
 		System.out.print("Ingrese nombre del curso -> ");
 		String courseName = scan.next();
-		if (Util.validateStringLength(courseName)) {
+		if (Util.isValidStringLength(courseName)) {
 			Util.showError("Error de ingreso. Texto inválido");
 		} else {
 			Course course = new Course(courseName);

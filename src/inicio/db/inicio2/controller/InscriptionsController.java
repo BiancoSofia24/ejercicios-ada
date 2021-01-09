@@ -31,35 +31,85 @@ public class InscriptionsController {
 			case 4:
 				deleteInscription(scan, con);
 				break;
+			case 5:
+				createFile(scan, con);
+				break;
 			}
 			option = showInscriptionsSubmenu(scan);
 		}
 	}
 
-	// Incomplete
+	private static void createFile(Scanner scan, Connection con) throws SQLException {
+		Util.showTitle("Crear archivo con registro");
+		System.out.print("Ingrese id de la inscripción: ");
+		int idInsc = scan.nextInt();
+		Inscription inscription = InscriptionsDAO.findById(idInsc, con);
+		if (inscription == null) {
+			Util.showError("Registro inexistente");
+		} else {
+			String directory = "C:\\Users\\Lenovo\\Desktop\\Programacion\\java-a\\git\\adaProject1\\src\\inicio\\db\\inicio2\\files\\";
+			String fileName = "Inscripcion#" + idInsc + ".txt";
+			String absolutePath = directory + fileName;
+			Util.createFile(absolutePath, inscription, con);
+			System.out.println("Archivo creado exitosamente");
+		}
+	}
+
 	public static void deleteInscription(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Eliminar Inscripción");
-		System.out.print("Ingrese id del alumno -> ");
-		int idStudent = scan.nextInt();
-		Student actualStudent = StudentsDAO.findById(idStudent, con);
-		if (actualStudent == null) {
+		System.out.print("Ingrese id de la inscripción -> ");
+		int idInsc = scan.nextInt();
+		Inscription actualInscription = InscriptionsDAO.findById(idInsc, con);
+		if (actualInscription == null) {
 			System.err.println("Registro inexistente");
 		} else {
-			System.out.println(actualStudent);
+			showInscription(actualInscription, con);
+			System.out.println();
+			System.out.print("¿Está seguro de eliminar esta inscripción? y/n -> ");
+			String opt = scan.next();
+			if (opt.toUpperCase().equals("Y")) {
+				int deleted = InscriptionsDAO.delete(idInsc, con);
+				if (deleted == 1) {
+					System.out.println("Registro eliminado");
+				} else {
+					Util.showError("Registro inexistente");
+				}
+			} else if (opt.toUpperCase().equals("N")) {
+				System.out.println("Registro no eliminado");
+			}
 		}
+
+	}
+
+	private static void showInscription(Inscription actualInscription, Connection con) throws SQLException {
+		Util.showSubtitle("Inscripción #" + actualInscription.getIdInsc());
+		System.out.println(StudentsDAO.findById(actualInscription.getIdStudent(), con));
+		System.out.println(CoursesDAO.findById(actualInscription.getIdCourse(), con));
+		System.out.println("Estado: " + actualInscription.getStatus());
 	}
 
 	// Incomplete
 	public static void updateInscription(Scanner scan, Connection con) throws SQLException {
-		Util.showTitle("Modificar Alumno en Curso");
-		System.out.print("Ingrese id del alumno -> ");
-		int idStudent = scan.nextInt();
-		Student actualStudent = StudentsDAO.findById(idStudent, con);
-		if (actualStudent == null) {
+		Util.showTitle("Modificar Inscripción");
+		System.out.print("Ingrese id de la inscripción -> ");
+		int idInsc = scan.nextInt();
+		Inscription actualInscription = InscriptionsDAO.findById(idInsc, con);
+		if (actualInscription == null) {
 			System.err.println("Registro inexistente");
 		} else {
-			System.out.println(actualStudent);
+			showFullInscription(actualInscription, con);
 		}
+	}
+
+	private static void showFullInscription(Inscription actualInscription, Connection con) throws SQLException {
+		Util.showSubtitle("Inscripción #" + actualInscription.getIdInsc());
+		System.out.println(StudentsDAO.findById(actualInscription.getIdStudent(), con));
+		System.out.println(CoursesDAO.findById(actualInscription.getIdCourse(), con));
+		System.out.println("Comisión: " + actualInscription.getCommission());
+		System.out.println("Estado: " + actualInscription.getStatus());
+		Util.showSubtitle("Notas");
+		System.out.println("Nota Parcial: " + actualInscription.getPartialNote());
+		System.out.println("Nota Final: " + actualInscription.getFinalNote());
 	}
 
 	public static void viewInscriptions(Connection con) throws SQLException {
@@ -123,6 +173,7 @@ public class InscriptionsController {
 		System.out.println("2 - Ver Inscripciones");
 		System.out.println("3 - Modificar Inscripción");
 		System.out.println("4 - Eliminar Inscripción");
+		System.out.println("5 - Crear archivo con registro");
 		// Student per course. Search by teacher, status, commission, course
 		System.out.println("Faltan opciones :)");
 		System.out.println("0 - Ir Atrás");

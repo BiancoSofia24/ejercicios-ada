@@ -32,6 +32,18 @@ public class Inscription {
 		this.status = status;
 	}
 
+	public Inscription(int idInsc, int idStudent, int idCourse, int idTeacher, String commission, int partialNote,
+			int finalNote, String status) {
+		this.idInsc = idInsc;
+		this.idStudent = idStudent;
+		this.idCourse = idCourse;
+		this.idTeacher = idTeacher;
+		this.commission = commission;
+		this.partialNote = partialNote;
+		this.finalNote = finalNote;
+		this.status = status;
+	}
+
 	public String getCommission() {
 		return commission;
 	}
@@ -119,4 +131,5 @@ public class Inscription {
 	public void setIdInsc(int idInsc) {
 		this.idInsc = idInsc;
 	}
+
 }

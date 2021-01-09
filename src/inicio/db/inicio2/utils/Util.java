@@ -1,12 +1,38 @@
 package inicio.db.inicio2.utils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import inicio.db.inicio2.DAO.CoursesDAO;
+import inicio.db.inicio2.DAO.StudentsDAO;
+import inicio.db.inicio2.model.Inscription;
 
 public class Util {
 
 	private static final int MAX_CHAR = 50;
 	private static final int MIN_CHAR = 1;
+
+	public static void createFile(String absolutePath, Inscription inscription, Connection con) throws SQLException {
+		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(absolutePath))) {
+			String fileContent = inscriptionsFileContent(inscription, con);
+			bufferedWriter.write(fileContent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static String inscriptionsFileContent(Inscription inscription, Connection con) throws SQLException {
+		String fileContent = "Inscripción #" + inscription.getIdInsc() + '\n' + "-------------------------" + '\n'
+				+ StudentsDAO.findById(inscription.getIdStudent(), con) + '\n'
+				+ CoursesDAO.findById(inscription.getIdCourse(), con) + '\n' + "Comisión: "
+				+ inscription.getCommission() + '\n' + "Estado: " + inscription.getStatus() + '\n' + "Notas" + '\n'
+				+ "-----------------" + '\n' + "Nota Parcial: " + inscription.getPartialNote() + '\n' + "Nota Final: "
+				+ inscription.getFinalNote();
+		return fileContent;
+	}
 
 	public static String valueForNullString(String text) {
 		if (text == null) {
@@ -18,18 +44,6 @@ public class Util {
 	public static boolean isValidStringLength(String text) {
 		boolean notValid = text.length() < MIN_CHAR || text.length() > MAX_CHAR;
 		return notValid;
-	}
-
-	// Doesn't work. Idk
-	public static void isValidEmail(String email) {
-		Pattern pattern = Pattern.compile(
-				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-		Matcher matcher = pattern.matcher(email);
-		if (matcher.find() == true) {
-			System.out.println("El email ingresado es válido.");
-		} else {
-			System.out.println("El email ingresado es inválido.");
-		}
 	}
 
 	public static void showError(String text) {

@@ -1,5 +1,6 @@
 package inicio.db.inicio2;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ import inicio.db.inicio2.utils.Util;
 public class AppJDBC {
 
 	public static void main(String[] args) {
-		Util.showTitle("Mis Cursos");
+		Util.showTitle("Escuelita");
 		try {
 			Connection con = AdminDB.getConnection();
 			System.out.println("Conexión establecida...");
@@ -34,16 +35,19 @@ public class AppJDBC {
 				case 4:
 					inscriptions(scan, con);
 					break;
+				case 5:
+					// fileLog(scan);
+					break;
 				}
 				option = showMenu(scan);
 			}
 			con.close();
 			System.out.println("Hasta Luego..!");
-
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -58,7 +62,7 @@ public class AppJDBC {
 		TeachersController.teachersOptions(crudOption, scan, con);
 	}
 
-	private static void students(Scanner scan, Connection con) throws SQLException {
+	private static void students(Scanner scan, Connection con) throws SQLException, IOException {
 		int crudOption = StudentsController.showStudentsSubmenu(scan);
 		StudentsController.studentsOptions(crudOption, scan, con);
 	}
@@ -74,6 +78,10 @@ public class AppJDBC {
 		System.out.println("2 - Cursos");
 		System.out.println("3 - Profesores");
 		System.out.println("4 - Inscripciones");
+		System.out.println("5 - Registro de archivos (NO)");
+		// method 1: create file with log (all files created) bufferedWritter.newLine()
+		// for accumulative record
+		// method 2: read the file as a backup
 		System.out.println("0 - Salir");
 		System.out.print("Opción -> ");
 		return scan.nextInt();

@@ -20,12 +20,6 @@ public class Student {
 		this.sEmail = studentEmail;
 	}
 
-	public Student(int idStudent, String studentName, String studentLastName) {
-		this.idStudent = idStudent;
-		this.sName = studentName;
-		this.sLastName = studentLastName;
-	}
-
 	public String getsEmail() {
 		return sEmail;
 	}

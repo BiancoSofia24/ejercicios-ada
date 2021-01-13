@@ -1,7 +1,12 @@
 package inicio.db.inicio2.controller;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,18 +44,40 @@ public class InscriptionsController {
 		}
 	}
 
+	public static String inscriptionsFileContent(Inscription inscription, Connection con) throws SQLException {
+		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String date = simpleDate.format(new Date());
+		String fileContent = "Fecha de creación: " + date + '\n' + "Inscripción #" + inscription.getIdInsc() + '\n'
+				+ "------------------" + '\n' + '\n' + StudentsDAO.findById(inscription.getIdStudent(), con) + '\n'
+				+ CoursesDAO.findById(inscription.getIdCourse(), con) + '\n' + "Comisión: "
+				+ Util.valueForNullString(inscription.getCommission()) + '\n' + "Estado: " + inscription.getStatus()
+				+ '\n' + '\n' + "Notas" + '\n' + "----------" + '\n' + '\n' + "Nota Parcial: "
+				+ inscription.getPartialNote() + '\n' + "Nota Final: " + inscription.getFinalNote();
+		return fileContent;
+	}
+
+	public static void createFileFromInscription(String absolutePath, Inscription inscription, Connection con)
+			throws SQLException {
+		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(absolutePath))) {
+			String fileContent = inscriptionsFileContent(inscription, con);
+			bufferedWriter.write(fileContent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static void createFile(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Crear archivo con registro");
-		System.out.print("Ingrese id de la inscripción: ");
+		System.out.print("Ingrese id de la inscripción -> ");
 		int idInsc = scan.nextInt();
 		Inscription inscription = InscriptionsDAO.findById(idInsc, con);
 		if (inscription == null) {
 			Util.showError("Registro inexistente");
 		} else {
-			String directory = "C:\\Users\\Lenovo\\Desktop\\Programacion\\java-a\\git\\adaProject1\\src\\inicio\\db\\inicio2\\files\\";
+			String directory = "src/inicio/db/inicio2/files/";
 			String fileName = "Inscripcion#" + idInsc + ".txt";
 			String absolutePath = directory + fileName;
-			Util.createFile(absolutePath, inscription, con);
+			createFileFromInscription(absolutePath, inscription, con);
 			System.out.println("Archivo creado exitosamente");
 		}
 	}

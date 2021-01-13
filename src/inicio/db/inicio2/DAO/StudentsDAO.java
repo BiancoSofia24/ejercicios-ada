@@ -26,13 +26,10 @@ public class StudentsDAO {
 		String sql = "SELECT * FROM students s";
 		PreparedStatement prepStmt = con.prepareStatement(sql);
 		ResultSet resultSet = prepStmt.executeQuery();
+		Student student = null;
 		while (resultSet.next()) {
-			int idStud = resultSet.getInt(1);
-			String studentName = resultSet.getString(2);
-			String studentLName = resultSet.getString(3);
-			String studentEmail = resultSet.getString(4);
-			Student student = new Student(studentName, studentLName, studentEmail);
-			student.setIdStudent(idStud);
+			student = new Student(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+					resultSet.getString(4));
 			studentsList.add(student);
 		}
 		return studentsList;

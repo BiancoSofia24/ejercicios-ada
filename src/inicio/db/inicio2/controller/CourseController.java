@@ -48,8 +48,7 @@ public class CourseController {
 
 	public static void findCourseByName(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Buscar Curso por Nombre");
-		System.out.print("Ingrese nombre del curso: ");
-		String courseName = scan.next();
+		String courseName = Util.requestStringFromUser(scan, "nombre", "curso");
 		List<Course> coursesListByName = CoursesDAO.findByName(courseName, con);
 		Util.showSubtitle("Id | Curso");
 		coursesListByName.forEach((c) -> {
@@ -59,8 +58,7 @@ public class CourseController {
 
 	private static void deleteCourse(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Eliminar Curso");
-		System.out.print("Ingrese id del curso a eliminar -> ");
-		int idCourse = scan.nextInt();
+		int idCourse = Util.requestIdFromUser(scan, "curso", "eliminar");
 		Course actualCourse = CoursesDAO.findById(idCourse, con);
 		if (actualCourse == null) {
 			Util.showError("Registro inexistente");
@@ -84,8 +82,7 @@ public class CourseController {
 
 	public static void updateCourse(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Modificar Curso");
-		System.out.print("Ingrese id del curso a modificar -> ");
-		int idCourse = scan.nextInt();
+		int idCourse = Util.requestIdFromUser(scan, "curso", "modificar");
 		Course actualCourse = CoursesDAO.findById(idCourse, con);
 		if (actualCourse == null) {
 			Util.showError("Registro inexistente");
@@ -96,13 +93,13 @@ public class CourseController {
 			String opt = scan.next();
 			if (opt.toUpperCase().equals("Y")) {
 				System.out.println();
-				System.out.print("Ingrese nuevo nombre del curso -> ");
-				String courseName = scan.next();
-				if (Util.isValidStringLength(courseName)) {
+				String courseName = Util.requestStringFromUser(scan, "nombre", "curso");
+				while (Util.isValidStringLength(courseName)) {
 					Util.showError("Error de ingreso. Texto inválido");
-				} else {
-					Course course = new Course(courseName);
-					course.setIdCourse(idCourse);
+					courseName = Util.requestStringFromUser(scan, "nombre", "curso");
+				}
+				if (!Util.isValidStringLength(courseName)) {
+					Course course = new Course(idCourse, courseName);
 					int updated = CoursesDAO.update(course, con);
 					if (updated == 1) {
 						System.out.println("Registro editado exitosamente");
@@ -118,8 +115,7 @@ public class CourseController {
 
 	public static void newCourse(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Nuevo Curso");
-		System.out.print("Ingrese nombre del curso -> ");
-		String courseName = scan.next();
+		String courseName = Util.requestStringFromUser(scan, "nombre", "curso");
 		if (Util.isValidStringLength(courseName)) {
 			Util.showError("Error de ingreso. Texto inválido");
 		} else {

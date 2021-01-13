@@ -36,6 +36,8 @@ public class InscriptionsDAO {
 	}
 
 	public static int update(Inscription inscription, Connection con) {
+		// Update inscriptions.
+		// Fields student, course, teacher, commission, partialNote, finalNota, status
 		return 0;
 	}
 

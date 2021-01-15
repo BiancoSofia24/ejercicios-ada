@@ -59,7 +59,7 @@ public class StudentsHelper {
 	}
 
 	public static void createFile(Student student, Connection con) throws SQLException, IOException {
-		String directory = "src/inicio/db/inicio2/files/";
+		String directory = "src/inicio/db/inicio2/files/students/";
 		String fileName = "Student#" + student.getIdStudent() + ".txt";
 		String absolutePath = directory + fileName;
 		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(absolutePath));

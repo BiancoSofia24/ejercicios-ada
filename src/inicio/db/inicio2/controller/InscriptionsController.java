@@ -74,7 +74,7 @@ public class InscriptionsController {
 		if (inscription == null) {
 			Util.showError("Registro inexistente");
 		} else {
-			String directory = "src/inicio/db/inicio2/files/";
+			String directory = "src/inicio/db/inicio2/files/inscriptions";
 			String fileName = "Inscripcion#" + idInsc + ".txt";
 			String absolutePath = directory + fileName;
 			createFileFromInscription(absolutePath, inscription, con);

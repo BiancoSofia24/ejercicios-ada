@@ -112,7 +112,7 @@ public class StudentsController {
 				String studentLName = Util.requestStringFromUser(scan, "apellido", "alumno");
 				while (Util.isValidStringLength(studentName) || Util.isValidStringLength(studentLName)) {
 					Util.showError("Error de ingreso. Texto inválido");
-					studentName = Util.requestStringFromUser(scan, "nombre", "curso");
+					studentName = Util.requestStringFromUser(scan, "nombre", "alumno");
 					studentLName = Util.requestStringFromUser(scan, "apellido", "alumno");
 				}
 				if (!Util.isValidStringLength(studentName) && !Util.isValidStringLength(studentLName)) {

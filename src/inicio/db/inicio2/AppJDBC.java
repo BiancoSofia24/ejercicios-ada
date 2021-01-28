@@ -52,7 +52,7 @@ public class AppJDBC {
 		}
 	}
 
-	private static void inscriptions(Scanner scan, Connection con) throws SQLException {
+	private static void inscriptions(Scanner scan, Connection con) throws SQLException, IOException {
 		int crudOption = InscriptionsController.showInscriptionsSubmenu(scan);
 		InscriptionsController.inscriptionsOptions(crudOption, scan, con);
 	}

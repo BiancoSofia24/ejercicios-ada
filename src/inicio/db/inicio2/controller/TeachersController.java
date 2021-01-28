@@ -41,16 +41,14 @@ public class TeachersController {
 
 	public static void findTeacherByLastName(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Buscar Profesor por Apellido");
-		System.out.print("Ingrese apellido del profesor: ");
-		String teacherLName = scan.next();
+		String teacherLName = Util.requestNameInfo(scan, "apellido", "profesor");
 		List<Teacher> teachersListByLastName = TeachersDAO.findByLastName(teacherLName, con);
 		TeachersHelper.showListByLastName(teachersListByLastName);
 	}
 
 	public static void findTeacherByName(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Buscar Profesor por Nombre");
-		System.out.print("Ingrese nombre del profesor: ");
-		String teacherName = scan.next();
+		String teacherName = Util.requestNameInfo(scan, "nombre", "profesor");
 		List<Teacher> teachersListByName = TeachersDAO.findByName(teacherName, con);
 		TeachersHelper.showList(teachersListByName);
 	}
@@ -78,7 +76,7 @@ public class TeachersController {
 
 	public static void updateTeacher(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Modificar Profesor");
-		int idTeacher = Util.requestIdFromUser(scan, "profesor registrado", "modificar");
+		int idTeacher = Util.requestId(scan, "profesor registrado");
 		Teacher actualTeacher = TeachersDAO.findById(idTeacher, con);
 		if (actualTeacher == null) {
 			Util.showError("Registro inexistente");
@@ -91,21 +89,12 @@ public class TeachersController {
 			String opt = scan.next();
 			if (opt.toUpperCase().equals("Y")) {
 				System.out.println();
-				String teacherName = Util.requestStringFromUser(scan, "nombre", "profesor");
-				String teacherLName = Util.requestStringFromUser(scan, "apellido", "profesor");
-				while (Util.isValidStringLength(teacherName) || Util.isValidStringLength(teacherLName)) {
-					Util.showError("Error de ingreso. Texto inválido");
-					teacherName = Util.requestStringFromUser(scan, "nombre", "profesor");
-					teacherLName = Util.requestStringFromUser(scan, "apellido", "profesor");
-				}
-				if (!Util.isValidStringLength(teacherName) && !Util.isValidStringLength(teacherLName)) {
-					String teacherEmail = Util.requestStringFromUser(scan, "correo electrónico", "profesor");
-					// Validate email
-					System.out.print("Ingrese especialidad -> ");
-					String teacherSpecialty = scan.next();
-					Teacher teacher = new Teacher(idTeacher, teacherName, teacherLName, teacherEmail, teacherSpecialty);
-					TeachersHelper.update(teacher, con);
-				}
+				String teacherName = Util.requestNameInfo(scan, "nombre", "profesor");
+				String teacherLName = Util.requestNameInfo(scan, "apellido", "profesor");
+				String teacherEmail = Util.requestEmail(scan, "profesor");
+				String teacherSpecialty = Util.requestSpecialty(scan);
+				Teacher teacher = new Teacher(idTeacher, teacherName, teacherLName, teacherEmail, teacherSpecialty);
+				TeachersHelper.update(teacher, con);
 			} else if (opt.toUpperCase().equals("N")) {
 				System.out.println("Registro no editado");
 			}
@@ -115,18 +104,12 @@ public class TeachersController {
 
 	public static void newTeacher(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Nuevo Profesor");
-		String teacherName = Util.requestStringFromUser(scan, "nombre", "profesor");
-		String teacherLName = Util.requestStringFromUser(scan, "apellido", "profesor");
-		if (Util.isValidStringLength(teacherName) && Util.isValidStringLength(teacherLName)) {
-			Util.showError("Error de ingreso. Texto inválido");
-		} else {
-			String teacherEmail = Util.requestStringFromUser(scan, "correo electrónico", "profesor");
-			// Validate email
-			System.out.print("Ingrese especialidad -> ");
-			String teacherSpecialty = scan.next();
-			Teacher teacher = new Teacher(teacherName, teacherLName, teacherEmail, teacherSpecialty);
-			TeachersHelper.insert(teacher, con);
-		}
+		String teacherName = Util.requestNameInfo(scan, "nombre", "profesor");
+		String teacherLName = Util.requestNameInfo(scan, "apellido", "profesor");
+		String teacherEmail = Util.requestEmail(scan, "profesor");
+		String teacherSpecialty = Util.requestSpecialty(scan);
+		Teacher teacher = new Teacher(teacherName, teacherLName, teacherEmail, teacherSpecialty);
+		TeachersHelper.insert(teacher, con);
 	}
 
 	public static void viewTeachers(Connection con) throws SQLException {

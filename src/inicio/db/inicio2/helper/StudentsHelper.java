@@ -72,7 +72,7 @@ public class StudentsHelper {
 	public static String fileContent(Student student, Connection con) throws SQLException {
 		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		String date = simpleDate.format(new Date());
-		String fileContent = "Fecha de creación: " + date + '\n' + "Alumno #" + student.getIdStudent() + '\n'
+		String fileContent = "Fecha de creación: " + date + '\n' + '\n' + "Alumno #" + student.getIdStudent() + '\n'
 				+ "-------------------" + '\n' + '\n' + "Nombre: " + student.getsName() + '\n' + "Apellido: "
 				+ student.getsLastName() + '\n' + "Correo electrónico: " + Util.valueForNullString(student.getsEmail());
 		return fileContent;

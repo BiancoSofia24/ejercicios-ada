@@ -63,21 +63,21 @@ public class StudentsController {
 
 	public static void findStudentByLastName(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Buscar Alumno por Apellido");
-		String studentLName = Util.requestStringFromUser(scan, "apellido", "alumno");
+		String studentLName = Util.requestNameInfo(scan, "apellido", "alumno");
 		List<Student> studentsListByLastName = StudentsDAO.findByLastName(studentLName, con);
 		StudentsHelper.showListByLastName(studentsListByLastName);
 	}
 
 	public static void findStudentByName(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Buscar Alumno por Nombre");
-		String studentName = Util.requestStringFromUser(scan, "nombre", "alumno");
+		String studentName = Util.requestNameInfo(scan, "nombre", "alumno");
 		List<Student> studentsListByName = StudentsDAO.findByName(studentName, con);
 		StudentsHelper.showList(studentsListByName);
 	}
 
 	public static void deleteStudent(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Eliminar Alumno");
-		int idStudent = Util.requestIdFromUser(scan, "alumno registrado", "eliminar");
+		int idStudent = Util.requestId(scan, "alumno registrado");
 		Student actualStudent = StudentsDAO.findById(idStudent, con);
 		if (actualStudent == null) {
 			Util.showError("Registro inexistente");
@@ -96,7 +96,7 @@ public class StudentsController {
 
 	public static void updateStudent(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Modificar Alumno");
-		int idStudent = Util.requestIdFromUser(scan, "alumno registrado", "modificar");
+		int idStudent = Util.requestId(scan, "alumno registrado");
 		Student actualStudent = StudentsDAO.findById(idStudent, con);
 		if (actualStudent == null) {
 			Util.showError("Registro inexistente");
@@ -108,19 +108,11 @@ public class StudentsController {
 			String opt = scan.next();
 			if (opt.toUpperCase().equals("Y")) {
 				System.out.println();
-				String studentName = Util.requestStringFromUser(scan, "nombre", "alumno");
-				String studentLName = Util.requestStringFromUser(scan, "apellido", "alumno");
-				while (Util.isValidStringLength(studentName) || Util.isValidStringLength(studentLName)) {
-					Util.showError("Error de ingreso. Texto inválido");
-					studentName = Util.requestStringFromUser(scan, "nombre", "alumno");
-					studentLName = Util.requestStringFromUser(scan, "apellido", "alumno");
-				}
-				if (!Util.isValidStringLength(studentName) && !Util.isValidStringLength(studentLName)) {
-					String studentEmail = Util.requestStringFromUser(scan, "correo electrónico", "alumno");
-					// Validate email
-					Student student = new Student(idStudent, studentName, studentLName, studentEmail);
-					StudentsHelper.update(student, con);
-				}
+				String studentName = Util.requestNameInfo(scan, "nombre", "alumno");
+				String studentLName = Util.requestNameInfo(scan, "nombre", "alumno");
+				String studentEmail = Util.requestEmail(scan, "alumno");
+				Student student = new Student(idStudent, studentName, studentLName, studentEmail);
+				StudentsHelper.update(student, con);
 			} else if (opt.toUpperCase().equals("N")) {
 				System.out.println("Registro no editado");
 			}
@@ -129,16 +121,11 @@ public class StudentsController {
 
 	public static void newStudent(Scanner scan, Connection con) throws SQLException {
 		Util.showTitle("Nuevo Alumno");
-		String studentName = Util.requestStringFromUser(scan, "nombre", "alumno");
-		String studentLName = Util.requestStringFromUser(scan, "apellido", "alumno");
-		if (Util.isValidStringLength(studentName) && Util.isValidStringLength(studentLName)) {
-			Util.showError("Error de ingreso. Texto inválido");
-		} else {
-			String studentEmail = Util.requestStringFromUser(scan, "correo electrónico", "alumno");
-			// Validate email
-			Student student = new Student(studentName, studentLName, studentEmail);
-			StudentsHelper.insert(student, con);
-		}
+		String studentName = Util.requestNameInfo(scan, "nombre", "alumno");
+		String studentLName = Util.requestNameInfo(scan, "nombre", "alumno");
+		String studentEmail = Util.requestEmail(scan, "alumno");
+		Student student = new Student(studentName, studentLName, studentEmail);
+		StudentsHelper.insert(student, con);
 	}
 
 	public static void viewStudents(Connection con) throws SQLException {
